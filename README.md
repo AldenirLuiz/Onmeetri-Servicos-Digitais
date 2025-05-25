@@ -1,5 +1,3 @@
-Claro! Aqui está uma sugestão de texto para o arquivo `README.md` do seu projeto no GitHub, com foco claro no propósito da página, nas funcionalidades principais e nas instruções básicas:
-
 ---
 
 # OnMeeTri - Serviços Digitais
