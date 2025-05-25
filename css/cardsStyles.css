@@ -24,28 +24,24 @@ main {
 main #mainSection {
     display: block;
     block-size: 100%;
-    margin: 0 auto;
     align-items: center;
     justify-content: center;
     background: var(--main-color-light);
-    padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 5px var(--main-color-shadow-purple);
-    margin: 10px;
-    overflow-wrap: break-word;
     max-width: 80%;
     max-height: 100%;
     font-size: 1.2em;
+    gap: 20px;
 }
 
 main #mainSection .cardsLine {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 20px auto;
-    padding: 10px;
+    gap: 20px;
 }
 
 main #mainSection .cardsLine .cards {
@@ -57,24 +53,18 @@ main #mainSection .cardsLine .cards {
     max-width: 45%;
     width: 500px;
     height: 300px;
-    display: flex;
-    flex-direction: column;
+    display: block;
     margin: 20px auto;
     padding: 10px;
-    overflow-wrap: break-word;
+    position: sticky;
 }
 main #mainSection .cards:hover {
-    position: relative;
     display: block;
     color: var(--main-color-text-lightdark);
     box-shadow: 0px 4px 10px var(--main-color-text-lightdark);
-    transition-duration: 0.4s;
-    transition-property: all;
     transition: all 0.5s ease;
-    transform: scale(1.2);
-    z-index: 1;
+    transform: scale(1.05);
     cursor: pointer;
-    margin-top: auto;
 }
 button {
     background-color: var(--main-color-secondary);
@@ -102,7 +92,9 @@ button:hover {
         max-width: 100%;
         width: 100%;
         height: auto;
-        margin: 10px auto;
+        margin: 0;
+        padding: 10px;
+        margin-bottom: 20px;
     }
     main #mainSection .cardsLine {
         flex-direction: column;

@@ -1,8 +1,11 @@
+const mainClock = document.getElementById("mainClock");
+const dateClock = document.getElementById("dateClock");
+
 setInterval(() => {
     const now = new Date();
     const colorPick = "#" + (Math.floor(Math.random() * 16777215).toString(16)).padStart(6, "0");
     mainClock.textContent = now.toLocaleTimeString();
-    dateClock.textContent = formattedDate;
+    dateClock.textContent = now.toLocaleDateString();
 
     mainClock.style.color = colorPick;
     dateClock.style.color = colorPick;

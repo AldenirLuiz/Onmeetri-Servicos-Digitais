@@ -26,7 +26,6 @@ body {
 
 #imgLogo {
     display: block;
-    margin: 0;
     width: 256px;
     height: 128px;
     filter: drop-shadow(0 0 5px #333333);
@@ -35,7 +34,6 @@ body {
 /* Header styles */
 header {
     color: var(--main-color-text-lightdark);
-    padding: 0;
     text-align: center;
     border-radius: 8px;
     max-height: fit-content;
