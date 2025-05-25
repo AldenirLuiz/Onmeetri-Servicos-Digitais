@@ -3,16 +3,8 @@ const dateClock = document.getElementById("dateClock");
 
 setInterval(() => {
     const now = new Date();
-    const colorPick = "#" + (Math.floor(Math.random() * 16777215).toString(16)).padStart(6, "0");
-    mainClock.textContent = now.toLocaleTimeString();
     dateClock.textContent = now.toLocaleDateString();
-
-    mainClock.style.color = colorPick;
-    dateClock.style.color = colorPick;
-}, 30000); // a cada 30s
-
-setInterval(() => {
-    mainClock.textContent = new Date().toLocaleTimeString();
+    mainClock.textContent = now.toLocaleTimeString();
 }, 1000); // apenas atualiza o horário a cada segundo
 
 const btn = document.getElementById('submit');

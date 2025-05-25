@@ -105,14 +105,10 @@ header #headColumns #centerColumn #title #titleContainer #tri {
     padding: 0;
 }
 
-#mainClock {
+.dateNow {
+    margin: 0;
+    padding-right: 30px;
     text-align: right;
-    text-justify: right;
-    margin-right: 20px;
-}
-
-#mainDate {
-    text-align: center;
     text-justify: center;
 }
 
