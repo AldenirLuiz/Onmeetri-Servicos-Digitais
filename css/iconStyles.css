@@ -1,0 +1,16 @@
+:root {
+    --main-color-text-lightdark: #33424b;
+    --main-color-light: #f4f4f4;
+    --main-color-secondary: #d7e2e6;
+    --main-color-shadow-purple: rgba(47, 9, 65, 0.1);
+    --main-color-fade: #cfe5e6;
+    --main-color-background-lightdark: #cecece;
+}
+
+.card-image {
+    display: block;
+    margin: 0 auto;
+    width: 64px;
+    height: 64px;
+    filter: drop-shadow(var(--main-color-fade) 10px 10px 25px);
+}
