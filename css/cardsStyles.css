@@ -74,25 +74,23 @@ main #mainSection .cards:hover {
     transform: scale(1.2);
     z-index: 1;
     cursor: pointer;
+    margin-top: auto;
 }
-
 button {
     background-color: var(--main-color-secondary);
     color: var(--main-color-text-lightdark);
     border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 200px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
+
 button:hover {
     background-color: var(--main-color-text-lightdark);
     color: var(--main-color-light);
+    transform: scale(1.05);
 }
 
 @media screen and (max-width: 768px) {
@@ -111,4 +109,18 @@ button:hover {
         align-items: center;
     }
     
+    .cards h3 {
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+
+    .cards p {
+        font-size: 1em;
+        margin-bottom: 15px;
+    }
+
+    .card-button {
+        margin-top: auto;
+    }
 }
+

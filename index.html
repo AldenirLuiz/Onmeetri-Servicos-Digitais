@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OnMeeTri - Soluções Digitais em Gestão de Pessoas</title>
+    <meta name="description" content="OnMeeTri - Soluções Digitais em Gestão de Pessoas">
+    <meta name="keywords" content="OnMeeTri, Gestão de Pessoas, Soluções Digitais, Inclusão Digital, Recursos Humanos">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/cardsStyles.css">
     <link rel="stylesheet" href="css/iconStyles.css">
@@ -31,21 +33,20 @@
                     <h3 id="mainClock"></h3>
                 </div> 
                 <div>
-                    <h3 id="mainDate"></h3>
+                    <h3 id="dateClock"></h3>
                 </div>
             </div>
             
         </div>
-        <div id="headNavbar">
+        <nav id="headNavbar">
             <ul>
-                <li>
-                    <a href="">Contato</a>
-                    <a href="">Sobre</a>
-                    <a href="">Serviços</a>
-                    <a href="">Suporte</a>
-                </li>
+                <li><a href="#">Contato</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Serviços</a></li>
+                <li><a href="#">Suporte</a></li>
             </ul>
-        </div>
+        </nav>
+
     </header>
     <main id="main">
         <aside id="aside">
@@ -90,7 +91,23 @@
                     </div>
                 </div>
             </section>
+            <section id="contactSection">
+                <h2>Fale com a gente</h2>
+                <form id="contactForm">
+                    <label for="name">Nome:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Mensagem:</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+
+                    <button type="submit" id="submit">Enviar</button>
+                </form>
+            </section>
         </section>
+        
     </main>
     <footer id="footer">
         <div id="footerLogo">
@@ -103,6 +120,27 @@
         </div>
         <p>Desenvolvido por: <a href="https://github.com/aldenirluiz">Aldenir Luiz</a></p>
     </footer>
+    <div id="modalOverlay" class="modal hidden">
+        <div class="modal-content">
+            <span id="closeModal" class="modal-close">&times;</span>
+            <h2>Obrigado!</h2>
+            <p>Sua mensagem foi recebida. Entraremos em contato em breve.</p>
+        </div>
+    </div>
+
 </body>
-<script src="js/script.js"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+
+<script src="js/script.js" defer></script>
 </html>
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "xo0Ytw1Fl2cs1ssbC",
+      });
+   })();
+</script>
