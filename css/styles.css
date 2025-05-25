@@ -282,8 +282,6 @@ footer p {
     margin: 40px auto;
     padding: 20px;
     background-color: var(--main-color-light);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px var(--main-color-shadow-purple);
     font-size: 0.6em;
     font-family: sans-serif;
 }
