@@ -34,7 +34,10 @@ table th {
     border: 1px solid lightslategray;
 }
 
-table td th{
+table tr th, td{
     height: 30px;
     border: 1px solid lightslategray;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
 }
