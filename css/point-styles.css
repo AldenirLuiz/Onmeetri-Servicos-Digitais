@@ -1,0 +1,40 @@
+body {
+    font-family: sans-serif, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin :0;
+    padding: 0;
+    background: linear-gradient("alice-blue");
+}
+
+header {
+    background-color: aliceblue;
+    max-height: 180px;
+    margin-bottom: 30px;
+    box-shadow: 0px 4px 8px;
+}
+
+.header-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+
+table {
+    border: 1px solid lightslategray;
+    box-shadow: 0px 2px 4px lightslategray;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+table th {
+    background: aliceblue;
+    height: 40px;
+    border: 1px solid lightslategray;
+}
+
+table td th{
+    height: 30px;
+    border: 1px solid lightslategray;
+}

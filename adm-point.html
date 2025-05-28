@@ -4,14 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/point-styles.css">
 </head>
 <body>
-    <form action="">
-        <label for="adm-point">GERENCIAMENTO DE PONTO</label>
-        <input type="" id="adm-point" name="adm-point" placeholder="Digite o ponto de administração">
-        
-        <button type="submit">Enviar</button>
-        <button type="reset">Limpar</button>
-    </form>
+    <header>
+        <section class="header-group">
+            <div class="header-column">
+                <img src="src/logo-omeetri.png" alt="onmeetri-logo" srcset="" width="180">
+            </div>
+            <div class="header-column">
+                <h1>Gerenciamento de Ponto</h1>
+            </div>
+            <div class="header-column">
+                <menu type="context"><select name="" id="">
+                    <option value="Config">Configuracoes</option>
+                </select></menu>
+            </div>
+            
+        </section>
+    </header>
+    <main>
+        <section class="sec-form" style="display: flex; align-items: center; justify-content: center;">
+            <table width="800px" id="table-data">
+                <tr>
+                    <th width="100" height="50">Header1</th>
+                    <th width="200" height="50">Header2</th>
+                    <th width="200" height="50">Header3</th>
+                </tr>
+                <tr id="data-table">
+                </tr>
+            </table>
+        </section>
+            
+    </main>
 </body>
+<script src="js/script-admpoint.js"></script>
 </html>
