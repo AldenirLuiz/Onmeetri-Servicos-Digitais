@@ -69,6 +69,10 @@ button:hover {
     transform: scale(1.05);
 }
 
+.ads-card {
+    height: 300px;
+}
+
 @media screen and (max-width: 768px) {
 
     main #mainSection {
