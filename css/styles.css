@@ -148,7 +148,6 @@ main {
 
 
 aside {
-    position: absolute;
     left: 10px;
     display: flex;
     flex-direction: column;
