@@ -1,0 +1,25 @@
+select {
+    padding: 5px;
+    border: 1px solid lightslategray;
+    border-radius: 5px;
+    background: white;
+    font-size: 1em;
+}
+
+button#export-pdf, button#export-excel {
+    padding: 5px 10px;
+    border: none;
+    background-color: seagreen;
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button#export-excel {
+    background-color: darkgoldenrod;
+}
+
+button#export-pdf:hover, button#export-excel:hover {
+    opacity: 0.85;
+}

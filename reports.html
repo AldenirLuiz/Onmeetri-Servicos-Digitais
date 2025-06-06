@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatórios e Métricas</title>
+    <link rel="stylesheet" href="./css/reports-styles.css">
+    <link rel="stylesheet" href="./css/employees-styles.css">
+</head>
+<body>
+    <header>
+        <section class="header-group">
+            <div class="header-column">
+                <img src="src/logo-omeetri.png" alt="onmeetri-logo" width="180">
+            </div>
+            <div class="header-column">
+                <h1>Relatórios e Métricas</h1>
+            </div>
+            <div class="header-column">
+                <h3 class="dateNow" id="mainClock"></h3>
+                <h3 class="dateNow" id="dateClock"></h3>
+            </div>
+        </section>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./adm-employee.html">Funcionarios</a></li>
+                <li><a href="./departments.html">Departamentos</a></li>
+                <li><a href="./reports.html">Relatorios</a></li>
+                <li><a href="./settings.html">Configuracoes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="main-container-form" style="flex-direction: column;">
+            <fieldset style="width: 100%; max-width: 1100px;">
+                <legend>Filtros e Métricas</legend>
+
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <select id="filter-contract">
+                        <option value="">Todos Contratos</option>
+                        <option value="CLT">CLT</option>
+                        <option value="PJ">PJ</option>
+                        <option value="Estagio">Estágio</option>
+                    </select>
+                    <select id="sort-by">
+                        <option value="">Ordenar por</option>
+                        <option value="salario">Salário</option>
+                        <option value="admissao">Data de Admissão</option>
+                    </select>
+                    <button id="export-pdf">Exportar PDF</button>
+                    <button id="export-excel">Exportar Excel</button>
+                </div>
+
+                <div id="metrics-container">
+                    <p><strong>Total de Funcionários:</strong> <span id="total-funcionarios">0</span></p>
+                    <p><strong>Média Salarial:</strong> <span id="media-salarial">R$ 0,00</span></p>
+                </div>
+
+                <div class="main-container-table" style="margin-top: 20px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Cargo</th>
+                                <th>Departamento</th>
+                                <th>Salário</th>
+                                <th>Contrato</th>
+                                <th>Admissão</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-table-body">
+                            <!-- Linhas populadas via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+            <div style="display: flex; flex-direction: row; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 40px;">
+                <div style="width: 350px;">
+                    <h3 style="text-align: center;">Funcionários por Departamento</h3>
+                    <canvas id="departamentoChart"></canvas>
+                </div>
+                <div style="width: 350px;">
+                    <h3 style="text-align: center;">Distribuição Salarial</h3>
+                    <canvas id="salarioChart"></canvas>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+<script src="js/reports.js"></script>
+<!-- SheetJS (Excel) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!-- jsPDF + autoTable (PDF) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+</html>

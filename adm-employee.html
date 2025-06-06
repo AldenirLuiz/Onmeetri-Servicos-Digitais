@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/point-styles.css">
+    <link rel="stylesheet" href="css/employees-styles.css">
 </head>
 <body>
     <header>
@@ -13,14 +13,23 @@
                 <img src="src/logo-omeetri.png" alt="onmeetri-logo" srcset="" width="180">
             </div>
             <div class="header-column">
-                <h1>Gerenciamento de Ponto</h1>
+                <h1>Gerenciamento de Funcionarios</h1>
             </div>
             <div class="header-column">
-                <menu type="context"><select name="" id="">
-                    <option value="Config">Configuracoes</option>
-                </select></menu>
+                <h3 class="dateNow" id="mainClock"></h3>
+                <h3 class="dateNow" id="dateClock"></h3>
+
             </div>
         </section>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="#./employees.html">Funcionarios</a></li>
+                <li><a href="#./departments.html">Departamentos</a></li>
+                <li><a href="#./reports.html">Relatorios</a></li>
+                <li><a href="#./settings.html">Configuracoes</a></li>
+            </ul>
+        </nav>
     </header>
     <main>
         <section class="main-container">
@@ -43,13 +52,6 @@
                                 <input type="text" placeholder="Salario do Funcionario">
                             </div>
                             <div class="form-line">
-                                <label for="dept">Departamento</label>
-                                <input type="text" placeholder="Departamento">
-
-                                <label for="income">Salario</label>
-                                <input type="text" placeholder="Salario do Funcionario">
-                            </div>
-                            <div class="form-line">
                                 <label for="name">Contrato</label>
                                 <input type="text" placeholder="CLT / PJ / Estagio / Outros">
 
@@ -66,6 +68,38 @@
                 
             </div>
         </section>
+        <section class="main-container-table">
+            <fieldset class="table-fieldset"><legend>Lista de Funcionarios</legend>
+                <div style="margin-bottom: 10px; text-align: right;">
+                    <input type="text" id="searchInput" placeholder="Buscar por nome, cargo ou departamento..." style="width: 300px; padding: 5px; border-radius: 5px; border: 1px solid lightslategray;">
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th id="employee-name">Nome</th>
+                            <th id="employee-role">Cargo</th>
+                            <th id="employee-department">Departamento</th>
+                            <th id="employee-salary">Salario</th>
+                            <th id="employee-contract">Contrato</th>
+                            <th id="employee-admission">Admissao</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employee-list">
+                        <!-- Lista de funcionarios sera preenchida aqui -->
+                        <tr>
+                            <td>João da Silva</td>
+                            <td>Desenvolvedor</td>
+                            <td>Tecnologia</td>
+                            <td>R$ 5.000,00</td>
+                            <td>CLT</td>
+                            <td>01/01/2020</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </section>
     </main>
 </body>
+<script src="./js/script-adm-employees.js"></script>
 </html>
