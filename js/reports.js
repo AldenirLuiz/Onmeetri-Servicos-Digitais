@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const filterContract = document.getElementById("filter-contract");
     const sortBy = document.getElementById("sort-by");
+    
 
     function renderTable(data) {
         tableBody.innerHTML = "";
