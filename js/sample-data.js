@@ -7,47 +7,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to generate a random employee
     function generateRandomEmployee(id) {
-        const names = ['João', 'Maria', 'José', 'Ana', 'Paulo', 'Carla', 'Ricardo', 'Fernanda', 'Pedro', 'Juliana'];
-        const lastNames = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Pereira', 'Ferreira', 'Almeida', 'Machado', 'Nascimento', 'Costa'];
-        const roles = ['Desenvolvedor', 'Analista', 'Gerente', 'Designer', 'Estagiário'];
-        const departments = ['Tecnologia', 'Marketing', 'Financeiro', 'Recursos Humanos', 'Vendas'];
-        const contracts = ['CLT', 'PJ', 'Estágio'];
+        const nomes = ['João', 'Maria', 'José', 'Ana', 'Paulo', 'Carla', 'Ricardo', 'Fernanda', 'Pedro', 'Juliana'];
+        const lastnomes = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Pereira', 'Ferreira', 'Almeida', 'Machado', 'Nascimento', 'Costa'];
+        const cargos = ['Desenvolvedor', 'Analista', 'Gerente', 'Designer', 'Estagiário'];
+        const departamentos = ['Tecnologia', 'Marketing', 'Financeiro', 'Recursos Humanos', 'Vendas'];
+        const contratos = ['CLT', 'PJ', 'Estágio'];
 
-        const randomName = names[Math.floor(Math.random() * names.length)];
-        const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-        const randomRole = roles[Math.floor(Math.random() * roles.length)];
-        const randomDepartment = departments[Math.floor(Math.random() * departments.length)];
-        const randomSalary = (Math.random() * (10000 - 2000) + 2000).toFixed(2);
-        const randomContract = contracts[Math.floor(Math.random() * contracts.length)];
-        const randomAdmission = new Date(new Date().setDate(new Date().getDate() - Math.floor(Math.random() * 365)));
-        const formattedDate = randomAdmission.toLocaleDateString('pt-BR');
+        const randomnome = nomes[Math.floor(Math.random() * nomes.length)];
+        const randomLastnome = lastnomes[Math.floor(Math.random() * lastnomes.length)];
+        const randomcargo = cargos[Math.floor(Math.random() * cargos.length)];
+        const randomdepartamento = departamentos[Math.floor(Math.random() * departamentos.length)];
+        const randomsalario = (Math.random() * (10000 - 2000) + 2000).toFixed(2);
+        console.log(randomsalario)
+        const randomcontrato = contratos[Math.floor(Math.random() * contratos.length)];
+        const randomadmissao = new Date(new Date().setDate(new Date().getDate() - Math.floor(Math.random() * 365)));
+        const formattedDate = randomadmissao.toLocaleDateString('pt-BR');
 
         return {
-            id: id,
-            name: `${randomName} ${randomLastName}`,
-            role: randomRole,
-            department: randomDepartment,
-            salary: `R$ ${randomSalary}`,
-            contract: randomContract,
-            admission: formattedDate
+            nome: `${randomnome} ${randomLastnome}`,
+            cargo: randomcargo,
+            departamento: randomdepartamento,
+            salario: `${randomsalario}`,
+            contrato: randomcontrato,
+            admissao: formattedDate
         };
-    }
-
-    // Function to populate the table with employee data
-    function populateTable(employees) {
-        employeeList.innerHTML = '';
-        employees.forEach(employee => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${employee.name}</td>
-                <td>${employee.role}</td>
-                <td>${employee.department}</td>
-                <td>${employee.salary}</td>
-                <td>${employee.contract}</td>
-                <td>${employee.admission}</td>
-            `;
-            employeeList.appendChild(row);
-        });
     }
 
     // Function to get employees from local storage
@@ -69,9 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 employees.push(generateRandomEmployee(i + 1));
             }
             saveEmployees(employees);
-            populateTable(employees);
         } else {
-            populateTable(employees);
         }
     }
 
@@ -84,12 +65,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const employees = getEmployees();
         const filteredEmployees = employees.filter(employee => {
             return (
-                employee.name.toLowerCase().includes(searchTerm) ||
-                employee.role.toLowerCase().includes(searchTerm) ||
-                employee.department.toLowerCase().includes(searchTerm)
+                employee.nome.toLowerCase().includes(searchTerm) ||
+                employee.cargo.toLowerCase().includes(searchTerm) ||
+                employee.departamento.toLowerCase().includes(searchTerm)
             );
         });
-        populateTable(filteredEmployees);
     });
 
     // Form submission
