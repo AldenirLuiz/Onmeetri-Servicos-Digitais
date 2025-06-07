@@ -119,3 +119,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Inicializar dados salvos
     loadEmployees();
 });
+

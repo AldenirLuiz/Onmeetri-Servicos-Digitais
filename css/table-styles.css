@@ -135,3 +135,34 @@ table tr td div{
     border: 1px solid lightslategray;
     border-radius: 3px;
 }
+
+.summary-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.summary-controls select,
+.summary-controls button {
+    padding: 5px 10px;
+    border: 1px solid lightslategray;
+    border-radius: 3px;
+}
+
+.summary-controls button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.summary-controls button:hover {
+    background-color: #45a049;
+}
+
+.monthly-total {
+    background-color: #f5f5f5;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 3px;
+}

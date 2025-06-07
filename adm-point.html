@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/secondary-header.css">
     <link rel="stylesheet" href="./css/table-styles.css">
+    <!-- Export Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
     <header>
@@ -42,15 +46,8 @@
                 </div>
                 <table id="table-data"></table>
                 <div class="table-btt-container"><button id="btt-save-table">SALVAR</button></div>
-
                 </fieldset>
-                
-                <div>
-                    <h2>Resultado:</h2>
-                    <div id="result"></div>
-                </div>
             </section>
-                
         </main>
         
         <!-- Modal -->
@@ -65,7 +62,15 @@
         <!-- Resumo de Entradas -->
         <div class="entry-summary">
             <h3>Resumo de Entradas</h3>
-            <input type="date" id="summaryDate" />
+            <div class="summary-controls">
+                <input type="date" id="summaryDate" />
+                <select id="summaryType">
+                    <option value="daily">Diário</option>
+                    <option value="monthly">Mensal</option>
+                </select>
+                <button id="exportPDF">Exportar PDF</button>
+                <button id="exportExcel">Exportar Excel</button>
+            </div>
             <div id="summaryContent"></div>
         </div>
     </body>
