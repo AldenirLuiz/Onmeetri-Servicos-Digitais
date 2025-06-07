@@ -24,7 +24,7 @@ main #mainSection .cardsLine:not(#ads-card-row) {
     height: 240px;
     align-items: center;
     gap: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
 }
 
 main #mainSection .cardsLine .cards:not(#ads-card){
@@ -39,7 +39,7 @@ main #mainSection .cardsLine .cards:not(#ads-card){
     justify-content: center;
     height: 300px;
     width: 100%;
-    padding-top: 12px;
+    padding-top: 20px;
     margin: 10px 10px 0 0;
 }
 
@@ -99,6 +99,8 @@ button:hover {
     justify-content: center;
     width: 100%;
     margin: 20px auto;
+    padding-bottom: 20px;
+    padding-top: 20px;
 }
 
 .ads-card-rows div p, h2{

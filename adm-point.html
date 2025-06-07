@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/point-styles.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/secondary-header.css">
+    <link rel="stylesheet" href="./css/table-styles.css">
 </head>
 <body>
     <header>
@@ -33,26 +34,40 @@
     </header>
     </header>
     <main>
-        <section class="sec-form" style="display: flex;flex-direction:column; align-items: center; justify-content: center;">
-            <table  width="800px" id="table-data">
-                <tr>
-                    <th>NOME</th>
-                    <th width="20">SEXO</th>
-                    <th width="20">IDADE</th>
-                    <th width="20">MANHA</th>
-                    <th width="20">TARDE</th>
-                </tr>
-                <tr id="data-table">
-                </tr>
-            </table>
-            <div class="table-btt-container"><button id="btt-save-table">SALVAR</button></div>
-            <div>
-                <h2>Resultado:</h2>
-                <div id="result"></div>
+        <section class="main-container-table">
+            <fieldset class="table-fieldset">
+                <div class="date-selector">
+                    <label for="tableDate">Data do Ponto:</label>
+                    <input type="date" id="tableDate" required>
+                </div>
+                <table id="table-data"></table>
+                <div class="table-btt-container"><button id="btt-save-table">SALVAR</button></div>
+
+                </fieldset>
+                
+                <div>
+                    <h2>Resultado:</h2>
+                    <div id="result"></div>
+                </div>
+            </section>
+                
+        </main>
+        
+        <!-- Modal -->
+        <div id="entryModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Detalhes da Entrada</h2>
+                <div id="modalContent"></div>
             </div>
-        </section>
-            
-    </main>
-</body>
-<script src="js/script-admpoint.js"></script>
-</html>
+        </div>
+        
+        <!-- Resumo de Entradas -->
+        <div class="entry-summary">
+            <h3>Resumo de Entradas</h3>
+            <input type="date" id="summaryDate" />
+            <div id="summaryContent"></div>
+        </div>
+    </body>
+    <script src="js/script-admpoint.js"></script>
+    </html>

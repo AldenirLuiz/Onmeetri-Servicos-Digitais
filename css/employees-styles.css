@@ -1,47 +1,4 @@
 
-header {
-    background-color: aliceblue;
-    max-height: 180px;
-    margin-bottom: 30px;
-    box-shadow: 0px 4px 8px;
-    color: oklch(from gray 0.5 0 1);;
-}
-
-.header-group {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-}
-.header-nav ul {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: left;
-    gap: 20px;
-    list-style: none;
-    margin: 0;
-}
-.header-nav ul li {
-    
-    cursor: pointer;
-}
-
-.header-nav ul li a {
-    font-size: 1.1em;
-    font-weight: bold;
-    text-decoration: none;
-    color: oklch(from gray 0.6 0.02 1);
-}
-
-.header-nav ul li a:hover {
-    color: oklch(from gray 0.3 0 1);
-    text-decoration: underline;
-    font-weight: bold;
-    box-shadow: 0px 4px 4px lightslategray;
-}
-
 /* Styles para gerenciamento de funcionarios */
 main {
     display: flex;
@@ -115,59 +72,6 @@ main {
 
 .main-container-form form .form-container-button button:hover {
     background: rgb(70, 111, 157);
-}
-
-/* Styles para tabela de funcionarios */
-
-.main-container-table {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 1150px;
-    margin-bottom: 80px;
-}
-
-.main-container-table .table-fieldset {
-    width: 100%;
-    max-width: 1100px;
-    margin-top: 20px;
-}
-
-.main-container-table table thead {
-    background: aliceblue;
-    box-shadow: 0px 2px 4px lightslategray;
-}
-
-.main-container-table table th {
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-    color: oklch(from gray 0.3 0 1);
-    font-size: 18px;
-    font-family: 'Consolas', sans-serif, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
-    background: aliceblue;
-    box-shadow: 0px 2px 4px lightslategray;
-
-}
-
-
-table {
-    width: 100%;
-    border: 1px solid lightslategray;
-    box-shadow: 0px 2px 4px lightslategray;
-    padding: 0;
-    margin: 0;
-    border-collapse: collapse;
-    border-radius: 5px;
-}
-
-table td{
-    padding: 8px;
-    border: 1px solid lightslategray;
-    text-align: center;
-    text-justify: distribute;
 }
 
 .btn-delete {
