@@ -100,27 +100,3 @@ main {
     background-color: darkslateblue;
 }
 
-
-.main-container-table table thead tr #employee-name {
-    width: 250px;
-}
-
-.main-container-table table thead tr #employee-role {
-    width: 180px;
-}
-
-.main-container-table table thead tr #employee-department {
-    width: 150px;
-}
-
-.main-container-table table thead tr #employee-salary {
-    width: 100px;
-}
-
-.main-container-table table thead tr #employee-contract {
-    width: 100px;
-}
-
-.main-container-table table thead tr #employee-admission {
-    width: 100px;
-}

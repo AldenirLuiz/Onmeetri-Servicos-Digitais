@@ -6,6 +6,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="./css/employees-styles.css">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/secondary-header.css">
+    <link rel="stylesheet" href="./css/table-styles.css">
 </head>
 <body>
     <header>
@@ -14,7 +16,7 @@
                 <img src="src/logo-omeetri.png" alt="onmeetri-logo" srcset="" width="180">
             </div>
             <div class="header-column">
-                <h1>Gerenciamento de Funcionarios</h1>
+                <h1>Gerenciamento de Funcionarios</h1><legend style="color: crimson; font-weight:bolder;">BETA!</legend>
             </div>
             <div class="header-column">
                 <h3 class="dateNow" id="mainClock"></h3>
@@ -25,7 +27,7 @@
         <nav class="header-nav">
             <ul>
                 <li><a href="./index.html">Home</a></li>
-                <li><a href="./adm-employees.html">Funcionarios</a></li>
+                <li><a href="./adm-point.html">Sistema de ponto</a></li>
                 <li><a href="./reports.html">Relatorios</a></li>
                 <!-- <li><a href="./settings.html">Configuracoes</a></li> -->
             </ul>
@@ -34,7 +36,7 @@
     <main>
         <section class="main-container">
             <div class="main-container-form">
-                <fieldset><legend>Formulario de Dados Do Usuario</legend>
+                <fieldset><legend>Formulario de Dados Do Usuario </legend>
                     <form class="form" action="">
                         <div class="form-container">
                             <div class="form-line">
@@ -77,7 +79,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th id="employee-name">Nome</th>
+                            <th class="name" id="employee-name">Nome</th>
                             <th id="employee-role">Cargo</th>
                             <th id="employee-department">Departamento</th>
                             <th id="employee-salary">Salario</th>
@@ -88,12 +90,7 @@
                     <tbody id="employee-list">
                         <!-- Lista de funcionarios sera preenchida aqui -->
                         <tr>
-                            <td>João da Silva</td>
-                            <td>Desenvolvedor</td>
-                            <td>Tecnologia</td>
-                            <td>R$ 5.000,00</td>
-                            <td>CLT</td>
-                            <td>01/01/2020</td>
+                            
                         </tr>
                     </tbody>
                 </table>

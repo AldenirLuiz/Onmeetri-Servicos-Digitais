@@ -2,11 +2,35 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Relatórios e Métricas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de gerenciamento de ponto e funcionários">
+    <meta name="keywords" content="ponto eletrônico, gestão de funcionários, recursos humanos">
+    <meta name="author" content="Seu Nome">
+    
+    <title>Relatórios e Métricas | Sistema de Ponto</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./src/favicon.ico">
+    
+    <!-- Preload de recursos críticos -->
+    <link rel="preload" href="./css/reports-styles.css" as="style">
+    <link rel="preload" href="./js/reports.js" as="script">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="./css/reports-styles.css">
     <link rel="stylesheet" href="./css/employees-styles.css">
+    <link rel="stylesheet" href="./css/secondary-header.css">
+    <link rel="stylesheet" href="./css/table-styles.css">
+    
+    <!-- Scripts carregados de forma otimizada -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js" defer></script>
+    <script src="js/reports.js" defer></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=seu-client-id"></script>
 </head>
-<body>
+<body>  
     <header>
         <section class="header-group">
             <div class="header-column">
@@ -24,7 +48,6 @@
             <ul>
                 <li><a href="./index.html">Home</a></li>
                 <li><a href="./adm-employees.html">Funcionarios</a></li>
-                <li><a href="./departments.html">Departamentos</a></li>
                 <li><a href="./reports.html">Relatorios</a></li>
                 <li><a href="./settings.html">Configuracoes</a></li>
             </ul>
@@ -88,15 +111,17 @@
 
         </section>
     </main>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="seu-client-id"
+             data-ad-slot="seu-ad-slot"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
 </body>
-<script src="js/reports.js"></script>
-<!-- SheetJS (Excel) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-<!-- jsPDF + autoTable (PDF) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-
 </html>

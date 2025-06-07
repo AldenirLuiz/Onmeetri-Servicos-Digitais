@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         data.forEach(emp => {
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td>${emp.nome}</td>
+                <td class="name">${emp.nome}</td>
                 <td>${emp.cargo}</td>
                 <td>${emp.departamento}</td>
                 <td>R$ ${parseFloat(emp.salario).toFixed(2)}</td>

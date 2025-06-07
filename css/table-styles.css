@@ -48,6 +48,8 @@ table {
 }
 
 table tr, td {
+    height: 20px;
+    padding: 10px;
     border: 1px solid lightslategray;
     border-collapse: collapse;
 }
