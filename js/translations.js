@@ -18,7 +18,21 @@ const translations = {
         afternoonPresence: 'Presença Tarde',
         // Mensagens
         saveSuccess: 'Dados salvos com sucesso!',
-        confirmDelete: 'Deseja realmente excluir?'
+        confirmDelete: 'Deseja realmente excluir?',
+        // Configurações
+        settingsTitle: 'Configurações do Sistema',
+        generalSettings: 'Configurações Gerais',
+        timesheetSettings: 'Configurações de Ponto',
+        exportSettings: 'Configurações de Exportação',
+        timeFormat: 'Formato de Hora',
+        workSchedule: 'Horário de Trabalho',
+        lunchBreak: 'Horário de Almoço',
+        defaultExportFormat: 'Formato Padrão',
+        saveSettings: 'Salvar Configurações',
+        resetSettings: 'Restaurar Padrões',
+        settingsSaved: 'Configurações salvas com sucesso!',
+        settingsReset: 'Configurações restauradas com sucesso!',
+        confirmReset: 'Tem certeza que deseja restaurar as configurações padrão?'
     },
     'en-US': {
         title: 'Timesheet System',
@@ -39,7 +53,21 @@ const translations = {
         afternoonPresence: 'Afternoon Presence',
         // Messages
         saveSuccess: 'Data saved successfully!',
-        confirmDelete: 'Do you really want to delete?'
+        confirmDelete: 'Do you really want to delete?',
+        // Settings
+        settingsTitle: 'System Settings',
+        generalSettings: 'General Settings',
+        timesheetSettings: 'Timesheet Settings',
+        exportSettings: 'Export Settings',
+        timeFormat: 'Time Format',
+        workSchedule: 'Work Schedule',
+        lunchBreak: 'Lunch Break',
+        defaultExportFormat: 'Default Format',
+        saveSettings: 'Save Settings',
+        resetSettings: 'Restore Defaults',
+        settingsSaved: 'Settings saved successfully!',
+        settingsReset: 'Settings reset successfully!',
+        confirmReset: 'Are you sure you want to restore default settings?'
     },
     'es-ES': {
         title: 'Sistema de Registro',
@@ -60,6 +88,20 @@ const translations = {
         afternoonPresence: 'Presencia Tarde',
         // Mensajes
         saveSuccess: '¡Datos guardados con éxito!',
-        confirmDelete: '¿Realmente desea eliminar?'
+        confirmDelete: '¿Realmente desea eliminar?',
+        // Configuraciones
+        settingsTitle: 'Configuraciones del Sistema',
+        generalSettings: 'Configuraciones Generales',
+        timesheetSettings: 'Configuraciones de Registro',
+        exportSettings: 'Configuraciones de Exportación',
+        timeFormat: 'Formato de Hora',
+        workSchedule: 'Horario de Trabajo',
+        lunchBreak: 'Hora de Almuerzo',
+        defaultExportFormat: 'Formato Predeterminado',
+        saveSettings: 'Guardar Configuraciones',
+        resetSettings: 'Restablecer Predeterminados',
+        settingsSaved: 'Configuraciones guardadas con éxito!',
+        settingsReset: 'Configuraciones restauradas con éxito!',
+        confirmReset: '¿Está seguro de que desea restaurar las configuraciones predeterminadas?'
     }
 };

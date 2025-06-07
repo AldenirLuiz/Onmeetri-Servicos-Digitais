@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações | OnMeeTri</title>
+    <meta name="description" content="Configurações do sistema OnMeeTri">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/settings-styles.css">
+    <link rel="stylesheet" href="./css/secondary-header.css">
+    
+    <!-- Scripts -->
+    <script src="js/translations.js"></script>
+    <script src="js/language-manager.js"></script>
+    <script src="js/base.js"></script>
+    <script src="js/settings.js" defer></script>
+</head>
+<body>
+    <header>
+        <section class="header-group">
+            <div class="header-column">
+                <img src="src/logo-omeetri.png" alt="onmeetri-logo" width="180">
+            </div>
+            <div class="header-column">
+                <h1 data-i18n="settingsTitle">Configurações do Sistema</h1>
+            </div>
+            <div class="header-column">
+                <h3 class="dateNow" id="mainClock"></h3>
+                <h3 class="dateNow" id="dateClock"></h3>
+            </div>
+        </section>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="./index.html" data-i18n="home">Home</a></li>
+                <li><a href="./adm-point.html" data-i18n="timesheet">Sistema de ponto</a></li>
+                <li><a href="./adm-employees.html" data-i18n="employees">Funcionarios</a></li>
+                <li><a href="./reports.html" data-i18n="reports">Relatórios</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="settings-container">
+        <section class="settings-group">
+            <h2 data-i18n="generalSettings">Configurações Gerais</h2>
+            <div class="settings-item">
+                <label data-i18n="language">Idioma:</label>
+                <select id="languageSelect">
+                    <option value="pt-BR">Português</option>
+                    <option value="en-US">English</option>
+                    <option value="es-ES">Español</option>
+                </select>
+            </div>
+            <div class="settings-item">
+                <label data-i18n="timeFormat">Formato de Hora:</label>
+                <select id="timeFormat">
+                    <option value="24">24 horas</option>
+                    <option value="12">12 horas (AM/PM)</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="settings-group">
+            <h2 data-i18n="timesheetSettings">Configurações de Ponto</h2>
+            <div class="settings-item">
+                <label data-i18n="workSchedule">Horário de Trabalho:</label>
+                <div class="time-inputs">
+                    <input type="time" id="workStartTime" value="08:00">
+                    <span>-</span>
+                    <input type="time" id="workEndTime" value="18:00">
+                </div>
+            </div>
+            <div class="settings-item">
+                <label data-i18n="lunchBreak">Horário de Almoço:</label>
+                <div class="time-inputs">
+                    <input type="time" id="lunchStartTime" value="12:00">
+                    <span>-</span>
+                    <input type="time" id="lunchEndTime" value="13:00">
+                </div>
+            </div>
+        </section>
+
+        <section class="settings-group">
+            <h2 data-i18n="exportSettings">Configurações de Exportação</h2>
+            <div class="settings-item">
+                <label data-i18n="defaultExportFormat">Formato Padrão:</label>
+                <select id="defaultExportFormat">
+                    <option value="pdf">PDF</option>
+                    <option value="excel">Excel</option>
+                </select>
+            </div>
+        </section>
+
+        <div class="settings-actions">
+            <button id="saveSettings" data-i18n="saveSettings">Salvar Configurações</button>
+            <button id="resetSettings" data-i18n="resetSettings">Restaurar Padrões</button>
+        </div>
+    </main>
+</body>
+</html>

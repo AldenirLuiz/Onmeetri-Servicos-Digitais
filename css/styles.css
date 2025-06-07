@@ -35,6 +35,11 @@ main {
     justify-content: center;
 }
 
+#mainSection {
+    display: flex;
+    gap: 50px;
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
