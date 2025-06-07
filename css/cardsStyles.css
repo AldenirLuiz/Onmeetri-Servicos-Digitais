@@ -160,5 +160,12 @@ button:hover {
         margin-top: auto;
         margin-bottom: 0;
     }
+
+    #ads-card-row, #ads-card, .ads-card-rows{
+        visibility: hidden;
+        display: none;
+        width: 0;
+        height: 0;
+    }
 }
 
