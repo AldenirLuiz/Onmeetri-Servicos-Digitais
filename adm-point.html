@@ -11,6 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9041954249034519"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -44,7 +46,15 @@
                     <label for="tableDate">Data do Ponto:</label>
                     <input type="date" id="tableDate" required>
                 </div>
-                <table id="table-data"></table>
+                <table id="table-data">
+                    <thead>
+                        <tr>
+                            <th data-i18n="name">Nome</th>
+                            <th data-i18n="morningPeriod">Período Manhã</th>
+                            <th data-i18n="afternoonPeriod">Período Tarde</th>
+                        </tr>
+                    </thead>
+                </table>
                 <div class="table-btt-container"><button id="btt-save-table">SALVAR</button></div>
                 </fieldset>
             </section>

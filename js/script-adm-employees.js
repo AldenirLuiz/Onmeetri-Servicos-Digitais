@@ -120,3 +120,9 @@ document.addEventListener("DOMContentLoaded", function () {
     loadEmployees();
 });
 
+// Exemplo de uso em mensagens
+alert(langManager.translate('saveSuccess'));
+
+// Exemplo de uso em elementos dinâmicos
+element.textContent = langManager.translate('department');
+

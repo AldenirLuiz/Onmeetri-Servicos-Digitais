@@ -44,16 +44,98 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('employees', JSON.stringify(employees));
     }
 
+    // Função para gerar horário aleatório dentro de um intervalo
+    function generateRandomTime(baseHour, baseMinute, variation) {
+        const minutes = baseMinute + Math.floor(Math.random() * variation);
+        const hours = baseHour + Math.floor(minutes / 60);
+        const finalMinutes = minutes % 60;
+        return `${hours.toString().padStart(2, '0')}:${finalMinutes.toString().padStart(2, '0')}`;
+    }
+
+    // Função para gerar dados de ponto para um mês
+    function generateMonthlyTimesheet(employee) {
+        const timesheet = [];
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        for (let day = 1; day <= Math.min(26, daysInMonth); day++) {
+            const date = new Date(year, month, day);
+            
+            // Pula fins de semana
+            if (date.getDay() === 0 || date.getDay() === 6) continue;
+
+            // 90% de chance de presença
+            const isPresent = Math.random() < 0.9;
+
+            if (isPresent) {
+                timesheet.push({
+                    date: date.toISOString().split('T')[0],
+                    name: employee.nome,
+                    department: employee.departamento,
+                    role: employee.cargo,
+                    morningIn: generateRandomTime(6, 25, 10),    // 6:25 - 6:35
+                    morningOut: generateRandomTime(11, 25, 10),  // 11:25 - 11:35
+                    afterIn: generateRandomTime(12, 55, 10),     // 12:55 - 13:05
+                    afterOut: generateRandomTime(16, 55, 10),    // 16:55 - 17:05
+                    checkMorning: true,
+                    checkAfter: true
+                });
+            } else {
+                // Dia com falta
+                timesheet.push({
+                    date: date.toISOString().split('T')[0],
+                    name: employee.nome,
+                    department: employee.departamento,
+                    role: employee.cargo,
+                    morningIn: "00:00",
+                    morningOut: "00:00",
+                    afterIn: "00:00",
+                    afterOut: "00:00",
+                    checkMorning: false,
+                    checkAfter: false
+                });
+            }
+        }
+
+        return timesheet;
+    }
+
     // Function to initialize the employee list with random data if it's empty
     function initializeEmployeeList() {
         let employees = getEmployees();
-        if (employees.length === 0) {
+        let pointData = JSON.parse(localStorage.getItem('pointData')) || [];
+        
+        // Só gera novos dados se não existirem funcionários E pontos
+        if (employees.length === 0 && pointData.length === 0) {
+            console.log('Gerando dados aleatórios...');
+            
+            // Gerar funcionários aleatórios
             for (let i = 0; i < 10; i++) {
                 employees.push(generateRandomEmployee(i + 1));
             }
             saveEmployees(employees);
-        } else {
+            console.log('Funcionários gerados:', employees.length);
+
+            // Gerar pontos aleatórios para cada funcionário
+            let allTimesheet = [];
+            employees.forEach(employee => {
+                const timesheet = generateMonthlyTimesheet(employee);
+                allTimesheet = [...allTimesheet, ...timesheet];
+                console.log(`Pontos gerados para ${employee.nome}:`, timesheet.length);
+            });
+
+            // Salvar dados de ponto
+            localStorage.setItem('pointData', JSON.stringify(allTimesheet));
+            console.log('Total de pontos salvos:', allTimesheet.length);
         }
+        
+        // Verificar se os dados foram salvos
+        const savedEmployees = getEmployees();
+        const savedPoints = JSON.parse(localStorage.getItem('pointData')) || [];
+        console.log('Funcionários no storage:', savedEmployees.length);
+        console.log('Pontos no storage:', savedPoints.length);
     }
 
     // Initial population of the table

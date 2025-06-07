@@ -1,4 +1,3 @@
-
 // Exemplo: Salvar ponto
 async function salvarPonto(funcionarioId, entrada) {
     try {
@@ -8,6 +7,8 @@ async function salvarPonto(funcionarioId, entrada) {
             timestamp: new Date()
         });
         console.log("Ponto salvo com sucesso!");
+        // Exemplo de uso em mensagens
+        alert(langManager.translate('saveSuccess'));
     } catch (e) {
         console.error("Erro ao salvar ponto: ", e);
     }
@@ -54,4 +55,18 @@ window.addEventListener("click", (e) => {
         modal.classList.add("hidden");
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const langManager = new LanguageManager();
+    langManager.init();
+    
+    // Expor para uso global
+    window.langManager = langManager;
+});
+
+// Exemplo de uso em mensagens
+alert(langManager.translate('saveSuccess'));
+
+// Exemplo de uso em elementos dinâmicos
+element.textContent = langManager.translate('department');
 

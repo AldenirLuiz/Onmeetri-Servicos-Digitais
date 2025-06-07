@@ -531,3 +531,9 @@ document.addEventListener("DOMContentLoaded", function () {
         populateTable(datafillArray);
     }
 });
+
+// Exemplo de uso em mensagens
+alert(langManager.translate('saveSuccess'));
+
+// Exemplo de uso em elementos dinâmicos
+element.textContent = langManager.translate('department');

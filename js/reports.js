@@ -167,5 +167,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         doc.save("relatorio_funcionarios.pdf");
     });
+
+    // Exemplo de uso em mensagens
+    alert(langManager.translate('saveSuccess'));
+
+    // Exemplo de uso em elementos dinâmicos
+    element.textContent = langManager.translate('department');
 });
 
