@@ -158,57 +158,6 @@ header #headColumns #centerColumn #title #titleContainer #tri {
     background: #333333;
     color: var(--main-color-light);
 }
-aside {
-    left: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: left;
-    padding: 10px;
-    max-width: 200px;
-    font-size: 0.7em;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    font-family: sans-serif;
-}
-aside h2 {
-    color: var(--main-color-text-lightdark);
-    font-size: 1.5em;
-    text-align: center;
-    margin-bottom: 10px;
-}
-aside ul {
-    list-style: none;
-    padding: 0;
-}
-aside ul li {
-    margin: 5px 0;
-}
-aside ul li a {
-    color: var(--main-color-text-lightdark);
-    text-decoration: none;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-aside ul li a:hover {
-    background: var(--main-color-secondary);
-    color: var(--main-color-text-lightdark);
-}
-aside ul li a.active {
-    background: var(--main-color-secondary);
-    color: var(--main-color-text-lightdark);
-}
-aside ul li a.active:hover {
-    background: var(--main-color-secondary);
-    color: var(--main-color-text-lightdark);
-}
-aside ul li a.active:visited {
-    background: var(--main-color-secondary);
-    color: var(--main-color-text-lightdark);
-}
-
 
 footer {
     display: flex;

@@ -95,21 +95,43 @@ button:hover {
 .ads-card-rows {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    margin: 20px;
+    margin: 20px auto;
 }
 
 .ads-card-rows div p, h2{
-    text-align: center;
+    text-align: justify;
     font-family: monospace;
     font-size: 0.7em;
-    gap: 30px;
+    text-justify: inter-ideograph;
     margin: 10px;
+    padding: 0;
 }
 
 .titlerise {
     font-family: 'Bebas Neue';
     font-size: 1em;
+}
+
+#contactSection {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: none;
+    gap: 0;
+}
+#contactSection #contactForm {
+    display: flex;
+    width: 100%;
+}
+
+#contactSection h2 {
+    font-family: 'Bebas Neue';
+
+    font-size: 1.2rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -132,13 +154,6 @@ button:hover {
         margin: 20px;
     }
 
-    #contactSection {
-        display: block;
-        max-width: 80%;
-        margin: 0 auto;
-        box-shadow: none;
-        gap: 0;
-    }
     .cards {
         display: flex;
         flex-direction: column;
