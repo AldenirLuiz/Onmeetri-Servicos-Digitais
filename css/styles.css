@@ -6,13 +6,6 @@
     --main-color-fade: #cfe5e6;
     --main-color-background-lightdark: #cecece;
 }
-.bebas-neue-regular {
-  font-family: "Bebas Neue", sans-serif;
-  font-weight: lighter;
-  font-style: normal;
-}
-
-
 body {
     font-family: "Bebas Neue", sans-serif;
     background: linear-gradient(var(--main-color-light), var(--main-color-fade));
@@ -22,6 +15,33 @@ body {
     color: var(--main-color-text-lightdark);
     line-height: 1.6;
     font-size: 1em;
+}
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: lighter;
+  font-style: normal;
+}
+main {
+    background-color: var(--main-color-light);
+    margin: 0;
+    padding: 0;
+    color: var(--main-color-text-lightdark);
+    line-height: 1.6rem;
+    font-size: 1em;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #1fa8da;
 }
 
 #imgLogo {
@@ -138,15 +158,6 @@ header #headColumns #centerColumn #title #titleContainer #tri {
     background: #333333;
     color: var(--main-color-light);
 }
-
-main {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-
 aside {
     left: 10px;
     display: flex;
@@ -260,21 +271,6 @@ footer p {
         justify-content: center;
     }
     
-}
-
-
-.cards h3 {
-    font-size: 1.4em;
-    margin-bottom: 10px;
-}
-
-.cards p {
-    font-size: 1em;
-    margin-bottom: 15px;
-}
-
-.card-button {
-    margin-top: auto;
 }
 
 #contactSection {
