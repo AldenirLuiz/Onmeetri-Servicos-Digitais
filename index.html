@@ -15,88 +15,202 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
-    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9041954249034519" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-XXXXX-Y');
+        (function(){
+            emailjs.init({ publicKey: "xo0Ytw1Fl2cs1ssbC" });
+        })();
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9041954249034519"
-     crossorigin="anonymous"></script>
 </head>
 <body>
     <header id="Header">
         <div id="headColumns">
             <div id="leftColumn">
-                <img id="imgLogo" src="./src/logo-omeetri.png" alt="facSuLogo" srcset="">
+                <img id="imgLogo" src="./src/logo-omeetri.png" alt="facSuLogo">
             </div>
             <div id="centerColumn">
                 <div id="title">
                     <div id="titleContainer">
-                        <h1 class="personality" id="onm">OnM</h1><h1 class="personality" id="ee">ee</h1><h1 class="personality" id="tri">Tri - Serviços Digitais</h1>
+                        <h1 class="personality" id="onm">OnM</h1>
+                        <h1 class="personality" id="ee">ee</h1>
+                        <h1 class="personality" id="tri">Tri - Serviços Digitais</h1>
                     </div>
                     <p>Reduza 20% do tempo gasto em controles de ponto e gerenciamento da sua empresa!</p>
                 </div>
-                
             </div>
             <div id="rightColumn">
                 <div>
                     <h3 class="dateNow" id="mainClock"></h3>
                     <h3 class="dateNow" id="dateClock"></h3>
-                </div> 
+                </div>
             </div>
-            
         </div>
     </header>
-    <main id="main" style="background-image: url('./src/background.png');
-                    background-size: cover;
-                    background-repeat: repeat;
-                    background-position: center;
-                    background-color:none;">
-        <section class="" >
-                <div class="container-showroom-card">
-                    
+    <main id="main" style="background-image: url('./src/background.png'); background-size: cover; background-repeat: repeat; background-position: center;">
+        <section class="carousel-section">
+            <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="src/banner3.png" alt="Banner OnMeeTri" class="carousel-image">
+                <div class="carousel-caption">
+                <h2>Bem-vindo à OnMeeTri</h2>
+                <p>Soluções Digitais em Gestão de Pessoas para sua empresa crescer!</p>
                 </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="src/banner-02.png" alt="Gestão de Pessoas" class="carousel-image">
+                <div class="carousel-caption">
+                <h2>Gestão de Pessoas</h2>
+                <p>Modernize o controle de ponto e otimize o tempo da sua equipe.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="src/point-card.png" alt="Relatórios e Métricas" class="carousel-image">
+                <div class="carousel-caption">
+                <h2>Relatórios e Métricas</h2>
+                <p>Visualize dados e tome decisões estratégicas com facilidade.</p>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <img src="src/baner-omntri.png" alt="Inclusão Digital" class="carousel-image">
+                <div class="carousel-caption">
+                <h2>Inclusão Digital</h2>
+                <p>Facilitamos a transformação digital para pequenas empresas.</p>
+                </div>
+            </div>
         </section>
+        <style>
+            .carousel-section {
+            width: 100%;
+            margin: 0 auto 2em auto;
+            position: relative;
+            }
+            .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            }
+            .carousel-slide {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.5s;
+            background: #fff;
+            }
+            .carousel-slide.active {
+            display: block;
+            position: relative;
+            opacity: 1;
+            animation: fadeIn 0.7s;
+            }
+            @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+            }
+            .carousel-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+            }
+            .carousel-caption {
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            padding: 1em;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            border-radius: 0 0 12px 12px;
+            box-sizing: border-box;
+            font-size: 2.4em;
+            }
+            @media (max-width: 600px) {
+            .carousel-image { height: 340px; }
+            .carousel-caption { font-size: 1.9em; }
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            let current = 0;
+            let interval = null;
+
+            function showSlide(idx) {
+                slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === idx);
+                });
+            }
+
+            function nextSlide() {
+                current = (current + 1) % slides.length;
+                showSlide(current);
+            }
+
+            function prevSlide() {
+                current = (current - 1 + slides.length) % slides.length;
+                showSlide(current);
+            }
+
+            function startInterval() {
+                interval = setInterval(nextSlide, 5000);
+            }
+            function resetInterval() {
+                clearInterval(interval);
+                startInterval();
+            }
+
+            showSlide(current);
+            startInterval();
+            });
+        </script>
         <section id="mainSection">
             <section class="cardsLine">
-                <div class="cards" id="point-card" >
-                    <div class="card-intern-lines" >
-                        <img class="card-image" src="./src/update-list_14752951.png" alt="officer" srcset=""><legend style="color: crimson;">BETA!</legend>
+                <div class="cards" id="point-card">
+                    <div class="card-intern-lines">
+                        <img class="card-image" src="./src/update-list_14752951.png" alt="officer">
+                        <legend style="color: crimson;">BETA!</legend>
                         <h3>Gerenciamento de ponto</h3>
                         <p>Adicione, remova e consulte pontos de entrada e saída dos funcionarios.</p>
                     </div>
                     <div class="card-button">
                         <a href="adm-point.html"><button>Sistema de ponto</button></a>
                     </div>
-                    
                 </div>
             </section>
             <section class="cardsLine">
                 <div class="cards">
-                    <div class="card-intern-lines" id="empl-card" >
-                        <img class="card-image" src="./src/networking_9084420.png" alt="officer" srcset=""><legend style="color: crimson;">BETA!</legend>
+                    <div class="card-intern-lines" id="empl-card">
+                        <img class="card-image" src="./src/networking_9084420.png" alt="officer">
+                        <legend style="color: crimson;">BETA!</legend>
                         <h3>Gerenciamento de Funcionarios</h3>
                         <p>Gerencie, consulte e administre os funcionarios da sua empresa.</p>
                     </div>
-                    <div class="card-button ">
-                            <a href="adm-employees.html"><button >Gerenciar Funcionarios</button></a>
-                        </div>
-                </div>
-                <div class="cards">
-                    <div class="card-intern-lines" >
-                        <img class="card-image" src="./src/bar-chart_9084532.png" alt="barChart" srcset=""><legend style="color: crimson;">BETA!</legend>
-                        <h3>Relatórios e Métricas</h3>
-                        <p>Visualize e analise os dados de ponto dos funcionarios.</p>
-                    </div>
                     <div class="card-button">
-                            <a href="./reports.html"><button>Ver Relatórios</button></a>
+                        <a href="adm-employees.html"><button>Gerenciar Funcionarios</button></a>
                     </div>
                 </div>
                 <div class="cards">
                     <div class="card-intern-lines">
-                        <img class="card-image" src="./src/taxes_9947497.png" alt="barChart" srcset=""><legend style="color: crimson;">BETA!</legend>
+                        <img class="card-image" src="./src/bar-chart_9084532.png" alt="barChart">
+                        <legend style="color: crimson;">BETA!</legend>
+                        <h3>Relatórios e Métricas</h3>
+                        <p>Visualize e analise os dados de ponto dos funcionarios.</p>
+                    </div>
+                    <div class="card-button">
+                        <a href="./reports.html"><button>Ver Relatórios</button></a>
+                    </div>
+                </div>
+                <div class="cards">
+                    <div class="card-intern-lines">
+                        <img class="card-image" src="./src/taxes_9947497.png" alt="barChart">
+                        <legend style="color: crimson;">BETA!</legend>
                         <h3>Cadastro de Notas e Mercadoria</h3>
                         <p>Cadastre, Salve e Visualize Notas Fiscais e Mercadorias Simples e Facil Como deve ser!</p>
                     </div>
@@ -104,13 +218,12 @@
                         <a href="./reports.html"><button>Gerenciar Notas</button></a>
                     </div>
                 </div>
-                
-                </div>
             </section>
             <section class="cardsLine">
                 <div class="cards">
                     <div class="card-intern-lines">
-                        <img class="card-image" src="./src/helmet_2823675.png" alt="officer" srcset=""><legend style="color: crimson;">BETA!</legend>
+                        <img class="card-image" src="./src/helmet_2823675.png" alt="officer">
+                        <legend style="color: crimson;">BETA!</legend>
                         <h3>Configurações</h3>
                         <p>Personalize as configurações do sistema de gerenciamento OnMeeTri.</p>
                     </div>
@@ -120,20 +233,24 @@
                 </div>
                 <div class="cards">
                     <div class="card-intern-lines">
-                        <img class="card-image" src="./src/receive_1652648.png" alt="officer" srcset=""><legend style="color: crimson;">NÃO IMPLEMENTADO!</legend>
+                        <img class="card-image" src="./src/receive_1652648.png" alt="officer">
+                        <legend style="color: crimson;">NÃO IMPLEMENTADO!</legend>
                         <h3>Almoxarifado</h3>
                         <p>Gerencie seu estoque, epis, materiais em geral tudo em um so lugar.</p>
                     </div>
                     <div class="card-button">
-                        <button>Ajustar Configurações</button>
+                        <button disabled>Ajustar Configurações</button>
                     </div>
+                </div>
             </section>
             <section id="ads-card-row">
                 <div id="ads-card">
                     <div class="ads-card-rows">
                         <div>
-                            <div class="title-from-tag"><h2 class="titlerise">O que Somos?</h2><legend>REVOLUCIONARIOS</legend></div>
-                            
+                            <div class="title-from-tag">
+                                <h2 class="titlerise">O que Somos?</h2>
+                                <legend>REVOLUCIONARIOS</legend>
+                            </div>
                             <p>Somos uma empresa dedicada a Inclusao Digital e recursos humanos.</p>
                             <p>Nosso objetivo é fornecer soluções tecnológicas que facilitem a gestão de pessoas e promovam a inclusão digital e modernização de pequenas empresas.</p>
                         </div>
@@ -156,7 +273,10 @@
                 </div>
             </section>
             <section class="social">
-                <h2><img class="social-icon" src="./src/social-media_1209257.png" alt="Redes sociais" srcset=""> Redes sociais</h2>
+                <h2>
+                    <img class="social-icon" src="./src/social-media_1209257.png" alt="Redes sociais">
+                    Redes sociais
+                </h2>
                 <p>Nos siga nas redes sociais para ficar por dentro das novidades e atualizações.</p>
                 <p>Estamos presentes no Facebook, Instagram e LinkedIn e no GitHub.</p>
                 <div class="social-icons">
@@ -171,44 +291,26 @@
                 <form id="contactForm">
                     <label for="name">Nome:</label>
                     <input type="text" id="name" name="name" required>
-
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
-
                     <label for="message">Mensagem:</label>
                     <textarea id="message" name="message" rows="4" required></textarea>
-
                     <button type="submit" id="submit">Enviar</button>
                 </form>
             </section>
         </section>
-        
     </main>
     <footer id="footer">
         <div id="footerLogo">
-            <img id="imgLogo" src="./src/logo-omeetri.png" alt="facSuLogo" srcset="">
+            <img id="imgLogo" src="./src/logo-omeetri.png" alt="facSuLogo">
         </div>
         <div id="footerText">
             <h2>OnMeeTri</h2>
             <p>Transformando a gestão de pessoas com tecnologia.</p>
-        <p style="font-weight: bold; font-style: normal; font-size: 1em;">OnMeeTri® - Todos os direitos reservados</p>
+            <p style="font-weight: bold; font-style: normal; font-size: 1em;">OnMeeTri® - Todos os direitos reservados</p>
         </div>
         <a href="https://www.buymeacoffee.com/onmeetri" class="card-button">Apoie a OnMeeTri</a>
-    
     </footer>
+    <script src="js/script.js" defer></script>
 </body>
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-
-
-<script src="js/script.js" defer></script>
 </html>
-<script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init({
-        publicKey: "xo0Ytw1Fl2cs1ssbC",
-      });
-   })();
-</script>
