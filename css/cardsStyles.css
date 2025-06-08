@@ -1,64 +1,71 @@
-:root {
-    --main-color-text-lightdark: #35424a;
-    --main-color-light: #f4f4f4;
-    --main-color-secondary: #ddf8ff;
-    --main-color-shadow-purple: rgba(71, 19, 95, 0.1);
-}
 
 main #mainSection {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--main-color-light);
     font-size: 1.2em;
     width: 80%;
     height: 100%;
     margin: 50px;
 }
 
-main #mainSection .cardsLine:not(#ads-card-row) {
+main #mainSection .cardsLine {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 240px;
+    height: fit-content;
+    justify-content: center;
     align-items: center;
     gap: 20px;
-    margin-bottom: 60px;
 }
 
-main #mainSection .cardsLine .cards:not(#ads-card){
+main #mainSection .cardsLine .cards{
     display: flex;
     flex-direction: column;
     color: var(--main-color-text-lightdark);
+    font-family: 'Bebas Neue', sans-serif;
     text-align: center;
-    background: var(--main-color-light);
     border-radius: 8px;
-    box-shadow: 0px 0px 5px var(--main-color-shadow-purple);
+    box-shadow: 2px 2px 8px var(--fade-light-green);
     align-items: center;
     justify-content: center;
-    height: 300px;
     width: 100%;
-    padding-top: 20px;
-    margin: 10px 10px 0 0;
+    height: 340px;
+    padding: 0;
+    margin: 0;
 }
 
 main #mainSection .cards:hover {
-    display: block;
     color: var(--main-color-text-lightdark);
     box-shadow: 0px 4px 10px var(--main-color-text-lightdark);
     transition: all 0.5s ease;
     transform: scale(1.05);
     cursor: pointer;
+    z-index: 1;
 }
-main #mainSection .cards .card-button {
+main #mainSection .cards {
+    display: flex;
+    flex-direction: column;
+    color: var(--main-color-text-lightdark);
+    font-family: 'Bebas Neue', sans-serif;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px var(--fade-light-green);
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 340px;
+    padding: 0;
     margin: 0;
+    position: relative;
+}
+
+main #mainSection .cards .card-button {
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: var(--main-color-secondary);
+    align-items: flex-end;
     width: 100%;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -76,8 +83,8 @@ button {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     display: inline-block;
     text-align: center;
-    width: 100%;
-    max-width: 200px;
+    width: 400px;
+    max-width: 100%;
     margin: 10px auto;
 }
 
@@ -117,6 +124,17 @@ button:hover {
     font-size: 1em;
 }
 
+#container-showroom-card{
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 99vmax;
+    height: 400px;
+    box-shadow: 0px 6px 8px var(--fade-light-green);
+    border-radius: 8px;
+}
+
 #contactSection {
     display: flex;
     flex-direction: column;
@@ -137,31 +155,45 @@ button:hover {
 }
 
 @media screen and (max-width: 768px) {
+    main {
+        gap: 40px;
+    }
+
+    .container-showroom-card {
+        width: 100%;
+    }
 
     main #mainSection {
         display: flex;
         flex-direction: column;
-        margin: 10px auto;
-        width: 100%;
+        block-size: auto;
+        font-size: 1.2em;
+        margin-bottom: 80px;
+        width: 90%;
+        height: 100%;
+        gap: 60px;
     }
 
-    main #mainSection .cardsLine {
+    main #mainSection .cardsLine{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin: 0 auto;
         max-width: 100%;
-        height: 350px;
-        margin: 20px;
+        height: 100%;
+        gap: 40px;
     }
 
     .cards {
-        display: flex;
-        flex-direction: column;
         width: 100%;
-        height: 350px;
+        height: 100%;
         padding-top: 10px;
+    }
+    .cards:hover {
+        box-shadow: 0px 0 0 ;
+        transform: none;
+        cursor: pointer;
+        z-index: 1;
     }
     .cards h3 {
         font-size: 1.4em;
@@ -176,6 +208,11 @@ button:hover {
     .card-button {
         margin-top: auto;
         margin-bottom: 0;
+        
+    }
+    .card-button button {
+        width: 200px;
+        max-width: 100%;
     }
 
     #ads-card-row, #ads-card, .ads-card-rows{
@@ -183,6 +220,16 @@ button:hover {
         display: none;
         width: 0;
         height: 0;
+    }
+
+    #card-overflow-x {
+        width: 800px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+    #card-overflow-x .cards {
+        display: block;
+        display: flex;
     }
 }
 

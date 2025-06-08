@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/cardsStyles.css">
     <link rel="stylesheet" href="css/iconStyles.css">
+    <link rel="stylesheet" href="css/mainstyle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -35,7 +36,7 @@
                     <div id="titleContainer">
                         <h1 class="personality" id="onm">OnM</h1><h1 class="personality" id="ee">ee</h1><h1 class="personality" id="tri">Tri - Serviços Digitais</h1>
                     </div>
-                    <p>Transformando a gestão de pessoas com tecnologia.</p>
+                    <p>Reduza 20% do tempo gasto em controles de ponto e gerenciamento da sua empresa!</p>
                 </div>
                 
             </div>
@@ -47,21 +48,21 @@
             </div>
             
         </div>
-        <nav id="headNavbar">
-            <ul>
-                <li><a href="#">Contato</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Serviços</a></li>
-                <li><a href="#">Suporte</a></li>
-            </ul>
-        </nav>
-
     </header>
-    <main id="main">
+    <main id="main" style="background-image: url('./src/background.png');
+                    background-size: cover;
+                    background-repeat: repeat;
+                    background-position: center;
+                    background-color:none;">
+        <section class="" >
+                <div class="container-showroom-card">
+                    
+                </div>
+        </section>
         <section id="mainSection">
             <section class="cardsLine">
-                <div class="cards">
-                    <div class="card-intern-lines">
+                <div class="cards" id="point-card" >
+                    <div class="card-intern-lines" >
                         <img class="card-image" src="./src/update-list_14752951.png" alt="officer" srcset=""><legend style="color: crimson;">BETA!</legend>
                         <h3>Gerenciamento de ponto</h3>
                         <p>Adicione, remova e consulte pontos de entrada e saída dos funcionarios.</p>
@@ -69,27 +70,28 @@
                     <div class="card-button">
                         <a href="adm-point.html"><button>Sistema de ponto</button></a>
                     </div>
+                    
                 </div>
+            </section>
+            <section class="cardsLine">
                 <div class="cards">
-                    <div class="card-intern-lines">
+                    <div class="card-intern-lines" id="empl-card" >
                         <img class="card-image" src="./src/networking_9084420.png" alt="officer" srcset=""><legend style="color: crimson;">BETA!</legend>
                         <h3>Gerenciamento de Funcionarios</h3>
                         <p>Gerencie, consulte e administre os funcionarios da sua empresa.</p>
                     </div>
                     <div class="card-button ">
-                        <a href="adm-employees.html"><button >Gerenciar Funcionarios</button></a>
-                    </div>
+                            <a href="adm-employees.html"><button >Gerenciar Funcionarios</button></a>
+                        </div>
                 </div>
-            </section>
-            <section class="cardsLine">
                 <div class="cards">
-                    <div class="card-intern-lines">
+                    <div class="card-intern-lines" >
                         <img class="card-image" src="./src/bar-chart_9084532.png" alt="barChart" srcset=""><legend style="color: crimson;">BETA!</legend>
                         <h3>Relatórios e Métricas</h3>
                         <p>Visualize e analise os dados de ponto dos funcionarios.</p>
                     </div>
                     <div class="card-button">
-                        <a href="./reports.html"><button>Ver Relatórios</button></a>
+                            <a href="./reports.html"><button>Ver Relatórios</button></a>
                     </div>
                 </div>
                 <div class="cards">
@@ -102,23 +104,13 @@
                         <a href="./reports.html"><button>Gerenciar Notas</button></a>
                     </div>
                 </div>
-                <div class="cards">
-                    
-                    <div class="card-intern-lines">
-                        <img class="card-image" src="./src/helmet_2823675.png" alt="officer" srcset=""><legend style="color: crimson;">NÃO IMPLEMENTADO!</legend>
-                        <h3>Configurações</h3>
-                        <p>Personalize as configurações do sistema de gerenciamento de ponto.</p>
-                    </div>
-                    <div class="card-button">
-                        <button>Ajustar Configurações</button>
-                    </div>
+                
                 </div>
             </section>
             <section class="cardsLine">
                 <div class="cards">
-                    
                     <div class="card-intern-lines">
-                        <img class="card-image" src="./src/helmet_2823675.png" alt="officer" srcset=""><legend style="color: crimson;">NÃO IMPLEMENTADO!</legend>
+                        <img class="card-image" src="./src/helmet_2823675.png" alt="officer" srcset=""><legend style="color: crimson;">BETA!</legend>
                         <h3>Configurações</h3>
                         <p>Personalize as configurações do sistema de gerenciamento OnMeeTri.</p>
                     </div>
@@ -126,12 +118,22 @@
                         <a href="./settings.html"><button>Ajustar Configurações</button></a>
                     </div>
                 </div>
+                <div class="cards">
+                    <div class="card-intern-lines">
+                        <img class="card-image" src="./src/receive_1652648.png" alt="officer" srcset=""><legend style="color: crimson;">NÃO IMPLEMENTADO!</legend>
+                        <h3>Almoxarifado</h3>
+                        <p>Gerencie seu estoque, epis, materiais em geral tudo em um so lugar.</p>
+                    </div>
+                    <div class="card-button">
+                        <button>Ajustar Configurações</button>
+                    </div>
             </section>
-            <section class="cardsLine" id="ads-card-row">
+            <section id="ads-card-row">
                 <div id="ads-card">
                     <div class="ads-card-rows">
                         <div>
-                            <h2 class="titlerise">O que Somos?</h2>
+                            <div class="title-from-tag"><h2 class="titlerise">O que Somos?</h2><legend>REVOLUCIONARIOS</legend></div>
+                            
                             <p>Somos uma empresa dedicada a Inclusao Digital e recursos humanos.</p>
                             <p>Nosso objetivo é fornecer soluções tecnológicas que facilitem a gestão de pessoas e promovam a inclusão digital e modernização de pequenas empresas.</p>
                         </div>
@@ -179,13 +181,6 @@
                     <button type="submit" id="submit">Enviar</button>
                 </form>
             </section>
-            <div class="language-selector">
-    <select id="languageSelect">
-        <option value="pt-BR">Português</option>
-        <option value="en-US">English</option>
-        <option value="es-ES">Español</option>
-    </select>
-</div>
         </section>
         
     </main>

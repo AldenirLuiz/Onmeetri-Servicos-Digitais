@@ -5,10 +5,16 @@
     --main-color-shadow-purple: rgba(47, 9, 65, 0.1);
     --main-color-fade: #cfe5e6;
     --main-color-background-lightdark: #cecece;
+    --light-green: #1ed40ed3;
+    --light-blue: #10aeb9d3;
+    --fade-light-green: #74b16f2d;
+    --fade-light-blue: #66a1a53a;
 }
 body {
     font-family: "Bebas Neue", sans-serif;
-    background: linear-gradient(var(--main-color-light), var(--main-color-fade));
+    background: linear-gradient(45deg, var(--main-color-fade), var(--fade-light-blue), var(--main-color-light), var(--fade-light-green));
+    background-position: 0% 50%;
+    background-size: 400% 400%;
     background-color: var(--main-color-light);
     margin: 0;
     padding: 0;
@@ -22,7 +28,6 @@ body {
   font-style: normal;
 }
 main {
-    background-color: var(--main-color-light);
     margin: 0;
     padding: 0;
     color: var(--main-color-text-lightdark);
@@ -61,14 +66,13 @@ header {
     text-align: center;
     border-radius: 8px;
     max-height: fit-content;
+    box-shadow: 0 8px 12px var(--fade-light-green);
 }
 
 #headColumns {
     display: flex;
     justify-content: space-around;
-    background: linear-gradient(var(--main-color-light), var(--main-color-fade));
-    background-color: #d7e2e6;
-}
+    }
 
 #headColumns div {
     display: flex;
@@ -170,7 +174,7 @@ footer {
     padding: 10px 0;
     text-align: center;
     border-radius: 8px;
-    box-shadow: 0 2px 5px var(--main-color-shadow-purple);
+    box-shadow: 0 2px 5px var(--fade-light-green);
     margin-top: 20px;
 }
 
@@ -229,7 +233,6 @@ footer p {
     max-width: 100%;
     margin: 40px auto;
     padding: 20px;
-    background-color: var(--main-color-light);
     font-size: 0.6em;
     font-family: sans-serif;
 }
@@ -309,10 +312,14 @@ footer p {
     right: 20px;
 }
 
-.language-selector select {
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: white;
-    font-size: 14px;
+.title-from-tag {
+    display: flex;
+
+}
+
+.title-from-tag legend {
+    color: #1fa8da;
+    font-family: monospace;
+    font-size: smaller;
+    justify-self: end;
 }
