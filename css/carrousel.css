@@ -1,0 +1,81 @@
+.carousel-section {
+    width: 100%;
+    margin: 0;
+    position: relative;
+    padding: 0;
+}
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+.carousel-slide {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: calc(100vh - 100px);
+    transition: opacity 0.5s;
+    background: #fff;
+}
+.carousel-slide.active {
+    display: block;
+    position: relative;
+    opacity: 1;
+    animation: fadeIn 0.7s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.carousel-image {
+    width: 100%;
+    object-fit: cover;
+    height: calc(100vh - 100px);
+}
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.205);
+    color: var(--main-color-text-lightdark);
+    text-shadow: #fff 0 0 5px , #000 0 0 5px;
+    text-align: center;
+    padding: 0;
+    width: 100%;
+    font-size: 2em;
+    position: absolute;
+    bottom: 0px;
+}
+@media (max-width: 600px) {
+    .carousel-image { height: 340px; object-fit: cover; }
+    .carousel-slide { 
+        height: 340px; 
+        width: 100%; 
+        position: relative; 
+        display: none; 
+        opacity: 1; 
+    }
+    .carousel-slide.active { 
+        display: block; 
+        position: relative; 
+        opacity: 1; 
+        animation: fadeIn 0.7s; 
+    }
+
+    .carousel-section { 
+        height: 340px; 
+        width: 100%; 
+        overflow: hidden; 
+    }
+    .carousel-container { 
+        height: 340px; 
+        width: 100%; 
+        overflow: hidden; 
+    }
+    .carousel-caption {
+        position: absolute;
+        bottom: 0;
+        font-size: 1.2em; 
+        margin: 0;
+        bottom: 0;
+        width: 100%;
+        height: fit-content;
+    }
+}

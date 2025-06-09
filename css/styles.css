@@ -57,16 +57,16 @@ main {
     display: block;
     width: 256px;
     height: 128px;
-    filter: drop-shadow(0 0 5px #333333);
+    filter: drop-shadow(0 0 2px #333333);
 }   
 
 /* Header styles */
 header {
     color: var(--main-color-text-lightdark);
     text-align: center;
-    border-radius: 8px;
-    max-height: fit-content;
-    box-shadow: 0 8px 12px var(--fade-light-green);
+    box-shadow: 0 0 12px var(--fade-light-green);
+    z-index: 1;
+    height: 100px;
 }
 
 #headColumns {
@@ -140,32 +140,6 @@ header #headColumns #centerColumn #title #titleContainer #tri {
     text-justify: center;
 }
 
-/* Navbar styles */
-#headNavbar {
-    display: flex;
-    justify-content: right;
-    padding: 4px 0;
-}
-#headNavbar ul {
-    list-style: none;
-    padding: 0;
-}
-#headNavbar ul li {
-    display: inline;
-    margin: 0 15px;
-}
-#headNavbar ul li a {
-    color: var(--main-color-text-lightdark);
-    text-decoration: none;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-#headNavbar ul li a:hover {
-    background: #333333;
-    color: var(--main-color-light);
-}
 footer {
     display: flex;
     align-items: center;
@@ -188,7 +162,11 @@ footer p {
 
 @media screen and (max-width: 768px) {
     body {
-        font-size: 0.8rem;
+        font-size: 1rem;
+    }
+    header {
+        height: auto;
+        padding: 10px;
     }
 
     main {
@@ -201,6 +179,7 @@ footer p {
     }
 
     #titleContainer {
+        
         font-size: 1.0rem;
     }
 

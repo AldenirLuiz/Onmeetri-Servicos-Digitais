@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/cardsStyles.css">
     <link rel="stylesheet" href="css/iconStyles.css">
     <link rel="stylesheet" href="css/mainstyle.css">
+    <link rel="stylesheet" href="css/carrousel.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
@@ -35,10 +36,10 @@
             </div>
             <div id="centerColumn">
                 <div id="title">
-                    <div id="titleContainer">
-                        <h1 class="personality" id="onm">OnM</h1>
-                        <h1 class="personality" id="ee">ee</h1>
-                        <h1 class="personality" id="tri">Tri - Serviços Digitais</h1>
+                    <div id="titleContainer" style="align-items: center; justify-content: center;">
+                        <h1 class="personality" id="onm" style="margin-top: 0;">OnM</h1>
+                        <h1 class="personality" id="ee" style="margin-top: 0;">ee</h1>
+                        <h1 class="personality" id="tri" style="margin-top: 0;">Tri</h1>
                     </div>
                     <p>Reduza 20% do tempo gasto em controles de ponto e gerenciamento da sua empresa!</p>
                 </div>
@@ -84,57 +85,7 @@
             </div>
         </section>
         <style>
-            .carousel-section {
-            width: 100%;
-            margin: 0 auto 2em auto;
-            position: relative;
-            }
-            .carousel-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-            }
-            .carousel-slide {
-            display: none;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transition: opacity 0.5s;
-            background: #fff;
-            }
-            .carousel-slide.active {
-            display: block;
-            position: relative;
-            opacity: 1;
-            animation: fadeIn 0.7s;
-            }
-            @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-            }
-            .carousel-image {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            border-radius: 12px 12px 0 0;
-            }
-            .carousel-caption {
-            background: rgba(0,0,0,0.5);
-            color: #fff;
-            padding: 1em;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            border-radius: 0 0 12px 12px;
-            box-sizing: border-box;
-            font-size: 2.4em;
-            }
-            @media (max-width: 600px) {
-            .carousel-image { height: 340px; }
-            .carousel-caption { font-size: 1.9em; }
-            }
+            
         </style>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -183,8 +134,6 @@
                         <a href="adm-point.html"><button>Sistema de ponto</button></a>
                     </div>
                 </div>
-            </section>
-            <section class="cardsLine">
                 <div class="cards">
                     <div class="card-intern-lines" id="empl-card">
                         <img class="card-image" src="./src/networking_9084420.png" alt="officer">
@@ -196,6 +145,9 @@
                         <a href="adm-employees.html"><button>Gerenciar Funcionarios</button></a>
                     </div>
                 </div>
+            </section>
+            <section class="cardsLine" id="overflowed-card">
+                
                 <div class="cards">
                     <div class="card-intern-lines">
                         <img class="card-image" src="./src/bar-chart_9084532.png" alt="barChart">
@@ -207,6 +159,8 @@
                         <a href="./reports.html"><button>Ver Relatórios</button></a>
                     </div>
                 </div>
+            </section>
+            <section class="cardsLine">
                 <div class="cards">
                     <div class="card-intern-lines">
                         <img class="card-image" src="./src/taxes_9947497.png" alt="barChart">
@@ -218,8 +172,6 @@
                         <a href="./reports.html"><button>Gerenciar Notas</button></a>
                     </div>
                 </div>
-            </section>
-            <section class="cardsLine">
                 <div class="cards">
                     <div class="card-intern-lines">
                         <img class="card-image" src="./src/helmet_2823675.png" alt="officer">
@@ -231,6 +183,8 @@
                         <a href="./settings.html"><button>Ajustar Configurações</button></a>
                     </div>
                 </div>
+            </section>
+            <section class="cardsLine">
                 <div class="cards">
                     <div class="card-intern-lines">
                         <img class="card-image" src="./src/receive_1652648.png" alt="officer">

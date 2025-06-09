@@ -1,0 +1,71 @@
+.hero-container {
+    background: linear-gradient(135deg, var(--main-color-primary), var(--main-color-secondary));
+    color: var(--main-color-light);
+    padding: 4rem 2rem;
+    text-align: center;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.hero-container h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.hero-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.primary-button {
+    background: var(--main-color-light);
+    color: var(--main-color-primary);
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.secondary-button {
+    background: transparent;
+    color: var(--main-color-light);
+    border: 2px solid var(--main-color-light);
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+
+/* Responsive Design */
+@media screen and (max-width: 800px) {
+    .hero-container {
+        padding: 3rem 1rem;
+    }
+
+    
+
+    .hero-container h1 {
+        font-size: 2rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+    }
+}
