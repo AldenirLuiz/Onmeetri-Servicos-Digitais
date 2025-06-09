@@ -46,9 +46,9 @@
 @media (max-width: 600px) {
     .carousel-image { height: 340px; object-fit: cover; }
     .carousel-slide { 
-        height: 340px; 
+        height: calc(90lvw - 100px); 
         width: 100%; 
-        position: relative; 
+        transition: opacity 0.5s; 
         display: none; 
         opacity: 1; 
     }
