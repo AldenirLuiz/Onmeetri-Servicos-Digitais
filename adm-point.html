@@ -40,12 +40,14 @@
     </header>
     </header>
     <main>
-        <section class="main-container-table">
-            <fieldset class="table-fieldset">
-                <div class="date-selector">
-                    <label for="tableDate">Data do Ponto:</label>
-                    <input type="date" id="tableDate" required>
-                </div>
+        <section class="main-container">
+            <div class="date-selector">
+                <label for="tableDate">Data do Ponto:</label>
+                <input type="date" id="tableDate" required>
+            </div>
+
+            <!-- Desktop Table (hidden on mobile) -->
+            <div class="desktop-view">
                 <table id="table-data">
                     <thead>
                         <tr>
@@ -55,34 +57,46 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="table-btt-container"><button id="btt-save-table">SALVAR</button></div>
-                </fieldset>
-            </section>
-        </main>
-        
-        <!-- Modal -->
-        <div id="entryModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Detalhes da Entrada</h2>
-                <div id="modalContent"></div>
             </div>
-        </div>
-        
-        <!-- Resumo de Entradas -->
-        <div class="entry-summary">
-            <h3>Resumo de Entradas</h3>
-            <div class="summary-controls">
-                <input type="date" id="summaryDate" />
-                <select id="summaryType">
-                    <option value="daily">Diário</option>
-                    <option value="monthly">Mensal</option>
-                </select>
-                <button id="exportPDF">Exportar PDF</button>
-                <button id="exportExcel">Exportar Excel</button>
+
+            <!-- Mobile Cards (hidden on desktop) -->
+            <div class="mobile-view">
+                <div id="employee-cards" class="employee-cards">
+                    <!-- Cards will be populated by JavaScript -->
+                </div>
             </div>
-            <div id="summaryContent"></div>
+
+            <div class="action-buttons">
+                <button id="btt-save-table" class="primary-button">
+                    <span data-i18n="save">SALVAR</span>
+                </button>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Modal -->
+    <div id="entryModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Detalhes da Entrada</h2>
+            <div id="modalContent"></div>
         </div>
-    </body>
-    <script src="js/script-admpoint.js"></script>
-    </html>
+    </div>
+    
+    <!-- Resumo de Entradas -->
+    <div class="entry-summary">
+        <h3>Resumo de Entradas</h3>
+        <div class="summary-controls">
+            <input type="date" id="summaryDate" />
+            <select id="summaryType">
+                <option value="daily">Diário</option>
+                <option value="monthly">Mensal</option>
+            </select>
+        </div>
+            <button id="exportPDF">Exportar PDF</button>
+            <button id="exportExcel">Exportar Excel</button>
+        <div id="summaryContent"></div>
+    </div>
+</body>
+<script src="js/script-admpoint.js"></script>
+</html>

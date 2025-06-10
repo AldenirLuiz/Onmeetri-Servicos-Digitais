@@ -487,53 +487,107 @@ exportExcel.addEventListener('click', () => {
 });
 
 // Add after your existing code
-document.addEventListener("DOMContentLoaded", function () {
-    // Function to populate table with saved employees
-    function populateEmployeeDropdown() {
-        const tbody = tableData.querySelector('tbody');
-        tbody.innerHTML = ''; // Clear existing rows
-        
-        // Get employees from localStorage
+document.addEventListener("DOMContentLoaded", async function() {
+    // Get DOM elements
+    const tableDate = document.getElementById("tableDate");
+    const employeeCards = document.getElementById("employee-cards");
+    const saveButton = document.getElementById("btt-save-table");
+
+    // Set today's date as default
+    tableDate.valueAsDate = new Date();
+
+    // Load and display employees
+    function loadEmployees() {
         const employees = JSON.parse(localStorage.getItem("employees")) || [];
+        if (employees.length === 0) {
+            employeeCards.innerHTML = '<p class="no-data">Nenhum funcionário cadastrado</p>';
+            return;
+        }
         
-        // Create a Set to track unique names
-        const uniqueNames = new Set();
-        
-        employees.forEach((emp) => {
-            // Skip if name already exists
-            if (uniqueNames.has(emp.nome)) return;
-            
-            // Add name to Set
-            uniqueNames.add(emp.nome);
-            
-            const newLine = `
-                <tr class="tr-line">
-                    <td class="name">${emp.nome}</td>
-                    <td><div><legend>Entrada</legend><input type="time" class="morning-in" value="06:30"><legend>Saida</legend><input type="time" class="morning-out" value="11:30"></div></td>
-                    <td><div><legend>Entrada</legend><input type="time" class="after-in" value="13:00"><legend>Saida</legend><input type="time" class="after-out" value="17:00"></div></td>
-                    <td class="check-morning" style="text-align: center; vertical-align: middle;">
-                        <input type="checkbox" class="check-morning-input" checked />
-                    </td>
-                    <td class="check-after" style="text-align: center; vertical-align: middle;">
-                        <input type="checkbox" class="check-after-input" checked />
-                    </td>
-                </tr>`;
-            tbody.insertAdjacentHTML('beforeend', newLine);
+        // Clear existing content
+        employeeCards.innerHTML = '';
+
+        // Create card for each employee
+        employees.forEach(emp => {
+            const card = `
+                <div class="employee-card" data-employee-id="${emp.id}">
+                    <div class="card-header">
+                        <h3>${emp.nome}</h3>
+                        <span class="department">${emp.departamento}</span>
+                    </div>
+                    
+                    <div class="time-entries">
+                        <div class="period morning">
+                            <h4>Período Manhã</h4>
+                            <div class="time-group">
+                                <div class="time-input">
+                                    <label>Entrada</label>
+                                    <input type="time" class="morning-in" data-type="morning-in" value="06:30">
+                                </div>
+                                <div class="time-input">
+                                    <label>Saída</label>
+                                    <input type="time" class="morning-out" data-type="morning-out" value="11:30">
+                                </div>
+                                <div class="presence-check">
+                                    <input type="checkbox" class="check-morning" checked>
+                                    <label>Presente</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="period afternoon">
+                            <h4>Período Tarde</h4>
+                            <div class="time-group">
+                                <div class="time-input">
+                                    <label>Entrada</label>
+                                    <input type="time" class="after-in" data-type="after-in" value="06:30">
+                                </div>
+                                <div class="time-input">
+                                    <label>Saída</label>
+                                    <input type="time" class="after-out" data-type="after-out" value="11:30">
+                                </div>
+                                <div class="presence-check">
+                                    <input type="checkbox" class="check-after" checked>
+                                    <label>Presente</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            employeeCards.insertAdjacentHTML('beforeend', card);
         });
     }
 
-    // Call the function when page loads
-    const employees = JSON.parse(localStorage.getItem("employees")) || [];
-    if (employees.length > 0) {
-        populateEmployeeDropdown();
-    } else {
-        // If no employees saved, use default array
-        populateTable(datafillArray);
-    }
+    // Save time entries
+    saveButton.addEventListener('click', function() {
+        const date = tableDate.value;
+        const cards = document.querySelectorAll('.employee-card');
+        const timeEntries = [];
+
+        cards.forEach(card => {
+            const employeeId = card.dataset.employeeId;
+            const entry = {
+                date,
+                employeeId,
+                morningIn: card.querySelector('.morning-in').value,
+                morningOut: card.querySelector('.morning-out').value,
+                afterIn: card.querySelector('.after-in').value,
+                afterOut: card.querySelector('.after-out').value,
+                checkMorning: card.querySelector('.check-morning').checked,
+                checkAfter: card.querySelector('.check-after').checked
+            };
+            timeEntries.push(entry);
+        });
+
+        // Save to localStorage
+        const existingData = JSON.parse(localStorage.getItem('pointData')) || [];
+        const newData = existingData.filter(entry => entry.date !== date);
+        localStorage.setItem('pointData', JSON.stringify([...newData, ...timeEntries]));
+
+        alert('Dados salvos com sucesso!');
+    });
+
+    // Initialize
+    loadEmployees();
 });
-
-// Exemplo de uso em mensagens
-alert(langManager.translate('saveSuccess'));
-
-// Exemplo de uso em elementos dinâmicos
-element.textContent = langManager.translate('department');
