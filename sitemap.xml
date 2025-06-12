@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Página Principal -->
+    <url>
+        <loc>https://onmeetri-servicos-digitais.vercel.app/</loc>
+        <lastmod>2025-06-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Sistema de Ponto -->
+    <url>
+        <loc>https://onmeetri-servicos-digitais.vercel.app/adm-point.html</loc>
+        <lastmod>2025-06-12</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Gerenciamento de Funcionários -->
+    <url>
+        <loc>https://onmeetri-servicos-digitais.vercel.app/adm-employees.html</loc>
+        <lastmod>2025-06-12</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Relatórios -->
+    <url>
+        <loc>https://onmeetri-servicos-digitais.vercel.app/reports.html</loc>
+        <lastmod>2025-06-12</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Configurações -->
+    <url>
+        <loc>https://onmeetri-servicos-digitais.vercel.app/settings.html</loc>
+        <lastmod>2025-06-12</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+</urlset>
