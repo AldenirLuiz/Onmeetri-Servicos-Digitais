@@ -382,3 +382,35 @@ footer p {
 .feature-detail li {
     margin-bottom: 5px;
 }
+
+/* Estilos para a seção introdutória */
+#intro-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--main-color-shadow-purple);
+    font-family: sans-serif;
+    text-align: center;
+}
+
+#intro-section h2 {
+    color: var(--main-color-text-lightdark);
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+#intro-section p {
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: var(--main-color-text-lightdark);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#intro-section em {
+    font-style: italic;
+    color: var(--main-color-secondary);
+}
