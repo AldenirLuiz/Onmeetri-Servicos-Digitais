@@ -414,3 +414,15 @@ footer p {
     font-style: italic;
     color: var(--main-color-secondary);
 }
+/* Estilos para anúncios */
+#ad-section, #footer-ad {
+    margin: 20px 0;
+    text-align: center;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    #ad-section, #footer-ad {
+        margin: 10px 0;
+    }
+}
