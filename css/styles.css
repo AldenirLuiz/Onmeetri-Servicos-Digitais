@@ -324,3 +324,61 @@ footer p {
     font-size: smaller;
     justify-self: end;
 }
+
+/* Estilos para a seção de detalhes das funcionalidades */
+#features-details {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--main-color-shadow-purple);
+    font-family: sans-serif;
+}
+
+#features-details h2 {
+    text-align: center;
+    color: var(--main-color-text-lightdark);
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.feature-detail {
+    margin-bottom: 40px;
+    padding: 20px;
+    border-left: 5px solid var(--main-color-secondary);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+.feature-detail h3 {
+    color: var(--main-color-text-lightdark);
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+.feature-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+.feature-detail p {
+    line-height: 1.8;
+    margin-bottom: 15px;
+    color: var(--main-color-text-lightdark);
+}
+
+.feature-detail ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    color: var(--main-color-text-lightdark);
+}
+
+.feature-detail li {
+    margin-bottom: 5px;
+}
