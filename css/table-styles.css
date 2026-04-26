@@ -49,13 +49,13 @@ table {
 
 table tr, td {
     height: 20px;
-    padding: 10px;
+    padding: 6px;
     border: 1px solid lightslategray;
     border-collapse: collapse;
 }
 
 table tr td div{
-    padding: 8px;
+    padding: 6px;
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -251,13 +251,10 @@ button:hover {
 
 /* Common Styles */
 .action-buttons {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 1rem;
-    background: var(--fade-light-green);
+    padding: 0;
+    background: #014103af;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    width: 100%;
     z-index: 100;
 }
 

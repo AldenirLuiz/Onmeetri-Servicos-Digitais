@@ -30,6 +30,35 @@
     cursor: pointer;
 }
 
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.secondary-button {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.secondary-button:hover {
+    background-color: #bbb;
+}
+
+.tutorial-checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.tutorial-checkbox input {
+    margin-right: 10px;
+}
+
 .hidden {
     display: none;
 }

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/secondary-header.css">
     <link rel="stylesheet" href="./css/table-styles.css">
+    <link rel="stylesheet" href="./css/modal-styles.css">
     <!-- Export Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
@@ -58,6 +59,11 @@
                         </tr>
                     </thead>
                 </table>
+                <div class="action-buttons">
+                    <button id="btt-save-table" class="primary-button">
+                        <span data-i18n="save">SALVAR</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Mobile Cards (hidden on desktop) -->
@@ -67,20 +73,45 @@
                 </div>
             </div>
 
-            <div class="action-buttons">
-                <button id="btt-save-table" class="primary-button">
-                    <span data-i18n="save">SALVAR</span>
-                </button>
-            </div>
+            
         </section>
     </main>
     
     <!-- Modal -->
-    <div id="entryModal" class="modal">
+    <div id="entryModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Detalhes da Entrada</h2>
             <div id="modalContent"></div>
+        </div>
+    </div>
+    
+    <!-- First Access Modal -->
+    <div id="firstAccessModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Primeiro Acesso</h2>
+            <p>Não há dados para ser carregado. Deseja carregar os dados de teste?</p>
+            <div class="modal-buttons">
+                <button id="confirmLoadData" class="primary-button">Confirmar</button>
+                <button id="cancelLoadData" class="secondary-button">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tutorial Modal -->
+    <div id="tutorialModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-tutorial">&times;</span>
+            <h2>Como Alterar os Dados</h2>
+            <p>Para alterar os horários de entrada e saída, edite os campos de tempo na tabela. Marque ou desmarque as caixas de presença para indicar se o funcionário estava presente no período da manhã ou tarde.</p>
+            <p>Após fazer as alterações, clique em "SALVAR" para armazenar os dados.</p>
+            <div class="tutorial-checkbox">
+                <input type="checkbox" id="dontShowTutorial" />
+                <label for="dontShowTutorial">Não mostrar novamente</label>
+            </div>
+            <div class="modal-buttons">
+                <button id="closeTutorial" class="primary-button">Entendi</button>
+            </div>
         </div>
     </div>
     
