@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to show entry details
   function showEntryDetails(entry) {
       modalContent.innerHTML = `
-          <h3>${entry.name}</h3>
+          <h3>${getEntryName(entry)}</h3>
           <p><strong>Período Manhã:</strong> ${entry.checkMorning ? `${entry.morningIn} - ${entry.morningOut}` : 'Falta'}</p>
           <p><strong>Período Tarde:</strong> ${entry.checkAfter ? `${entry.afterIn} - ${entry.afterOut}` : 'Falta'}</p>
           <p><strong>Total de Horas:</strong> ${calculateTotalHours(entry)}</p>
@@ -312,82 +312,92 @@ document.addEventListener("DOMContentLoaded", function () {
       return (endHours - startHours) + (endMins - startMins) / 60;
   }
 
+  function getEntryName(entry) {
+      if (entry.name) return entry.name;
+      if (entry.employeeId) {
+          const employee = JSON.parse(localStorage.getItem("employees"))?.find(emp => emp.id === entry.employeeId);
+          return employee?.nome || entry.employeeId;
+      }
+      return 'Funcionário desconhecido';
+  }
+
   // Update summary when date changes
-  summaryDate.addEventListener('change', updateSummary);
 
   // Add export functions
   function exportToPDF(data) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
 
-    // Calculate totals
-    const totals = data.reduce((acc, entry) => {
-        if (!acc[entry.name]) {
-            acc[entry.name] = {
-                totalHours: 0,
-                presentMorning: 0,
-                presentAfternoon: 0,
-                totalDays: 0
-            };
-        }
-        
-        acc[entry.name].totalHours += parseFloat(calculateTotalHours(entry));
-        if (entry.checkMorning) acc[entry.name].presentMorning++;
-        if (entry.checkAfter) acc[entry.name].presentAfternoon++;
-        acc[entry.name].totalDays++;
-        
-        return acc;
-    }, {});
+      // Calculate totals
+      const totals = data.reduce((acc, entry) => {
+          const name = getEntryName(entry);
+          if (!acc[name]) {
+              acc[name] = {
+                  totalHours: 0,
+                  presentMorning: 0,
+                  presentAfternoon: 0,
+                  totalDays: 0
+              };
+          }
 
-    // Regular table data
-    const tableColumns = [
-        { header: 'Nome', dataKey: 'name' },
-        { header: 'Data', dataKey: 'date' },
-        { header: 'Manhã', dataKey: 'morning' },
-        { header: 'Tarde', dataKey: 'afternoon' },
-        { header: 'Total Horas', dataKey: 'total' }
-    ];
+          acc[name].totalHours += parseFloat(calculateTotalHours(entry));
+          if (entry.checkMorning) acc[name].presentMorning++;
+          if (entry.checkAfter) acc[name].presentAfternoon++;
+          acc[name].totalDays++;
 
-    const tableRows = data.map(entry => ({
-        name: entry.name,
-        date: new Date(entry.date).toLocaleDateString(),
-        morning: entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
-        afternoon: entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
-        total: calculateTotalHours(entry)
-    }));
+          return acc;
+      }, {});
 
-    // Add summary rows
-    const summaryRows = Object.entries(totals).map(([name, stats]) => ({
-        name: `${name} - TOTAL`,
-        date: `${stats.totalDays} dias`,
-        morning: `${stats.presentMorning} presenças`,
-        afternoon: `${stats.presentAfternoon} presenças`,
-        total: `${stats.totalHours.toFixed(2)}h`
-    }));
+      // Regular table data
+      const tableColumns = [
+          { header: 'Nome', dataKey: 'name' },
+          { header: 'Data', dataKey: 'date' },
+          { header: 'Manhã', dataKey: 'morning' },
+          { header: 'Tarde', dataKey: 'afternoon' },
+          { header: 'Total Horas', dataKey: 'total' }
+      ];
 
-    doc.autoTable({
-        columns: tableColumns,
-        body: [...tableRows, { name: '', date: '', morning: '', afternoon: '', total: '' }, ...summaryRows],
-        startY: 20,
-        head: [tableColumns.map(col => col.header)],
-        theme: 'grid',
-        didDrawCell: (data) => {
-            // Highlight summary rows
-            if (tableRows.length + 1 <= data.row.index) {
-                data.cell.styles.fontStyle = 'bold';
-                data.cell.styles.fillColor = [240, 240, 240];
-            }
-        }
-    });
+      const tableRows = data.map(entry => ({
+          name: getEntryName(entry),
+          date: new Date(entry.date).toLocaleDateString(),
+          morning: entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
+          afternoon: entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
+          total: calculateTotalHours(entry)
+      }));
 
-    doc.save('timesheet.pdf');
-}
+      // Add summary rows
+      const summaryRows = Object.entries(totals).map(([name, stats]) => ({
+          name: `${name} - TOTAL`,
+          date: `${stats.totalDays} dias`,
+          morning: `${stats.presentMorning} presenças`,
+          afternoon: `${stats.presentAfternoon} presenças`,
+          total: `${stats.totalHours.toFixed(2)}h`
+      }));
+
+      doc.autoTable({
+          columns: tableColumns,
+          body: [...tableRows, { name: '', date: '', morning: '', afternoon: '', total: '' }, ...summaryRows],
+          startY: 20,
+          head: [tableColumns.map(col => col.header)],
+          theme: 'grid',
+          didDrawCell: (data) => {
+              // Highlight summary rows
+              if (tableRows.length + 1 <= data.row.index) {
+                  data.cell.styles.fontStyle = 'bold';
+                  data.cell.styles.fillColor = [240, 240, 240];
+              }
+          }
+      });
+
+      doc.save('timesheet.pdf');
+  }
 
 function exportToExcel(data) {
     // Calculate totals
     const totals = data.reduce((acc, entry) => {
-        if (!acc[entry.name]) {
-            acc[entry.name] = {
+        const name = getEntryName(entry);
+        if (!acc[name]) {
+            acc[name] = {
                 totalHours: 0,
                 presentMorning: 0,
                 presentAfternoon: 0,
@@ -395,17 +405,17 @@ function exportToExcel(data) {
             };
         }
         
-        acc[entry.name].totalHours += parseFloat(calculateTotalHours(entry));
-        if (entry.checkMorning) acc[entry.name].presentMorning++;
-        if (entry.checkAfter) acc[entry.name].presentAfternoon++;
-        acc[entry.name].totalDays++;
+        acc[name].totalHours += parseFloat(calculateTotalHours(entry));
+        if (entry.checkMorning) acc[name].presentMorning++;
+        if (entry.checkAfter) acc[name].presentAfternoon++;
+        acc[name].totalDays++;
         
         return acc;
     }, {});
 
     // Regular data rows
     const rows = data.map(entry => ({
-        Nome: entry.name,
+        Nome: getEntryName(entry),
         Data: new Date(entry.date).toLocaleDateString(),
         'Período Manhã': entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
         'Período Tarde': entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
@@ -442,132 +452,6 @@ function exportToExcel(data) {
 // Update summary when date changes
 summaryDate.addEventListener('change', updateSummary);
 
-// Add export functions
-function exportToPDF(data) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    // Calculate totals
-    const totals = data.reduce((acc, entry) => {
-        if (!acc[entry.name]) {
-            acc[entry.name] = {
-                totalHours: 0,
-                presentMorning: 0,
-                presentAfternoon: 0,
-                totalDays: 0
-            };
-        }
-        
-        acc[entry.name].totalHours += parseFloat(calculateTotalHours(entry));
-        if (entry.checkMorning) acc[entry.name].presentMorning++;
-        if (entry.checkAfter) acc[entry.name].presentAfternoon++;
-        acc[entry.name].totalDays++;
-        
-        return acc;
-    }, {});
-
-    // Regular table data
-    const tableColumns = [
-        { header: 'Nome', dataKey: 'name' },
-        { header: 'Data', dataKey: 'date' },
-        { header: 'Manhã', dataKey: 'morning' },
-        { header: 'Tarde', dataKey: 'afternoon' },
-        { header: 'Total Horas', dataKey: 'total' }
-    ];
-
-    const tableRows = data.map(entry => ({
-        name: entry.name,
-        date: new Date(entry.date).toLocaleDateString(),
-        morning: entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
-        afternoon: entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
-        total: calculateTotalHours(entry)
-    }));
-
-    // Add summary rows
-    const summaryRows = Object.entries(totals).map(([name, stats]) => ({
-        name: `${name} - TOTAL`,
-        date: `${stats.totalDays} dias`,
-        morning: `${stats.presentMorning} presenças`,
-        afternoon: `${stats.presentAfternoon} presenças`,
-        total: `${stats.totalHours.toFixed(2)}h`
-    }));
-
-    doc.autoTable({
-        columns: tableColumns,
-        body: [...tableRows, { name: '', date: '', morning: '', afternoon: '', total: '' }, ...summaryRows],
-        startY: 20,
-        head: [tableColumns.map(col => col.header)],
-        theme: 'grid',
-        didDrawCell: (data) => {
-            // Highlight summary rows
-            if (tableRows.length + 1 <= data.row.index) {
-                data.cell.styles.fontStyle = 'bold';
-                data.cell.styles.fillColor = [240, 240, 240];
-            }
-        }
-    });
-
-    doc.save('timesheet.pdf');
-}
-
-function exportToExcel(data) {
-    // Calculate totals
-    const totals = data.reduce((acc, entry) => {
-        if (!acc[entry.name]) {
-            acc[entry.name] = {
-                totalHours: 0,
-                presentMorning: 0,
-                presentAfternoon: 0,
-                totalDays: 0
-            };
-        }
-        
-        acc[entry.name].totalHours += parseFloat(calculateTotalHours(entry));
-        if (entry.checkMorning) acc[entry.name].presentMorning++;
-        if (entry.checkAfter) acc[entry.name].presentAfternoon++;
-        acc[entry.name].totalDays++;
-        
-        return acc;
-    }, {});
-
-    // Regular data rows
-    const rows = data.map(entry => ({
-        Nome: entry.name,
-        Data: new Date(entry.date).toLocaleDateString(),
-        'Período Manhã': entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
-        'Período Tarde': entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
-        'Total Horas': calculateTotalHours(entry)
-    }));
-
-    // Add empty row and summary rows
-    const summaryRows = Object.entries(totals).map(([name, stats]) => ({
-        Nome: `${name} - RESUMO`,
-        Data: `Total Dias: ${stats.totalDays}`,
-        'Período Manhã': `Presenças: ${stats.presentMorning}`,
-        'Período Tarde': `Presenças: ${stats.presentAfternoon}`,
-        'Total Horas': `${stats.totalHours.toFixed(2)}h`
-    }));
-
-    const ws = XLSX.utils.json_to_sheet([...rows, {}, ...summaryRows]);
-
-    // Style the summary rows (Excel)
-    const range = XLSX.utils.decode_range(ws['!ref']);
-    const summaryStart = rows.length + 2;
-    for (let R = summaryStart; R <= range.e.r; ++R) {
-        for (let C = range.s.c; C <= range.e.c; ++C) {
-            const cell = ws[XLSX.utils.encode_cell({r: R, c: C})];
-            if (!cell) continue;
-            cell.s = { font: { bold: true }, fill: { fgColor: { rgb: "EEEEEE" } } };
-        }
-    }
-
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Timesheet");
-    XLSX.writeFile(wb, 'timesheet.xlsx');
-}
-
-// Update summary when date changes
-summaryDate.addEventListener('change', updateSummary);
 
 // Add export functions
 exportPDF.addEventListener('click', () => {
@@ -616,7 +500,7 @@ exportExcel.addEventListener('click', () => {
       
       const summary = filteredData.map(entry => `
           <div class="entry-row" data-entry='${JSON.stringify(entry)}'>
-              <strong>${entry.name}</strong> - 
+              <strong>${getEntryName(entry)}</strong> - 
               Total de Horas: ${calculateTotalHours(entry)}h
           </div>
       `).join('');
