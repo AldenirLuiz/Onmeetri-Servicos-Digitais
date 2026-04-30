@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getPresenceData(filteredEmployees) {
         return filteredEmployees.map(emp => {
-            const entries = pointData.filter(entry => entry.employeeId === emp.id || entry.name === emp.nome);
+            const entries = pointData.filter(entry => String(entry.employeeId) === String(emp.id) || entry.name === emp.nome);
             const totalDays = entries.length;
             const presentMorning = entries.filter(entry => entry.checkMorning).length;
             const presentAfternoon = entries.filter(entry => entry.checkAfter).length;
