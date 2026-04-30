@@ -211,6 +211,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Add single save event listener
   newBtSave.addEventListener("click", function () {
+    const desktopView = document.querySelector('.desktop-view');
+    if (desktopView && window.getComputedStyle(desktopView).display === 'none') {
+      return; // ignore save from desktop handler when mobile view is active
+    }
+
     if (!tableDate.value) {
       alert('Por favor, selecione uma data para o ponto!');
       return;
@@ -613,6 +618,11 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     // Save time entries
     saveButton.addEventListener('click', function() {
+        const mobileView = document.querySelector('.mobile-view');
+        if (mobileView && window.getComputedStyle(mobileView).display === 'none') {
+            return; // ignore save from mobile handler when desktop view is active
+        }
+
         const date = tableDate.value;
         const cards = document.querySelectorAll('.employee-card');
         const timeEntries = [];
