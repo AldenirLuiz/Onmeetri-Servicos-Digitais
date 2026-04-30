@@ -7,13 +7,38 @@ document.addEventListener("DOMContentLoaded", () => {
     let chartDepartamento, chartSalario;
 
 
-    const filterContract = document.getElementById("filter-contract");
+    const filterField = document.getElementById("filter-field");
+    const filterValue = document.getElementById("filter-value");
+    const chartGroup = document.getElementById("chart-group");
     const sortBy = document.getElementById("sort-by");
     const reportType = document.getElementById("report-type");
     const chart1Title = document.getElementById("chart1-title");
     const chart2Title = document.getElementById("chart2-title");
     const pointData = JSON.parse(localStorage.getItem("pointData")) || [];
     const tableHead = document.querySelector("#report-table-body").closest("table").querySelector("thead");
+
+    function getUniqueFilterValues(field) {
+        return [...new Set(employees.map(emp => emp[field] || ""))]
+            .filter(value => value !== "")
+            .sort((a, b) => a.localeCompare(b, "pt-BR"));
+    }
+
+    function populateFilterValues() {
+        const field = filterField.value;
+        const values = getUniqueFilterValues(field);
+        filterValue.innerHTML = "<option value=\"\">Todos</option>";
+
+        values.forEach(value => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            filterValue.appendChild(option);
+        });
+    }
+
+    function getGroupLabel() {
+        return chartGroup.value === "cargo" ? "Cargo" : "Departamento";
+    }
 
     function updateTableHeaders() {
         if (reportType.value === "presence") {
@@ -125,9 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function applyFiltersAndSort() {
         let filtered = [...employees];
 
-        const contratoSelecionado = filterContract.value;
-        if (contratoSelecionado) {
-            filtered = filtered.filter(emp => emp.contrato === contratoSelecionado);
+        const selectedField = filterField.value;
+        const selectedValue = filterValue.value;
+        if (selectedValue) {
+            filtered = filtered.filter(emp => emp[selectedField] === selectedValue);
         }
 
         const ordem = sortBy.value;
@@ -156,21 +182,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateCharts(data) {
         if (reportType.value === "presence") {
+            const groupLabel = getGroupLabel();
             chart1Title.textContent = "Taxa de Presença por Funcionário";
-            chart2Title.textContent = "Presença Média por Departamento";
+            chart2Title.textContent = `Presença Média por ${groupLabel}`;
 
             const nomes = data.map(emp => emp.nome);
             const presenceRates = data.map(emp => emp.presenceRate.toFixed(2));
 
-            const deptRates = {};
+            const groupRates = {};
             data.forEach(emp => {
-                if (!deptRates[emp.departamento]) deptRates[emp.departamento] = [];
-                deptRates[emp.departamento].push(emp.presenceRate);
+                const key = emp[chartGroup.value] || `Sem ${groupLabel}`;
+                if (!groupRates[key]) groupRates[key] = [];
+                groupRates[key].push(emp.presenceRate);
             });
 
-            const depLabels = Object.keys(deptRates);
+            const depLabels = Object.keys(groupRates);
             const depValues = depLabels.map(label => {
-                const values = deptRates[label];
+                const values = groupRates[label];
                 return values.reduce((acc, value) => acc + value, 0) / values.length;
             });
 
@@ -216,16 +244,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         } else {
-            chart1Title.textContent = "Funcionários por Departamento";
-            chart2Title.textContent = "Distribuição Salarial";
+            const groupLabel = getGroupLabel();
+            chart1Title.textContent = `Funcionários por ${groupLabel}`;
+            chart2Title.textContent = `Distribuição Salarial`;
 
-            const porDepartamento = {};
+            const groupCounts = {};
             data.forEach(emp => {
-                porDepartamento[emp.departamento] = (porDepartamento[emp.departamento] || 0) + 1;
+                const groupKey = emp[chartGroup.value] || `Sem ${groupLabel}`;
+                groupCounts[groupKey] = (groupCounts[groupKey] || 0) + 1;
             });
 
-            const depLabels = Object.keys(porDepartamento);
-            const depValues = Object.values(porDepartamento);
+            const depLabels = Object.keys(groupCounts);
+            const depValues = Object.values(groupCounts);
 
             const nomes = data.map(emp => emp.nome);
             const salarios = data.map(emp => parseFloat(emp.salario));
@@ -275,11 +305,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Eventos
-    filterContract.addEventListener("change", applyFiltersAndSort);
+    filterField.addEventListener("change", () => {
+        populateFilterValues();
+        applyFiltersAndSort();
+    });
+    filterValue.addEventListener("change", applyFiltersAndSort);
+    chartGroup.addEventListener("change", applyFiltersAndSort);
     sortBy.addEventListener("change", applyFiltersAndSort);
     reportType.addEventListener("change", applyFiltersAndSort);
 
     // Inicialização
+    populateFilterValues();
     applyFiltersAndSort();
     document.getElementById("export-excel").addEventListener("click", () => {
         let exportData;
