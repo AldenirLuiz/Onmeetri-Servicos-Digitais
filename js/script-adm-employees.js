@@ -66,7 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const employees = JSON.parse(localStorage.getItem("employees")) || [];
-        const newEmployee = { nome, cargo, departamento, salario, contrato, admissao };
+        const employeeId = editMode && employees[editIndex] && employees[editIndex].id ? employees[editIndex].id : Date.now().toString();
+        const newEmployee = { id: employeeId, nome, cargo, departamento, salario, contrato, admissao };
 
         if (editMode) {
             employees[editIndex] = newEmployee;

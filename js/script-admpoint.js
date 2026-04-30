@@ -651,7 +651,19 @@ document.addEventListener("DOMContentLoaded", async function() {
 
     // Load and display employees
     function loadEmployees() {
-        const employees = JSON.parse(localStorage.getItem("employees")) || [];
+        let employees = JSON.parse(localStorage.getItem("employees")) || [];
+        let updated = false;
+        employees = employees.map((emp, idx) => {
+            if (!emp.id) {
+                updated = true;
+                return { ...emp, id: `employee-${Date.now()}-${idx}` };
+            }
+            return emp;
+        });
+        if (updated) {
+            localStorage.setItem("employees", JSON.stringify(employees));
+        }
+
         if (employees.length === 0) {
             employeeCards.innerHTML = '<p class="no-data">Nenhum funcionário cadastrado</p>';
             return;

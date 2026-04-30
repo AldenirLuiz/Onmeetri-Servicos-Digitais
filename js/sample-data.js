@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formattedDate = randomadmissao.toLocaleDateString('pt-BR');
 
         return {
+            id,
             nome: `${randomnome} ${randomLastnome}`,
             cargo: randomcargo,
             departamento: randomdepartamento,
@@ -72,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (isPresent) {
                 timesheet.push({
                     date: date.toISOString().split('T')[0],
+                    employeeId: employee.id,
                     name: employee.nome,
                     department: employee.departamento,
                     role: employee.cargo,
@@ -86,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Dia com falta
                 timesheet.push({
                     date: date.toISOString().split('T')[0],
+                    employeeId: employee.id,
                     name: employee.nome,
                     department: employee.departamento,
                     role: employee.cargo,
