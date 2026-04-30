@@ -183,11 +183,22 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateCharts(data) {
         if (reportType.value === "presence") {
             const groupLabel = getGroupLabel();
-            chart1Title.textContent = "Taxa de Presença por Funcionário";
+            chart1Title.textContent = "Taxa de Presença por Cargo";
             chart2Title.textContent = `Presença Média por ${groupLabel}`;
 
-            const nomes = data.map(emp => emp.nome);
-            const presenceRates = data.map(emp => emp.presenceRate.toFixed(2));
+            // Agrupar por cargo
+            const cargoRates = {};
+            data.forEach(emp => {
+                const cargo = emp.cargo || 'Sem Cargo';
+                if (!cargoRates[cargo]) cargoRates[cargo] = [];
+                cargoRates[cargo].push(emp.presenceRate);
+            });
+
+            const cargoLabels = Object.keys(cargoRates);
+            const cargoValues = cargoLabels.map(cargo => {
+                const rates = cargoRates[cargo];
+                return rates.reduce((acc, rate) => acc + rate, 0) / rates.length;
+            });
 
             const groupRates = {};
             data.forEach(emp => {
@@ -208,10 +219,10 @@ document.addEventListener("DOMContentLoaded", () => {
             chartDepartamento = new Chart(document.getElementById("departamentoChart"), {
                 type: "bar",
                 data: {
-                    labels: nomes,
+                    labels: cargoLabels,
                     datasets: [{
                         label: "Presença (%)",
-                        data: presenceRates,
+                        data: cargoValues.map(v => v.toFixed(2)),
                         backgroundColor: "#6495ED"
                     }]
                 },
