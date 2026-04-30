@@ -59,6 +59,10 @@
                 <legend>Filtros e Métricas</legend>
 
                 <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <select id="report-type">
+                        <option value="employees">Relatório de Funcionários</option>
+                        <option value="presence">Relatório de Presença</option>
+                    </select>
                     <select id="filter-contract">
                         <option value="">Todos Contratos</option>
                         <option value="CLT">CLT</option>
@@ -67,16 +71,16 @@
                     </select>
                     <select id="sort-by">
                         <option value="">Ordenar por</option>
-                        <option value="salario">Salário</option>
-                        <option value="admissao">Data de Admissão</option>
+                        <option value="salario">Salário / Presença</option>
+                        <option value="admissao">Admissão / Registros</option>
                     </select>
                     <button id="export-pdf">Exportar PDF</button>
                     <button id="export-excel">Exportar Excel</button>
                 </div>
 
                 <div id="metrics-container">
-                    <p><strong>Total de Funcionários:</strong> <span id="total-funcionarios">0</span></p>
-                    <p><strong>Média Salarial:</strong> <span id="media-salarial">R$ 0,00</span></p>
+                    <p><strong id="metric-1-label">Total de Funcionários:</strong> <span id="total-funcionarios">0</span></p>
+                    <p><strong id="metric-2-label">Média Salarial:</strong> <span id="media-salarial">R$ 0,00</span></p>
                 </div>
 
                 <div class="main-container-table" style="margin-top: 20px;">
@@ -99,11 +103,11 @@
             </fieldset>
             <div style="display: flex; flex-direction: row; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 40px;">
                 <div style="width: 350px;">
-                    <h3 style="text-align: center;">Funcionários por Departamento</h3>
+                    <h3 id="chart1-title" style="text-align: center;">Funcionários por Departamento</h3>
                     <canvas id="departamentoChart"></canvas>
                 </div>
                 <div style="width: 350px;">
-                    <h3 style="text-align: center;">Distribuição Salarial</h3>
+                    <h3 id="chart2-title" style="text-align: center;">Distribuição Salarial</h3>
                     <canvas id="salarioChart"></canvas>
                 </div>
             </div>
