@@ -55,41 +55,47 @@
 
     <main class="main-container">
         <section class="main-container-form" style="flex-direction: column;">
-            <fieldset style="width: 100%; max-width: 1100px;">
-                <legend>Filtros e Métricas</legend>
-
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <select id="report-type">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; justify-content: center;">
+                    
+                    <select id="report-type" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
                         <option value="employees">Relatório de Funcionários</option>
                         <option value="presence">Relatório de Presença</option>
                     </select>
-                    <select id="filter-field">
+                    <select id="filter-field" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
                         <option value="contrato">Filtrar por Contrato</option>
                         <option value="departamento">Filtrar por Departamento</option>
                         <option value="cargo">Filtrar por Cargo</option>
                     </select>
-                    <select id="filter-value">
+                    <select id="filter-value" default="Todos" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
                         <option value="">Todos</option>
                     </select>
-                    <select id="chart-group">
-                        <option value="departamento">Chart por Departamento</option>
+                    <select id="chart-group" default="Chart por Cargo" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
                         <option value="cargo">Chart por Cargo</option>
+                        <option value="departamento">Chart por Departamento</option>
                     </select>
-                    <select id="sort-by">
+                    <select id="sort-by" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
                         <option value="">Ordenar por</option>
                         <option value="salario">Salário / Presença</option>
                         <option value="admissao">Admissão / Registros</option>
                     </select>
-                    <button id="export-pdf">Exportar PDF</button>
-                    <button id="export-excel">Exportar Excel</button>
                 </div>
-
+            <fieldset style="width: 100%; max-width: 1100px;">
+                <legend>Métricas</legend>
                 <div id="metrics-container">
                     <p><strong id="metric-1-label">Total de Funcionários:</strong> <span id="total-funcionarios">0</span></p>
                     <p><strong id="metric-2-label">Média Salarial:</strong> <span id="media-salarial">R$ 0,00</span></p>
                 </div>
 
                 <div class="main-container-table" style="margin-top: 20px;">
+                    <div style="display: flex; flex-direction: row; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 40px;">
+                <div style="width: 350px;">
+                    <h3 id="chart1-title" style="text-align: center;">Funcionários por Departamento</h3>
+                    <canvas id="departamentoChart"></canvas>
+                </div>
+                <div style="width: 350px;">
+                    <h3 id="chart2-title" style="text-align: center;">Distribuição Salarial</h3>
+                    <canvas id="salarioChart"></canvas>
+                </div>
                     <table>
                         <thead>
                             <tr>
@@ -105,19 +111,13 @@
                             <!-- Linhas populadas via JS -->
                         </tbody>
                     </table>
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; justify-content: center;">
+                        <button id="export-pdf">Exportar PDF</button>
+                        <button id="export-excel">Exportar Excel</button>
+                    </div>
                 </div>
             </fieldset>
-            <div style="display: flex; flex-direction: row; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 40px;">
-                <div style="width: 350px;">
-                    <h3 id="chart1-title" style="text-align: center;">Funcionários por Departamento</h3>
-                    <canvas id="departamentoChart"></canvas>
-                </div>
-                <div style="width: 350px;">
-                    <h3 id="chart2-title" style="text-align: center;">Distribuição Salarial</h3>
-                    <canvas id="salarioChart"></canvas>
-                </div>
-            </div>
-
+            
         </section>
     </main>
 
