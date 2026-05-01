@@ -368,6 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("export-pdf").addEventListener("click", () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
+        let yPosition = 15;
 
         let exportData;
         let heading;
@@ -399,11 +400,42 @@ document.addEventListener("DOMContentLoaded", () => {
             ]);
         }
 
-        doc.text(heading, 14, 15);
+        doc.text(heading, 14, yPosition);
+        
+        // Adicionar gráficos com proporção correta
+        try {
+            const chartDepartamentoCanvas = document.getElementById("departamentoChart");
+            const chartSalarioCanvas = document.getElementById("salarioChart");
+            
+            if (chartDepartamentoCanvas && chartSalarioCanvas) {
+                const chart1Image = chartDepartamentoCanvas.toDataURL("image/png");
+                const chart2Image = chartSalarioCanvas.toDataURL("image/png");
+                
+                // Calcular proporção dos canvas
+                const ratio1 = chartDepartamentoCanvas.width / chartDepartamentoCanvas.height;
+                const ratio2 = chartSalarioCanvas.width / chartSalarioCanvas.height;
+                
+                // Dimensões ajustadas mantendo proporção
+                const height1 = 45;
+                const width1 = height1 * ratio1;
+                const height2 = 45;
+                const width2 = height2 * ratio2;
+                
+                // Adicionar gráficos com proporção mantida
+                yPosition += 25;
+                doc.addImage(chart1Image, "PNG", 12, yPosition, width1, height1);
+                doc.addImage(chart2Image, "PNG", 12 + width1 + 10, yPosition, width2, height2);
+                
+                yPosition += height1 + 10;
+            }
+        } catch (error) {
+            console.error("Erro ao adicionar gráficos:", error);
+        }
+        
         doc.autoTable({
             head: headers,
             body: exportData,
-            startY: 20,
+            startY: yPosition,
             styles: { fontSize: 9 },
             headStyles: { fillColor: [90, 131, 177] },
         });

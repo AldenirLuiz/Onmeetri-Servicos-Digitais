@@ -54,32 +54,32 @@
     </header>
 
     <main class="main-container">
-        <section class="main-container-form" style="flex-direction: column;">
-                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; justify-content: center;">
-                    
-                    <select id="report-type" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
-                        <option value="employees">Relatório de Funcionários</option>
-                        <option value="presence">Relatório de Presença</option>
-                    </select>
-                    <select id="filter-field" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
-                        <option value="contrato">Filtrar por Contrato</option>
-                        <option value="departamento">Filtrar por Departamento</option>
-                        <option value="cargo">Filtrar por Cargo</option>
-                    </select>
-                    <select id="filter-value" default="Todos" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
-                        <option value="">Todos</option>
-                    </select>
-                    <select id="chart-group" default="Chart por Cargo" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
-                        <option value="cargo">Chart por Cargo</option>
-                        <option value="departamento">Chart por Departamento</option>
-                    </select>
-                    <select id="sort-by" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
-                        <option value="">Ordenar por</option>
-                        <option value="salario">Salário / Presença</option>
-                        <option value="admissao">Admissão / Registros</option>
-                    </select>
-                </div>
-            <fieldset style="width: 100%; max-width: 1100px;">
+        <section class="main-container-form" style="flex-direction: column; align-items: center; margin: 0 auto;">
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 8px; justify-content: center;">
+                
+                <select id="report-type" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
+                    <option value="employees">Relatório de Funcionários</option>
+                    <option value="presence">Relatório de Presença</option>
+                </select>
+                <select id="filter-field" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
+                    <option value="contrato">Filtrar por Contrato</option>
+                    <option value="departamento">Filtrar por Departamento</option>
+                    <option value="cargo">Filtrar por Cargo</option>
+                </select>
+                <select id="filter-value" default="Todos" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
+                    <option value="">Todos</option>
+                </select>
+                <select id="chart-group" default="Chart por Cargo" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
+                    <option value="cargo">Chart por Cargo</option>
+                    <option value="departamento">Chart por Departamento</option>
+                </select>
+                <select id="sort-by" style="border: none; border-bottom: 2px solid #ccc; padding: 8px; font-size: 16px; background-color: transparent;">
+                    <option value="">Ordenar por</option>
+                    <option value="salario">Salário / Presença</option>
+                    <option value="admissao">Admissão / Registros</option>
+                </select>
+            </div>
+            <fieldset style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 95vw; margin: 0 auto;">
                 <legend>Métricas</legend>
                 <div id="metrics-container">
                     <p><strong id="metric-1-label">Total de Funcionários:</strong> <span id="total-funcionarios">0</span></p>
