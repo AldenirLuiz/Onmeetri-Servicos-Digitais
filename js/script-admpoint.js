@@ -138,13 +138,49 @@ document.addEventListener("DOMContentLoaded", function () {
         <th>Nome</th>
         <th>Período Manhã</th>
         <th>Período Tarde</th>
-        <th>Presença Manhã</th>
-        <th>Presença Tarde</th>
+        <th>Manhã</th>
+        <th>Tarde</th>
+        <th>Presença</th>
       </tr>
     </thead>
     <tbody></tbody>
   `;
   tableData.innerHTML = tableHeader;
+
+  // Function to setup presence checkbox listeners for desktop view
+  function setupPresenceCheckboxes() {
+    const rows = tableData.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+      const presenceCheckbox = row.querySelector('.check-presence-input');
+      const morningCheckbox = row.querySelector('.check-morning-input');
+      const afternoonCheckbox = row.querySelector('.check-after-input');
+      
+      if (presenceCheckbox && morningCheckbox && afternoonCheckbox) {
+        // Setup presence checkbox change event
+        presenceCheckbox.addEventListener('change', function() {
+          if (this.checked) {
+            // Mark both periods and disable them
+            morningCheckbox.checked = true;
+            afternoonCheckbox.checked = true;
+            morningCheckbox.disabled = true;
+            afternoonCheckbox.disabled = true;
+          } else {
+            // Enable period checkboxes
+            morningCheckbox.disabled = false;
+            afternoonCheckbox.disabled = false;
+          }
+        });
+
+        // Check initial state
+        if (presenceCheckbox.checked) {
+          morningCheckbox.checked = true;
+          afternoonCheckbox.checked = true;
+          morningCheckbox.disabled = true;
+          afternoonCheckbox.disabled = true;
+        }
+      }
+    });
+  }
 
   // Function to populate table with saved employees
   function populateEmployeeTable() {
@@ -172,17 +208,23 @@ document.addEventListener("DOMContentLoaded", function () {
       const newLine = `
         <tr class="tr-line">
           <td class="name">${emp.nome}</td>
-          <td><div><legend>Entrada</legend><input type="time" class="morning-in" value="06:30"><legend>Saida</legend><input type="time" class="morning-out" value="11:30"></div></td>
-          <td><div><legend>Entrada</legend><input type="time" class="after-in" value="13:00"><legend>Saida</legend><input type="time" class="after-out" value="17:00"></div></td>
-          <td class="check-morning" style="text-align: center; vertical-align: middle;">
-            <input type="checkbox" class="check-morning-input" checked />
+          <td><div class="time-inputs"><input type="time" class="morning-in" value="06:30" title="Entrada Manhã"><input type="time" class="morning-out" title="Saída Manhã" value="11:30"></div></td>
+          <td><div class="time-inputs"><input type="time" class="after-in" value="13:00" title="Entrada Tarde"><input type="time" class="after-out" title="Saída Tarde" value="17:00"></div></td>
+          <td class="check-morning" style="text-align: center; vertical-align: middle; width: 15px;">
+            <input type="checkbox" class="check-morning-input" unchecked />
           </td>
-          <td class="check-after" style="text-align: center; vertical-align: middle;">
-            <input type="checkbox" class="check-after-input" checked />
+          <td class="check-after" style="text-align: center; vertical-align: middle; width: 15px;">
+            <input type="checkbox" class="check-after-input" unchecked />
+          </td>
+          <td class="check-presence" style="text-align: center; vertical-align: middle; width: 15px;">
+            <input type="checkbox" class="check-presence-input" checked />
           </td>
         </tr>`;
       tbody.insertAdjacentHTML('beforeend', newLine);
     });
+    
+    // Setup presence checkbox interactions after adding rows
+    setupPresenceCheckboxes();
   }
 
   // Initial table population
@@ -236,7 +278,8 @@ document.addEventListener("DOMContentLoaded", function () {
         afterIn: row.querySelector('.after-in').value,
         afterOut: row.querySelector('.after-out').value,
         checkMorning: row.querySelector('.check-morning-input').checked,
-        checkAfter: row.querySelector('.check-after-input').checked
+        checkAfter: row.querySelector('.check-after-input').checked,
+        checkPresence: row.querySelector('.check-presence-input').checked
       };
     });
 
@@ -573,6 +616,13 @@ document.addEventListener("DOMContentLoaded", async function() {
                         <span class="department">${emp.departamento}</span>
                     </div>
                     
+                    <div class="presence-section">
+                        <div class="presence-check main-presence">
+                            <input type="checkbox" class="check-presence" id="presence-${emp.id}" checked>
+                            <label for="presence-${emp.id}">Presença do Dia</label>
+                        </div>
+                    </div>
+                    
                     <div class="time-entries">
                         <div class="period morning">
                             <h4>Período Manhã</h4>
@@ -586,8 +636,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                                     <input type="time" class="morning-out" data-type="morning-out" value="11:30">
                                 </div>
                                 <div class="presence-check">
-                                    <input type="checkbox" class="check-morning" checked>
-                                    <label>Presente</label>
+                                    <input type="checkbox" class="check-morning" id="morning-${emp.id}" checked>
+                                    <label for="morning-${emp.id}">Presente</label>
                                 </div>
                             </div>
                         </div>
@@ -604,8 +654,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                                     <input type="time" class="after-out" data-type="after-out" value="11:30">
                                 </div>
                                 <div class="presence-check">
-                                    <input type="checkbox" class="check-after" checked>
-                                    <label>Presente</label>
+                                    <input type="checkbox" class="check-after" id="after-${emp.id}" checked>
+                                    <label for="after-${emp.id}">Presente</label>
                                 </div>
                             </div>
                         </div>
@@ -614,6 +664,9 @@ document.addEventListener("DOMContentLoaded", async function() {
             `;
             employeeCards.insertAdjacentHTML('beforeend', card);
         });
+
+        // Setup presence checkbox interactions for mobile view
+        setupMobilePresenceCheckboxes();
     }
 
     // Save time entries
@@ -637,7 +690,8 @@ document.addEventListener("DOMContentLoaded", async function() {
                 afterIn: card.querySelector('.after-in').value,
                 afterOut: card.querySelector('.after-out').value,
                 checkMorning: card.querySelector('.check-morning').checked,
-                checkAfter: card.querySelector('.check-after').checked
+                checkAfter: card.querySelector('.check-after').checked,
+                checkPresence: card.querySelector('.check-presence').checked
             };
             timeEntries.push(entry);
         });
@@ -653,3 +707,38 @@ document.addEventListener("DOMContentLoaded", async function() {
     // Initialize
     loadEmployees();
 });
+
+// Function to setup presence checkbox listeners for mobile view
+function setupMobilePresenceCheckboxes() {
+    const cards = document.querySelectorAll('.employee-card');
+    cards.forEach(card => {
+        const presenceCheckbox = card.querySelector('.check-presence');
+        const morningCheckbox = card.querySelector('.check-morning');
+        const afternoonCheckbox = card.querySelector('.check-after');
+
+        if (presenceCheckbox && morningCheckbox && afternoonCheckbox) {
+            // Setup presence checkbox change event
+            presenceCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    // Mark both periods and disable them
+                    morningCheckbox.checked = true;
+                    afternoonCheckbox.checked = true;
+                    morningCheckbox.disabled = true;
+                    afternoonCheckbox.disabled = true;
+                } else {
+                    // Enable period checkboxes
+                    morningCheckbox.disabled = false;
+                    afternoonCheckbox.disabled = false;
+                }
+            });
+
+            // Check initial state
+            if (presenceCheckbox.checked) {
+                morningCheckbox.checked = true;
+                afternoonCheckbox.checked = true;
+                morningCheckbox.disabled = true;
+                afternoonCheckbox.disabled = true;
+            }
+        }
+    });
+}

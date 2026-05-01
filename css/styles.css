@@ -1,6 +1,6 @@
 :root {
     --main-color-text-lightdark: #33424b;
-    --main-color-light: #f4f4f4;
+    --main-color-light: #f4f4f4b2;
     --main-color-secondary: #1fa8da;
     --main-color-shadow-purple: rgba(47, 9, 65, 0.1);
     --main-color-fade: #cfe5e6;
@@ -97,7 +97,7 @@ header #headColumns #centerColumn #title #titleContainer {
     justify-content: center;
     align-items: center;
     margin: 0;
-    padding: 0; 
+    padding: 4px; 
     filter: drop-shadow(0 0 5px #33333398);
     font-weight: bolder;
 }
@@ -425,4 +425,17 @@ footer p {
     #ad-section, #footer-ad {
         margin: 10px 0;
     }
+}
+
+li a {
+    color: var(--main-color-text-lightdark);
+    text-decoration: none;
+    transition: all 0.3s;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+li:hover {
+    color: var(--main-color-text-lightdark);
+    font-size: 1em;
 }

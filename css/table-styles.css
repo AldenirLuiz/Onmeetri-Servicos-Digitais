@@ -50,12 +50,12 @@ table {
 table tr, td {
     height: 20px;
     padding: 6px;
-    border: 1px solid lightslategray;
+    border: 1px solid rgba(119, 136, 153, 0.342);
     border-collapse: collapse;
 }
 
 table tr td div{
-    padding: 6px;
+    padding: 0px;
     display: flex;
     flex-direction: row;
     text-align: center;
@@ -268,4 +268,15 @@ button:hover {
     font-weight: bold;
     font-size: 1rem;
     text-transform: uppercase;
+}
+
+tr:hover {
+  background-color: #cacfcf;
+}
+
+input[type="time"] {
+  padding: 5px;
+  border: none;
+  background-color: transparent;
+  box-shadow: 0px 1px 0px rgba(0,0,0,0.1);
 }
