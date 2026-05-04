@@ -6,97 +6,273 @@ main {
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 0 1rem;
 }
 
-.main-container-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.main-container {
     width: 100%;
-    width: 800px;
-    color: oklch(from gray 0.3 0 1);
-    margin-top: 20px;
-    padding: 20px;
+    max-width: 600px;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-.main-container-form fieldset {
+.form-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 4px solid #105f09;
+}
+
+.form-card h2 {
+    margin: 0 0 1.5rem 0;
+    color: #105f09;
+    font-size: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.form {
     width: 100%;
-    max-width: 800px;
-    border: 1px solid lightslategray;
-    border-radius: 6px;
-    padding: 20px;
-    box-shadow: 0px 2px 4px lightslategray;
 }
 
-.main-container-form form .form-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 4.8rem;
-    width: 100%;
-}
-
-.main-container-form form .form-container input {
+.form-fields {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
-    width: 240px;
-    height: 24px;
-    border-radius: 6px;
-    border: 1px solid slategray;
-    background: aliceblue;
+    gap: 1rem;
 }
 
-.main-container-form form .form-container-button {
+.form-field {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 30px;
-    gap: 30px;
+    flex-direction: column;
 }
-.main-container-form form .form-container-button button {
-    background: rgb(90, 131, 177);
-    color: aliceblue;
-    font-weight: bold;
+
+.form-field label {
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.form-field input {
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background: white;
+    transition: border-color 0.3s ease;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: #105f09;
+    box-shadow: 0 0 0 2px rgba(16, 95, 9, 0.1);
+}
+
+.form-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+.btn-save,
+.btn-clear {
+    padding: 0.7rem 1.2rem;
     border: none;
     border-radius: 6px;
-    padding: 5px 10px;
     cursor: pointer;
-    width: 200px;
-    height: 30px;
-    box-shadow: 0px 2px 4px lightslategray;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
 }
 
-.main-container-form form .form-container-button button:hover {
-    background: rgb(70, 111, 157);
+.btn-save {
+    background-color: #105f09;
+    color: white;
+}
+
+.btn-save:active {
+    background-color: #0a4206;
+    transform: scale(0.98);
+}
+
+.btn-clear {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.btn-clear:active {
+    background-color: #e8e8e8;
+    transform: scale(0.98);
+}
+
+/* Responsivo para telas maiores */
+@media screen and (min-width: 768px) {
+    .main-container {
+        max-width: 700px;
+    }
+
+    .form-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .form-field:nth-child(n+5) {
+        grid-column: 1 / 2;
+    }
+
+    .form-buttons {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .btn-delete {
-    background-color: crimson;
+    background-color: #f44336;
     color: white;
     border: none;
-    padding: 4px 10px;
-    border-radius: 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    transition: all 0.3s ease;
 }
-.btn-delete:hover {
-    background-color: darkred;
+.btn-delete:active {
+    background-color: #da190b;
+    transform: scale(0.98);
 }
 .btn-edit {
-    background-color: steelblue;
+    background-color: #2196F3;
     color: white;
     border: none;
-    padding: 4px 10px;
-    border-radius: 5px;
+    padding: 6px 10px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
     margin-right: 5px;
+    transition: all 0.3s ease;
 }
-.btn-edit:hover {
-    background-color: darkslateblue;
+.btn-edit:active {
+    background-color: #0b7dda;
+    transform: scale(0.98);
+}
+
+/* Mobile Cards View Styles */
+.desktop-view {
+    display: none;
+}
+
+.mobile-view {
+    display: block;
+}
+
+.employee-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.employee-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 4px solid #105f09;
+}
+
+.employee-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.employee-card .card-header h3 {
+    margin: 0;
+    color: #105f09;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.card-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.card-field-label {
+    font-weight: 600;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.card-field-value {
+    color: #333;
+    text-align: right;
+    font-weight: 500;
+}
+
+.card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+.employee-card .btn-edit,
+.employee-card .btn-delete {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.employee-card .btn-edit {
+    background-color: #2196F3;
+    color: white;
+}
+
+.employee-card .btn-edit:active {
+    background-color: #0b7dda;
+    transform: scale(0.98);
+}
+
+.employee-card .btn-delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.employee-card .btn-delete:active {
+    background-color: #da190b;
+    transform: scale(0.98);
+}
+
+/* Large Screen Styles */
+@media screen and (min-width: 768px) {
+    .desktop-view {
+        display: block;
+    }
+
+    .mobile-view {
+        display: none;
+    }
 }
 

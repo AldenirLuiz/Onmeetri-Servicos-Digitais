@@ -49,39 +49,46 @@
     </header>
     <main>
         <section class="main-container">
-            <div class="main-container-form">
-                <fieldset><legend>Formulario de Dados Do Usuario </legend>
-                    <form class="form" action="">
-                        <div class="form-container">
-                            <div class="form-line">
-                                <label for="name">Nome</label>
-                                <input type="text" placeholder="Nome Do Funcionario">
-
-                                <label for="cargo">Cargo</label>
-                                <input type="text" placeholder="Cargo do Funcionario">
-                            </div>
-                            <div class="form-line">
-                                <label for="dept">Departamento</label>
-                                <input type="text" placeholder="Departamento">
-
-                                <label for="">Salario</label>
-                                <input type="text" placeholder="Salario do Funcionario">
-                            </div>
-                            <div class="form-line">
-                                <label for="name">Contrato</label>
-                                <input type="text" placeholder="CLT / PJ / Estagio / Outros">
-
-                                <label for="admission">Admissao</label>
-                                <input type="date" placeholder="Data de Admissao">
-                            </div>
+            <div class="form-card">
+                <h2>Adicionar/Editar Funcionário</h2>
+                <form class="form">
+                    <div class="form-fields">
+                        <div class="form-field">
+                            <label for="name">Nome</label>
+                            <input type="text" id="name" placeholder="Nome do Funcionário">
                         </div>
-                        <div class="form-container-button">
-                            <button id="form-btt-save">SALVAR</button>
-                            <button id="form-btt-clear">LIMPAR</button>
+
+                        <div class="form-field">
+                            <label for="cargo">Cargo</label>
+                            <input type="text" id="cargo" placeholder="Cargo do Funcionário">
                         </div>
-                    </form>
-                </fieldset>
-                
+
+                        <div class="form-field">
+                            <label for="dept">Departamento</label>
+                            <input type="text" id="dept" placeholder="Departamento">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="salario">Salário</label>
+                            <input type="text" id="salario" placeholder="Salário do Funcionário">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="contrato">Contrato</label>
+                            <input type="text" id="contrato" placeholder="CLT / PJ / Estágio / Outros">
+                        </div>
+
+                        <div class="form-field">
+                            <label for="admission">Admissão</label>
+                            <input type="date" id="admission" placeholder="Data de Admissão">
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="submit" id="form-btt-save" class="btn-save">SALVAR</button>
+                        <button type="button" id="form-btt-clear" class="btn-clear">LIMPAR</button>
+                    </div>
+                </form>
             </div>
         </section>
         <section class="main-container-table">
@@ -90,24 +97,34 @@
                     <input type="text" id="searchInput" placeholder="Buscar por nome, cargo ou departamento..." style="width: 300px; padding: 5px; border-radius: 5px; border: 1px solid lightslategray;">
                 </div>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="name" id="employee-name">Nome</th>
-                            <th id="employee-role">Cargo</th>
-                            <th id="employee-department">Departamento</th>
-                            <th id="employee-salary">Salario</th>
-                            <th id="employee-contract">Contrato</th>
-                            <th id="employee-admission">Admissao</th>
-                        </tr>
-                    </thead>
-                    <tbody id="employee-list">
-                        <!-- Lista de funcionarios sera preenchida aqui -->
-                        <tr>
-                            
-                        </tr>
-                    </tbody>
-                </table>
+                <!-- Desktop Table View -->
+                <div class="desktop-view">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="name" id="employee-name">Nome</th>
+                                <th id="employee-role">Cargo</th>
+                                <th id="employee-department">Departamento</th>
+                                <th id="employee-salary">Salario</th>
+                                <th id="employee-contract">Contrato</th>
+                                <th id="employee-admission">Admissao</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employee-list">
+                            <!-- Lista de funcionarios sera preenchida aqui -->
+                            <tr>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Cards View -->
+                <div class="mobile-view">
+                    <div id="employee-cards" class="employee-cards">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </div>
             </fieldset>
         </section>
     </main>

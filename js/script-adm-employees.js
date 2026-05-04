@@ -5,16 +5,89 @@ let editIndex = null;
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector(".form");
     const employeeList = document.getElementById("employee-list");
+    const employeeCards = document.getElementById("employee-cards");
     const btnClear = document.getElementById("form-btt-clear");
+    const searchInput = document.getElementById("searchInput");
+    const formInputs = {
+        name: document.getElementById("name"),
+        cargo: document.getElementById("cargo"),
+        dept: document.getElementById("dept"),
+        salario: document.getElementById("salario"),
+        contrato: document.getElementById("contrato"),
+        admission: document.getElementById("admission")
+    };
 
     // Função para carregar funcionários salvos
     function loadEmployees() {
-    const employees = JSON.parse(localStorage.getItem("employees")) || [];
-    employeeList.innerHTML = ""; // Limpa antes de recarregar
-    employees.forEach((emp, idx) => addEmployeeToTable(emp, idx));
+        const employees = JSON.parse(localStorage.getItem("employees")) || [];
+        employeeList.innerHTML = ""; // Limpa antes de recarregar
+        employeeCards.innerHTML = ""; // Limpa cards
+        employees.forEach((emp, idx) => {
+            addEmployeeToTable(emp, idx);
+            addEmployeeCard(emp, idx);
+        });
     }
-    const searchInput = document.getElementById("searchInput");
 
+    // Função para adicionar funcionário na tabela (desktop)
+    function addEmployeeToTable(employee, index) {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${employee.nome}</td>
+            <td>${employee.cargo}</td>
+            <td>${employee.departamento}</td>
+            <td>R$ ${parseFloat(employee.salario).toFixed(2)}</td>
+            <td>${employee.contrato}</td>
+            <td>${employee.admissao}</td>
+            <td>
+                <button class="btn-edit" data-index="${index}">Editar</button>
+                <button class="btn-delete" data-index="${index}">Excluir</button>
+            </td>
+        `;
+
+        employeeList.appendChild(tr);
+    }
+
+    // Função para adicionar funcionário em card (mobile)
+    function addEmployeeCard(employee, index) {
+        const card = document.createElement("div");
+        card.className = "employee-card";
+        card.innerHTML = `
+            <div class="card-header">
+                <h3>${employee.nome}</h3>
+            </div>
+            <div class="card-body">
+                <div class="card-field">
+                    <span class="card-field-label">Cargo:</span>
+                    <span class="card-field-value">${employee.cargo}</span>
+                </div>
+                <div class="card-field">
+                    <span class="card-field-label">Departamento:</span>
+                    <span class="card-field-value">${employee.departamento}</span>
+                </div>
+                <div class="card-field">
+                    <span class="card-field-label">Salário:</span>
+                    <span class="card-field-value">R$ ${parseFloat(employee.salario).toFixed(2)}</span>
+                </div>
+                <div class="card-field">
+                    <span class="card-field-label">Contrato:</span>
+                    <span class="card-field-value">${employee.contrato}</span>
+                </div>
+                <div class="card-field">
+                    <span class="card-field-label">Admissão:</span>
+                    <span class="card-field-value">${employee.admissao}</span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <button class="btn-edit" data-index="${index}">Editar</button>
+                <button class="btn-delete" data-index="${index}">Excluir</button>
+            </div>
+        `;
+        employeeCards.appendChild(card);
+    }
+
+
+    // Evento de busca
     searchInput.addEventListener("input", function () {
         const query = searchInput.value.toLowerCase();
         const employees = JSON.parse(localStorage.getItem("employees")) || [];
@@ -26,39 +99,21 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
         employeeList.innerHTML = "";
-        filtered.forEach((emp, idx) => addEmployeeToTable(emp, idx));
+        employeeCards.innerHTML = "";
+        filtered.forEach((emp, idx) => {
+            addEmployeeToTable(emp, idx);
+            addEmployeeCard(emp, idx);
+        });
     });
-
-
-
-    // Função para adicionar funcionário na tabela
-    function addEmployeeToTable(employee, index) {
-    const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-        <td>${employee.nome}</td>
-        <td>${employee.cargo}</td>
-        <td>${employee.departamento}</td>
-        <td>R$ ${parseFloat(employee.salario).toFixed(2)}</td>
-        <td>${employee.contrato}</td>
-        <td>${employee.admissao}</td>
-        <td>
-            <button class="btn-edit" data-index="${index}">Editar</button>
-            <button class="btn-delete" data-index="${index}">Excluir</button>
-        </td>
-    `;
-
-    employeeList.appendChild(tr);
-    }
-
-
-
-    // Função para salvar funcionário
     form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const inputs = form.querySelectorAll("input");
-        const [nome, cargo, departamento, salario, contrato, admissao] = [...inputs].map(i => i.value.trim());
+        const nome = formInputs.name.value.trim();
+        const cargo = formInputs.cargo.value.trim();
+        const departamento = formInputs.dept.value.trim();
+        const salario = formInputs.salario.value.trim();
+        const contrato = formInputs.contrato.value.trim();
+        const admissao = formInputs.admission.value.trim();
 
         if (!nome || !cargo || !departamento || !salario || !contrato || !admissao) {
             alert("Preencha todos os campos.");
@@ -82,32 +137,39 @@ document.addEventListener("DOMContentLoaded", function () {
         loadEmployees();
     });
 
-    // Event delegation para excluir
-    employeeList.addEventListener("click", function (e) {
-    const employees = JSON.parse(localStorage.getItem("employees")) || [];
+    // Event delegation para editar e excluir
+    function handleEmployeeAction(e) {
+        const employees = JSON.parse(localStorage.getItem("employees")) || [];
 
-    if (e.target.classList.contains("btn-delete")) {
-        const index = parseInt(e.target.dataset.index);
-        employees.splice(index, 1);
-        localStorage.setItem("employees", JSON.stringify(employees));
-        loadEmployees();
+        if (e.target.classList.contains("btn-delete")) {
+            const index = parseInt(e.target.dataset.index);
+            employees.splice(index, 1);
+            localStorage.setItem("employees", JSON.stringify(employees));
+            loadEmployees();
+        }
+
+        if (e.target.classList.contains("btn-edit")) {
+            editIndex = parseInt(e.target.dataset.index);
+            const emp = employees[editIndex];
+
+            formInputs.name.value = emp.nome;
+            formInputs.cargo.value = emp.cargo;
+            formInputs.dept.value = emp.departamento;
+            formInputs.salario.value = emp.salario;
+            formInputs.contrato.value = emp.contrato;
+            formInputs.admission.value = emp.admissao;
+
+            editMode = true;
+            // Scroll to form
+            form.scrollIntoView({ behavior: "smooth" });
+        }
     }
 
-    if (e.target.classList.contains("btn-edit")) {
-        editIndex = parseInt(e.target.dataset.index);
-        const emp = employees[editIndex];
+    // Event listeners para desktop (tabela)
+    employeeList.addEventListener("click", handleEmployeeAction);
 
-        const inputs = form.querySelectorAll("input");
-        inputs[0].value = emp.nome;
-        inputs[1].value = emp.cargo;
-        inputs[2].value = emp.departamento;
-        inputs[3].value = emp.salario;
-        inputs[4].value = emp.contrato;
-        inputs[5].value = emp.admissao;
-
-        editMode = true;
-    }
-});
+    // Event listeners para mobile (cards)
+    employeeCards.addEventListener("click", handleEmployeeAction);
 
 
 
@@ -120,10 +182,3 @@ document.addEventListener("DOMContentLoaded", function () {
     // Inicializar dados salvos
     loadEmployees();
 });
-
-// Exemplo de uso em mensagens
-alert(langManager.translate('saveSuccess'));
-
-// Exemplo de uso em elementos dinâmicos
-element.textContent = langManager.translate('department');
-
