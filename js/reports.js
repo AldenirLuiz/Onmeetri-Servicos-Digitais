@@ -502,7 +502,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const fileName = reportType.value === "presence" ? "relatorio_presenca.pdf" : "relatorio_funcionarios.pdf";
-        doc.save(fileName);
+        const dateRange = dateFromInput.value || dateToInput.value
+            ? `_${dateFromInput.value || 'inicio'}_${dateToInput.value || 'fim'}`
+            : "";
+        const finalFileName = fileName.replace('.pdf', `${dateRange}.pdf`);
+        doc.save(finalFileName);
     });
 });
 
