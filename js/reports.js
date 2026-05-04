@@ -12,10 +12,39 @@ document.addEventListener("DOMContentLoaded", () => {
     const chartGroup = document.getElementById("chart-group");
     const sortBy = document.getElementById("sort-by");
     const reportType = document.getElementById("report-type");
+    const dateFromInput = document.getElementById("date-from");
+    const dateToInput = document.getElementById("date-to");
+    const toggleAdvanced = document.getElementById("toggle-advanced");
+    const advancedOptions = document.getElementById("advanced-options");
     const chart1Title = document.getElementById("chart1-title");
     const chart2Title = document.getElementById("chart2-title");
     const pointData = JSON.parse(localStorage.getItem("pointData")) || [];
     const tableHead = document.querySelector("#report-table-body").closest("table").querySelector("thead");
+
+    function parsePTBRDate(dateString) {
+        if (!dateString) return null;
+        const [day, month, year] = dateString.split("/");
+        return new Date(`${year}-${month}-${day}`);
+    }
+
+    function parseISODate(dateString) {
+        return dateString ? new Date(dateString) : null;
+    }
+
+    function isWithinDateRange(valueDate, startDate, endDate) {
+        if (!valueDate || isNaN(valueDate.getTime())) return false;
+        if (startDate && valueDate < startDate) return false;
+        if (endDate && valueDate > endDate) return false;
+        return true;
+    }
+
+    function setDefaultDateRange() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        dateFromInput.value = `${year}-${month}-01`;
+        dateToInput.value = `${year}-${month}-15`;
+    }
 
     function getUniqueFilterValues(field) {
         return [...new Set(employees.map(emp => emp[field] || ""))]
@@ -129,7 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getPresenceData(filteredEmployees) {
         return filteredEmployees.map(emp => {
-            const entries = pointData.filter(entry => String(entry.employeeId) === String(emp.id) || entry.name === emp.nome);
+            const fromDate = dateFromInput.value ? new Date(dateFromInput.value) : null;
+            const toDate = dateToInput.value ? new Date(dateToInput.value) : null;
+            const entries = pointData.filter(entry => {
+                const matchesEmployee = String(entry.employeeId) === String(emp.id) || entry.name === emp.nome;
+                const entryDate = parseISODate(entry.date);
+                return matchesEmployee && (!fromDate && !toDate || isWithinDateRange(entryDate, fromDate, toDate));
+            });
             const totalDays = entries.length;
             const presentMorning = entries.filter(entry => entry.checkMorning).length;
             const presentAfternoon = entries.filter(entry => entry.checkAfter).length;
@@ -156,6 +191,15 @@ document.addEventListener("DOMContentLoaded", () => {
             filtered = filtered.filter(emp => emp[selectedField] === selectedValue);
         }
 
+        const startDate = dateFromInput.value ? new Date(dateFromInput.value) : null;
+        const endDate = dateToInput.value ? new Date(dateToInput.value) : null;
+        if (startDate || endDate) {
+            filtered = filtered.filter(emp => {
+                const admissionDate = parsePTBRDate(emp.admissao);
+                return isWithinDateRange(admissionDate, startDate, endDate);
+            });
+        }
+
         const ordem = sortBy.value;
         if (reportType.value === "presence") {
             let presenceData = getPresenceData(filtered);
@@ -169,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (ordem === "salario") {
                 filtered.sort((a, b) => parseFloat(b.salario) - parseFloat(a.salario));
             } else if (ordem === "admissao") {
-                filtered.sort((a, b) => new Date(b.admissao) - new Date(a.admissao));
+                filtered.sort((a, b) => parsePTBRDate(b.admissao) - parsePTBRDate(a.admissao));
             }
             visibleData = filtered;
         }
@@ -324,8 +368,15 @@ document.addEventListener("DOMContentLoaded", () => {
     chartGroup.addEventListener("change", applyFiltersAndSort);
     sortBy.addEventListener("change", applyFiltersAndSort);
     reportType.addEventListener("change", applyFiltersAndSort);
+    dateFromInput.addEventListener("change", applyFiltersAndSort);
+    dateToInput.addEventListener("change", applyFiltersAndSort);
+    toggleAdvanced.addEventListener("click", () => {
+        advancedOptions.classList.toggle("hidden");
+        toggleAdvanced.textContent = advancedOptions.classList.contains("hidden") ? "Mais opções ▾" : "Menos opções ▴";
+    });
 
     // Inicialização
+    setDefaultDateRange();
     populateFilterValues();
     applyFiltersAndSort();
     document.getElementById("export-excel").addEventListener("click", () => {
@@ -443,11 +494,5 @@ document.addEventListener("DOMContentLoaded", () => {
         const fileName = reportType.value === "presence" ? "relatorio_presenca.pdf" : "relatorio_funcionarios.pdf";
         doc.save(fileName);
     });
-
-    // Exemplo de uso em mensagens
-    alert(langManager.translate('saveSuccess'));
-
-    // Exemplo de uso em elementos dinâmicos
-    element.textContent = langManager.translate('department');
 });
 

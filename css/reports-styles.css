@@ -30,3 +30,50 @@ button#export-excel {
 button#export-pdf:hover, button#export-excel:hover {
     opacity: 0.85;
 }
+
+.filters-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.date-range-group input[type="date"], .date-range-group label {
+    font-size: 0.95rem;
+}
+
+.date-range-group input[type="date"] {
+    padding: 6px 8px;
+    border: 1px solid lightslategray;
+    border-radius: 6px;
+    background: white;
+}
+
+.toggle-advanced {
+    padding: 8px 14px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.advanced-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.advanced-options.hidden {
+    display: none;
+}
