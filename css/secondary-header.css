@@ -5,6 +5,7 @@ header {
     color: oklch(from gray 0.5 0 1);;
     position: relative;
     min-height: 100px;
+    font-size: 0.8em;
 }
 
 .header-group {

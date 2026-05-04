@@ -1,21 +1,39 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Usuários padrão
-  const defaultUsers = [
-    { username: 'admin', password: 'admin' },
-    { username: 'user', password: '1234' }
-  ];
+  // Carregar usuários das configurações
+  function getUsersFromSettings() {
+    const settings = JSON.parse(localStorage.getItem('platformSettings')) || {};
+    return settings.users?.usersList || [];
+  }
+
+  function getUserProfiles() {
+    const settings = JSON.parse(localStorage.getItem('platformSettings')) || {};
+    return settings.users?.profiles || {};
+  }
 
   // Verificar se está logado
   function isLoggedIn() {
     return localStorage.getItem('loggedIn') === 'true';
   }
 
+  // Verificar se usuário tem permissão para editar
+  function hasEditPermission() {
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) return false;
+    const users = getUsersFromSettings();
+    const profiles = getUserProfiles();
+    const user = users.find(u => u.email === currentUser || u.name === currentUser);
+    if (!user) return false;
+    const profile = profiles[user.profile];
+    return profile && (profile.permissions.includes('all') || profile.permissions.includes('edit') || profile.permissions.includes('point'));
+  }
+
   // Fazer login
-  function login(username, password) {
-    const user = defaultUsers.find(u => u.username === username && u.password === password);
+  function login(email, password) {
+    const users = getUsersFromSettings();
+    const user = users.find(u => (u.email === email || u.name === email) && u.password === password);
     if (user) {
       localStorage.setItem('loggedIn', 'true');
-      localStorage.setItem('currentUser', username);
+      localStorage.setItem('currentUser', user.email || user.name);
       return true;
     }
     return false;
@@ -30,7 +48,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Mostrar modal de login
   function showLoginModal() {
     const modal = document.getElementById('loginModal');
-    modal.style.display = 'flex';
+    if (modal) {
+      modal.style.display = 'flex';
+    } else {
+      console.error('Modal de login não encontrado');
+    }
   }
 
   // Esconder modal de login
@@ -44,47 +66,57 @@ document.addEventListener("DOMContentLoaded", function () {
   const cancelLogin = document.getElementById('cancelLogin');
   const closeLogin = document.querySelector('.close-login');
 
-  loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    if (login(username, password)) {
-      hideLoginModal();
-      alert('Login realizado com sucesso!');
-      // Reabilitar edições
-      enableEditing();
-    } else {
-      alert('Usuário ou senha incorretos!');
-    }
-  });
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      if (login(username, password)) {
+        hideLoginModal();
+        alert('Login realizado com sucesso!');
+        // Reabilitar edições
+        enableEditing();
+      } else {
+        alert('Usuário ou senha incorretos!');
+      }
+    });
+  }
 
-  cancelLogin.addEventListener('click', hideLoginModal);
-  closeLogin.addEventListener('click', hideLoginModal);
+  if (cancelLogin) cancelLogin.addEventListener('click', hideLoginModal);
+  if (closeLogin) closeLogin.addEventListener('click', hideLoginModal);
 
-  // Função para habilitar edições
+  // Função para habilitar edições somente em entradas novas ou linhas desbloqueadas
   function enableEditing() {
-    const timeInputs = document.querySelectorAll('input[type="time"]');
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    timeInputs.forEach(input => input.readonly = false);
+    const timeInputs = document.querySelectorAll('tr[data-saved-entry="false"] input[type="time"]');
+    const checkboxes = document.querySelectorAll('tr[data-saved-entry="false"] input[type="checkbox"]');
+    timeInputs.forEach(input => input.readOnly = false);
     checkboxes.forEach(cb => cb.disabled = false);
   }
 
-  // Função para desabilitar edições
+  // Função para desabilitar edições em todas as linhas
   function disableEditing() {
     const timeInputs = document.querySelectorAll('input[type="time"]');
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    timeInputs.forEach(input => input.readonly = true);
+    timeInputs.forEach(input => input.readOnly = true);
     checkboxes.forEach(cb => cb.disabled = true);
   }
 
   // Adicionar event listeners para clicar em inputs
+  function enableRowEditing(row) {
+    const inputs = row.querySelectorAll('input[type="time"]');
+    const checkboxes = row.querySelectorAll('input[type="checkbox"]');
+    inputs.forEach(input => input.readOnly = false);
+    checkboxes.forEach(cb => cb.disabled = false);
+  }
+
   function setupEditListeners() {
     const timeInputs = document.querySelectorAll('input[type="time"]');
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const editButtons = document.querySelectorAll('.edit-entry-button');
 
     timeInputs.forEach(input => {
       input.addEventListener('click', function() {
-        if (!isLoggedIn()) {
+        if (!isLoggedIn() || !hasEditPermission()) {
           showLoginModal();
         }
       });
@@ -92,22 +124,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
     checkboxes.forEach(cb => {
       cb.addEventListener('click', function() {
-        if (!isLoggedIn()) {
+        if (!isLoggedIn() || !hasEditPermission()) {
           showLoginModal();
           // Prevenir mudança
           setTimeout(() => cb.checked = !cb.checked, 0);
         }
       });
     });
+
+    editButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const row = this.closest('tr');
+        if (!row) return;
+
+        if (!isLoggedIn() || !hasEditPermission()) {
+          showLoginModal();
+          return;
+        }
+
+        enableRowEditing(row);
+        row.classList.add('editing');
+      });
+    });
   }
 
   // Inicializar
-  if (isLoggedIn()) {
+  if (isLoggedIn() && hasEditPermission()) {
     enableEditing();
   } else {
     disableEditing();
+    // Mostrar modal se não logado
+    if (!isLoggedIn()) {
+      showLoginModal();
+    }
   }
-  setupEditListeners();
+  // setupEditListeners será chamado após popular a tabela
   // Helper functions for test data
   function generateRandomEmployee(id) {
     const nomes = ['João', 'Maria', 'José', 'Ana', 'Paulo', 'Carla', 'Ricardo', 'Fernanda', 'Pedro', 'Juliana'];
@@ -234,30 +285,38 @@ document.addEventListener("DOMContentLoaded", function () {
   const dontShowTutorial = document.getElementById("dontShowTutorial");
   const closeTutorialBtn = document.getElementsByClassName("close-tutorial")[0];
 
+  let allowModifyExisting = true;
+  let lastPromptedDate = '';
+
+  function renderTableHeader(hasSavedEntries) {
+    return `
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Período Manhã</th>
+          <th>Período Tarde</th>
+          <th>Manhã</th>
+          <th>Tarde</th>
+          <th>Presença</th>
+          ${hasSavedEntries ? '<th>Ações</th>' : ''}
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+  }
+
   // Error checking for required elements
   if (!tableData) {
     console.error('Table element not found');
     return;
   }
 
-  // Add table header
-  const tableHeader = `
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Período Manhã</th>
-        <th>Período Tarde</th>
-        <th>Manhã</th>
-        <th>Tarde</th>
-        <th>Presença</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  `;
-  tableData.innerHTML = tableHeader;
+  // Table header will be rendered inside populateEmployeeTable based on whether there are saved entries.
 
   // Function to setup presence checkbox listeners for desktop view
   function setupPresenceCheckboxes() {
+    if (!isLoggedIn() || !hasEditPermission()) return; // Só aplicar se logado e com permissão
+
     const rows = tableData.querySelectorAll('tbody tr');
     rows.forEach(row => {
       const presenceCheckbox = row.querySelector('.check-presence-input');
@@ -295,9 +354,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to populate table with saved employees
   function populateEmployeeTable() {
-    const tbody = tableData.querySelector('tbody');
-    tbody.innerHTML = ''; // Clear existing rows
-    
     // Get employees from localStorage
     const employees = JSON.parse(localStorage.getItem("employees")) || [];
     
@@ -305,6 +361,24 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("No employees found in localStorage");
       return;
     }
+
+    // Get point data for selected date
+    const selectedDate = tableDate.value;
+    const pointData = JSON.parse(localStorage.getItem('pointData')) || [];
+    const dayData = pointData.filter(entry => entry.date === selectedDate);
+    const hasSavedEntries = dayData.length > 0;
+
+    if (hasSavedEntries && selectedDate && lastPromptedDate !== selectedDate) {
+      allowModifyExisting = window.confirm('Já existem dados salvos para esta data. Deseja modificar as entradas existentes?');
+      lastPromptedDate = selectedDate;
+    } else if (!hasSavedEntries) {
+      allowModifyExisting = true;
+      lastPromptedDate = selectedDate;
+    }
+
+    tableData.innerHTML = renderTableHeader(hasSavedEntries);
+    const tbody = tableData.querySelector('tbody');
+    tbody.innerHTML = ''; // Clear existing rows
 
     // Create a Set to track unique names
     const uniqueNames = new Set();
@@ -315,31 +389,66 @@ document.addEventListener("DOMContentLoaded", function () {
       
       // Add name to Set
       uniqueNames.add(emp.nome);
-      
+
+      // Find existing data for this employee and date
+      const existingEntry = dayData.find(entry => entry.name === emp.nome);
+    const entrySaved = Boolean(existingEntry);
+
+      const morningIn = existingEntry ? existingEntry.morningIn : '06:30';
+      const morningOut = existingEntry ? existingEntry.morningOut : '11:30';
+      const afterIn = existingEntry ? existingEntry.afterIn : '13:00';
+      const afterOut = existingEntry ? existingEntry.afterOut : '17:00';
+      const checkMorning = existingEntry ? existingEntry.checkMorning : false;
+      const checkAfter = existingEntry ? existingEntry.checkAfter : false;
+      const checkPresence = existingEntry ? existingEntry.checkPresence : true;
+
+      const isNewEntry = !entrySaved;
+      const canEditNewRow = isNewEntry && isLoggedIn() && hasEditPermission();
+      const rowReadOnly = entrySaved || !canEditNewRow;
+      const rowDisabled = entrySaved || !canEditNewRow;
+      const actionCell = entrySaved && allowModifyExisting ? '<button type="button" class="edit-entry-button primary-button">Editar</button>'
+                          : entrySaved && !allowModifyExisting ? '<span class="readonly-entry">Somente leitura</span>'
+                          : '';
+
       const newLine = `
-        <tr class="tr-line">
+        <tr class="tr-line" data-employee-id="${emp.id}" data-saved-entry="${entrySaved}">
           <td class="name">${emp.nome}</td>
-          <td><div class="time-inputs"><input type="time" class="morning-in" value="06:30" title="Entrada Manhã" readonly><input type="time" class="morning-out" title="Saída Manhã" value="11:30" readonly></div></td>
-          <td><div class="time-inputs"><input type="time" class="after-in" value="13:00" title="Entrada Tarde" readonly><input type="time" class="after-out" title="Saída Tarde" value="17:00" readonly></div></td>
+          <td><div class="time-inputs"><input type="time" class="morning-in" value="${morningIn}" title="Entrada Manhã" ${rowReadOnly ? 'readonly' : ''}><input type="time" class="morning-out" title="Saída Manhã" value="${morningOut}" ${rowReadOnly ? 'readonly' : ''}></div></td>
+          <td><div class="time-inputs"><input type="time" class="after-in" value="${afterIn}" title="Entrada Tarde" ${rowReadOnly ? 'readonly' : ''}><input type="time" class="after-out" title="Saída Tarde" value="${afterOut}" ${rowReadOnly ? 'readonly' : ''}></div></td>
           <td class="check-morning" style="text-align: center; vertical-align: middle; width: 15px;">
-            <input type="checkbox" class="check-morning-input" unchecked disabled />
+            <input type="checkbox" class="check-morning-input" ${checkMorning ? 'checked' : ''} ${rowDisabled ? 'disabled' : ''} />
           </td>
           <td class="check-after" style="text-align: center; vertical-align: middle; width: 15px;">
-            <input type="checkbox" class="check-after-input" unchecked disabled />
+            <input type="checkbox" class="check-after-input" ${checkAfter ? 'checked' : ''} ${rowDisabled ? 'disabled' : ''} />
           </td>
           <td class="check-presence" style="text-align: center; vertical-align: middle; width: 15px;">
-            <input type="checkbox" class="check-presence-input" checked disabled />
+            <input type="checkbox" class="check-presence-input" ${checkPresence ? 'checked' : ''} ${rowDisabled ? 'disabled' : ''} />
           </td>
+          ${hasSavedEntries ? `<td style="text-align: center; vertical-align: middle; width: 90px;">${actionCell}</td>` : ''}
         </tr>`;
       tbody.insertAdjacentHTML('beforeend', newLine);
     });
     
     // Setup presence checkbox interactions after adding rows
     setupPresenceCheckboxes();
+    updateSaveButtonState();
   }
+
+  // Set default date before populating existing point entries
+  if (tableDate) tableDate.valueAsDate = new Date();
 
   // Initial table population
   populateEmployeeTable();
+
+  function updateSaveButtonState() {
+    if (!btSave) return;
+    btSave.disabled = !allowModifyExisting && JSON.parse(localStorage.getItem('pointData'))?.some(entry => entry.date === tableDate.value);
+  }
+
+  updateSaveButtonState();
+
+  // Setup edit listeners after table is populated
+  setupEditListeners();
 
   // Check for first access
   const employees = JSON.parse(localStorage.getItem("employees")) || [];
@@ -357,6 +466,15 @@ document.addEventListener("DOMContentLoaded", function () {
   // Set default dates
   if (tableDate) tableDate.valueAsDate = new Date();
   if (summaryDate) summaryDate.valueAsDate = new Date();
+
+  // Reload table when date changes
+  if (tableDate) {
+    tableDate.addEventListener('change', () => {
+      populateEmployeeTable();
+      setupEditListeners();
+      updateSaveButtonState();
+    });
+  }
 
   // Remove existing event listeners
   const newBtSave = btSave.cloneNode(true);
@@ -378,12 +496,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const pointData = rows.map(row => {
       const name = row.querySelector('.name').textContent;
       const employee = JSON.parse(localStorage.getItem("employees"))?.find(emp => emp.nome === name) || {};
-      
-      return {
-        date: tableDate.value,
-        name: name,
-        department: employee.departamento || '',
-        role: employee.cargo || '',
+          const employeeId = row.dataset.employeeId || employee.id || '';
+          
+          return {
+            date: tableDate.value,
+            employeeId: employeeId,
         morningIn: row.querySelector('.morning-in').value,
         morningOut: row.querySelector('.morning-out').value,
         afterIn: row.querySelector('.after-in').value,

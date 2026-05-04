@@ -213,6 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = prompt('Email:');
         if (!email) return;
         
+        const password = prompt('Senha:');
+        if (!password) return;
+        
         const profileOptions = Object.keys(currentSettings.users.profiles).join(', ');
         const profile = prompt(`Perfil (${profileOptions}):`);
         if (!profile || !currentSettings.users.profiles[profile]) return;
@@ -220,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentSettings.users.usersList.push({
             name,
             email,
+            password,
             role: 'Funcionário',
             profile,
             createdAt: new Date().toISOString()
