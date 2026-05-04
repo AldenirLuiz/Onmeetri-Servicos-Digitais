@@ -65,8 +65,10 @@ header {
     color: var(--main-color-text-lightdark);
     text-align: center;
     box-shadow: 0 0 12px var(--fade-light-green);
-    z-index: 1;
-    height: 100px;
+    z-index: 10;
+    position: relative;
+    min-height: 100px;
+    padding: 1rem 0;
 }
 
 #headColumns {
