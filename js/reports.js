@@ -38,6 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     }
 
+    function formatDateForDisplay(dateString) {
+        if (!dateString) return "";
+        const [year, month, day] = dateString.split('-');
+        return `${day}/${month}/${year}`;
+    }
+
     function setDefaultDateRange() {
         const today = new Date();
         const year = today.getFullYear();
@@ -452,6 +458,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         doc.text(heading, 14, yPosition);
+        const periodLabel = dateFromInput.value || dateToInput.value
+            ? `Período: ${formatDateForDisplay(dateFromInput.value)} - ${formatDateForDisplay(dateToInput.value)}`
+            : "Período: Todos";
+        doc.text(periodLabel, 14, yPosition + 8);
         
         // Adicionar gráficos com proporção correta
         try {
