@@ -61,7 +61,7 @@ button#export-pdf:hover, button#export-excel:hover {
 .toggle-advanced {
     padding: 8px 14px;
     border: 1px solid #ccc;
-    background: #fff;
+    background: seagreen;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
