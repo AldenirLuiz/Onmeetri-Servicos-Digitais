@@ -1,4 +1,113 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Usuários padrão
+  const defaultUsers = [
+    { username: 'admin', password: 'admin' },
+    { username: 'user', password: '1234' }
+  ];
+
+  // Verificar se está logado
+  function isLoggedIn() {
+    return localStorage.getItem('loggedIn') === 'true';
+  }
+
+  // Fazer login
+  function login(username, password) {
+    const user = defaultUsers.find(u => u.username === username && u.password === password);
+    if (user) {
+      localStorage.setItem('loggedIn', 'true');
+      localStorage.setItem('currentUser', username);
+      return true;
+    }
+    return false;
+  }
+
+  // Logout
+  function logout() {
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('currentUser');
+  }
+
+  // Mostrar modal de login
+  function showLoginModal() {
+    const modal = document.getElementById('loginModal');
+    modal.style.display = 'flex';
+  }
+
+  // Esconder modal de login
+  function hideLoginModal() {
+    const modal = document.getElementById('loginModal');
+    modal.style.display = 'none';
+  }
+
+  // Configurar modal de login
+  const loginForm = document.getElementById('loginForm');
+  const cancelLogin = document.getElementById('cancelLogin');
+  const closeLogin = document.querySelector('.close-login');
+
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    if (login(username, password)) {
+      hideLoginModal();
+      alert('Login realizado com sucesso!');
+      // Reabilitar edições
+      enableEditing();
+    } else {
+      alert('Usuário ou senha incorretos!');
+    }
+  });
+
+  cancelLogin.addEventListener('click', hideLoginModal);
+  closeLogin.addEventListener('click', hideLoginModal);
+
+  // Função para habilitar edições
+  function enableEditing() {
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    timeInputs.forEach(input => input.readonly = false);
+    checkboxes.forEach(cb => cb.disabled = false);
+  }
+
+  // Função para desabilitar edições
+  function disableEditing() {
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    timeInputs.forEach(input => input.readonly = true);
+    checkboxes.forEach(cb => cb.disabled = true);
+  }
+
+  // Adicionar event listeners para clicar em inputs
+  function setupEditListeners() {
+    const timeInputs = document.querySelectorAll('input[type="time"]');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    timeInputs.forEach(input => {
+      input.addEventListener('click', function() {
+        if (!isLoggedIn()) {
+          showLoginModal();
+        }
+      });
+    });
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('click', function() {
+        if (!isLoggedIn()) {
+          showLoginModal();
+          // Prevenir mudança
+          setTimeout(() => cb.checked = !cb.checked, 0);
+        }
+      });
+    });
+  }
+
+  // Inicializar
+  if (isLoggedIn()) {
+    enableEditing();
+  } else {
+    disableEditing();
+  }
+  setupEditListeners();
   // Helper functions for test data
   function generateRandomEmployee(id) {
     const nomes = ['João', 'Maria', 'José', 'Ana', 'Paulo', 'Carla', 'Ricardo', 'Fernanda', 'Pedro', 'Juliana'];
@@ -165,7 +274,9 @@ document.addEventListener("DOMContentLoaded", function () {
             morningCheckbox.disabled = true;
             afternoonCheckbox.disabled = true;
           } else {
-            // Enable period checkboxes
+            // Unmark and enable period checkboxes
+            morningCheckbox.checked = false;
+            afternoonCheckbox.checked = false;
             morningCheckbox.disabled = false;
             afternoonCheckbox.disabled = false;
           }
@@ -208,16 +319,16 @@ document.addEventListener("DOMContentLoaded", function () {
       const newLine = `
         <tr class="tr-line">
           <td class="name">${emp.nome}</td>
-          <td><div class="time-inputs"><input type="time" class="morning-in" value="06:30" title="Entrada Manhã"><input type="time" class="morning-out" title="Saída Manhã" value="11:30"></div></td>
-          <td><div class="time-inputs"><input type="time" class="after-in" value="13:00" title="Entrada Tarde"><input type="time" class="after-out" title="Saída Tarde" value="17:00"></div></td>
+          <td><div class="time-inputs"><input type="time" class="morning-in" value="06:30" title="Entrada Manhã" readonly><input type="time" class="morning-out" title="Saída Manhã" value="11:30" readonly></div></td>
+          <td><div class="time-inputs"><input type="time" class="after-in" value="13:00" title="Entrada Tarde" readonly><input type="time" class="after-out" title="Saída Tarde" value="17:00" readonly></div></td>
           <td class="check-morning" style="text-align: center; vertical-align: middle; width: 15px;">
-            <input type="checkbox" class="check-morning-input" unchecked />
+            <input type="checkbox" class="check-morning-input" unchecked disabled />
           </td>
           <td class="check-after" style="text-align: center; vertical-align: middle; width: 15px;">
-            <input type="checkbox" class="check-after-input" unchecked />
+            <input type="checkbox" class="check-after-input" unchecked disabled />
           </td>
           <td class="check-presence" style="text-align: center; vertical-align: middle; width: 15px;">
-            <input type="checkbox" class="check-presence-input" checked />
+            <input type="checkbox" class="check-presence-input" checked disabled />
           </td>
         </tr>`;
       tbody.insertAdjacentHTML('beforeend', newLine);

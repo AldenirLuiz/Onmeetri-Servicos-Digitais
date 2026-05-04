@@ -117,6 +117,25 @@
         </div>
     </div>
     
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-login">&times;</span>
+            <h2>Login Necessário</h2>
+            <p>Para editar os dados, faça login.</p>
+            <form id="loginForm">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" required>
+                <label for="password">Senha:</label>
+                <input type="password" id="password" required>
+                <div class="modal-buttons">
+                    <button type="submit" class="primary-button">Entrar</button>
+                    <button type="button" id="cancelLogin" class="secondary-button">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <!-- Resumo de Entradas -->
     <div class="entry-summary">
         <h3>Resumo de Entradas</h3>
