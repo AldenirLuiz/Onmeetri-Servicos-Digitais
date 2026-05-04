@@ -76,6 +76,12 @@ header {
         border-radius: 0;
         box-shadow: none;
     }
+    .header-column h1 {
+        font-size: 1em;
+    }
+    .header-column legend {
+        display: none;
+    }
     .hamburger {
         display: block;
         cursor: pointer;
@@ -85,4 +91,5 @@ header {
         padding: 0.5rem 0;
         z-index: 25;
     }
+
 }
