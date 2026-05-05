@@ -167,7 +167,7 @@ footer p {
         font-size: 1rem;
     }
     header {
-        height: 240px;
+        height: 100%;
         padding: 10px;
     }
 
@@ -175,18 +175,12 @@ footer p {
         display: flex;
         flex-direction: column;
     }
-
     section {
         width: 100%;
     }
-
     #titleContainer {
         
         font-size: 1.0rem;
-    }
-
-    #headColumns {
-        flex-direction: column;
     }
     #headNavbar {
         flex-direction: column;
@@ -199,7 +193,6 @@ footer p {
         text-align: center;
         font-family: "Bebas Neue", sans-serif;
     }
-
     footer {
         max-width: 100%;
         display: flex;
@@ -207,6 +200,10 @@ footer p {
         align-items: center;
         justify-content: center;
     }
+    .entry-summary {
+        display: none;
+    }
+    
     
 }
 

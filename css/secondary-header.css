@@ -50,9 +50,9 @@ header {
 
 @media screen and (max-width: 768px) {
     .header-group {
-        flex-direction: column;
-        gap: 10px;
-        align-items: stretch;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
     }
     .header-nav {
         display: none;
