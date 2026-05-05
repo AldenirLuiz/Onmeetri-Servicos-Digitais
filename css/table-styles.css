@@ -1,11 +1,21 @@
+
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px auto;
+    margin: 0;
+    gap: 1em;
+}
+
 .main-container-table {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
     max-width: 1150px;
-    margin-bottom: 80px;
+    margin-bottom: 10px;
 }
 
 .main-container-table .table-fieldset {
@@ -180,24 +190,33 @@ button:hover {
 .employee-cards {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     gap: 1rem;
-    padding: 1rem;
 }
 
 .employee-card {
+    display: flex;
+    flex-direction: column;
     background: white;
     border-radius: 12px;
-    padding: 1rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    padding: 1em;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .employee-card .card-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #eee;
+    width: 100%;
+    font-size: 1em;
+    font-weight: bold;
 }
 
 .employee-card .card-header h3 {
@@ -247,10 +266,20 @@ button:hover {
     .mobile-view {
         display: none;
     }
+
+    .main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    }
 }
 
 /* Common Styles */
 .action-buttons {
+    margin: 12px auto;
     padding: 0;
     background: #014103af;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
