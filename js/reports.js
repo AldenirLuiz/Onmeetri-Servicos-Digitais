@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const reportType = document.getElementById("report-type");
     const dateFromInput = document.getElementById("date-from");
     const dateToInput = document.getElementById("date-to");
+    const dateRangeGroup = document.querySelector(".date-range-group");
     const toggleAdvanced = document.getElementById("toggle-advanced");
     const advancedOptions = document.getElementById("advanced-options");
     const chart1Title = document.getElementById("chart1-title");
@@ -73,6 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getGroupLabel() {
         return chartGroup.value === "cargo" ? "Cargo" : "Departamento";
+    }
+
+    function updateDateRangeVisibility() {
+        if (reportType.value === "presence") {
+            dateRangeGroup.style.display = "flex";
+        } else {
+            dateRangeGroup.style.display = "none";
+        }
     }
 
     function updateTableHeaders() {
@@ -379,7 +388,10 @@ document.addEventListener("DOMContentLoaded", () => {
     filterValue.addEventListener("change", applyFiltersAndSort);
     chartGroup.addEventListener("change", applyFiltersAndSort);
     sortBy.addEventListener("change", applyFiltersAndSort);
-    reportType.addEventListener("change", applyFiltersAndSort);
+    reportType.addEventListener("change", () => {
+        updateDateRangeVisibility();
+        applyFiltersAndSort();
+    });
     dateFromInput.addEventListener("change", applyFiltersAndSort);
     dateToInput.addEventListener("change", applyFiltersAndSort);
     toggleAdvanced.addEventListener("click", () => {
@@ -389,6 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Inicialização
     setDefaultDateRange();
+    updateDateRangeVisibility();
     populateFilterValues();
     applyFiltersAndSort();
     document.getElementById("export-excel").addEventListener("click", () => {
