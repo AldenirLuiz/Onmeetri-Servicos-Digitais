@@ -200,28 +200,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const startDate = dateFromInput.value ? new Date(dateFromInput.value) : null;
         const endDate = dateToInput.value ? new Date(dateToInput.value) : null;
 
-        if (reportType.value === "presence") {
-            if (startDate || endDate) {
-                filtered = filtered.filter(emp => {
-                    return pointData.some(entry => {
-                        const matchesEmployee = String(entry.employeeId) === String(emp.id) || entry.name === emp.nome;
-                        const entryDate = parseISODate(entry.date);
-                        return matchesEmployee && isWithinDateRange(entryDate, startDate, endDate);
-                    });
-                });
-            }
-        } else {
-            if (startDate || endDate) {
-                filtered = filtered.filter(emp => {
-                    const admissionDate = parsePTBRDate(emp.admissao);
-                    return isWithinDateRange(admissionDate, startDate, endDate);
-                });
-            }
+        if (reportType.value !== "presence" && (startDate || endDate)) {
+            filtered = filtered.filter(emp => {
+                const admissionDate = parsePTBRDate(emp.admissao);
+                return isWithinDateRange(admissionDate, startDate, endDate);
+            });
         }
 
         const ordem = sortBy.value;
         if (reportType.value === "presence") {
             let presenceData = getPresenceData(filtered);
+
+            if (startDate || endDate) {
+                presenceData = presenceData.filter(emp => emp.totalDays > 0);
+            }
+
             if (ordem === "salario") {
                 presenceData.sort((a, b) => b.presenceRate - a.presenceRate);
             } else if (ordem === "admissao") {
