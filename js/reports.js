@@ -79,8 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateDateRangeVisibility() {
         if (reportType.value === "presence") {
             dateRangeGroup.style.display = "flex";
+            if (!dateFromInput.value && !dateToInput.value) {
+                setDefaultDateRange();
+            }
         } else {
             dateRangeGroup.style.display = "none";
+            dateFromInput.value = "";
+            dateToInput.value = "";
         }
     }
 
@@ -209,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const startDate = dateFromInput.value ? new Date(dateFromInput.value) : null;
         const endDate = dateToInput.value ? new Date(dateToInput.value) : null;
 
-        if (reportType.value !== "presence" && (startDate || endDate)) {
+        if (reportType.value === "employees" && (startDate || endDate)) {
             filtered = filtered.filter(emp => {
                 const admissionDate = parsePTBRDate(emp.admissao);
                 return isWithinDateRange(admissionDate, startDate, endDate);
