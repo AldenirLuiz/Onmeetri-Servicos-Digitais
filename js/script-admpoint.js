@@ -273,6 +273,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalContent = document.getElementById("modalContent");
   const closeBtn = document.getElementsByClassName("close")[0];
   const summaryDate = document.getElementById("summaryDate");
+  const summaryFrom = document.getElementById("summaryFrom");
+  const summaryTo = document.getElementById("summaryTo");
   const summaryContent = document.getElementById("summaryContent");
   const exportPDF = document.getElementById("exportPDF");
   const exportExcel = document.getElementById("exportExcel");
@@ -630,6 +632,7 @@ document.addEventListener("DOMContentLoaded", function () {
           { header: 'Data', dataKey: 'date' },
           { header: 'Manhã', dataKey: 'morning' },
           { header: 'Tarde', dataKey: 'afternoon' },
+          { header: 'Diárias', dataKey: 'diarias' },
           { header: 'Total Horas', dataKey: 'total' }
       ];
 
@@ -638,21 +641,26 @@ document.addEventListener("DOMContentLoaded", function () {
           date: new Date(entry.date).toLocaleDateString(),
           morning: entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
           afternoon: entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
+          diarias: ((entry.checkMorning ? 0.5 : 0) + (entry.checkAfter ? 0.5 : 0)).toFixed(2),
           total: calculateTotalHours(entry)
       }));
 
       // Add summary rows
-      const summaryRows = Object.entries(totals).map(([name, stats]) => ({
-          name: `${name} - TOTAL`,
-          date: `${stats.totalDays} dias`,
-          morning: `${stats.presentMorning} presenças`,
-          afternoon: `${stats.presentAfternoon} presenças`,
-          total: `${stats.totalHours.toFixed(2)}h`
-      }));
+        const summaryRows = Object.entries(totals).map(([name, stats]) => {
+          const diarias = ((stats.presentMorning || 0) + (stats.presentAfternoon || 0)) * 0.5;
+          return {
+            name: `${name} - TOTAL`,
+            date: `${stats.totalDays} dias`,
+            morning: `${stats.presentMorning} presenças`,
+            afternoon: `${stats.presentAfternoon} presenças`,
+            diarias: diarias.toFixed(2),
+            total: `${stats.totalHours.toFixed(2)}h`
+          };
+        });
 
       doc.autoTable({
           columns: tableColumns,
-          body: [...tableRows, { name: '', date: '', morning: '', afternoon: '', total: '' }, ...summaryRows],
+          body: [...tableRows, { name: '', date: '', morning: '', afternoon: '', diarias: '', total: '' }, ...summaryRows],
           startY: 20,
           head: [tableColumns.map(col => col.header)],
           theme: 'grid',
@@ -693,18 +701,20 @@ function exportToExcel(data) {
     const rows = data.map(entry => ({
         Nome: getEntryName(entry),
         Data: new Date(entry.date).toLocaleDateString(),
-        'Período Manhã': entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
-        'Período Tarde': entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
-        'Total Horas': calculateTotalHours(entry)
+      'Período Manhã': entry.checkMorning ? `${entry.morningIn}-${entry.morningOut}` : 'Falta',
+      'Período Tarde': entry.checkAfter ? `${entry.afterIn}-${entry.afterOut}` : 'Falta',
+      'Diárias': ((entry.checkMorning ? 0.5 : 0) + (entry.checkAfter ? 0.5 : 0)).toFixed(2),
+      'Total Horas': calculateTotalHours(entry)
     }));
 
     // Add empty row and summary rows
     const summaryRows = Object.entries(totals).map(([name, stats]) => ({
         Nome: `${name} - RESUMO`,
-        Data: `Total Dias: ${stats.totalDays}`,
-        'Período Manhã': `Presenças: ${stats.presentMorning}`,
-        'Período Tarde': `Presenças: ${stats.presentAfternoon}`,
-        'Total Horas': `${stats.totalHours.toFixed(2)}h`
+      Data: `Total Dias: ${stats.totalDays}`,
+      'Período Manhã': `Presenças: ${stats.presentMorning}`,
+      'Período Tarde': `Presenças: ${stats.presentAfternoon}`,
+      'Diárias': `Total: ${(((stats.presentMorning||0) + (stats.presentAfternoon||0)) * 0.5).toFixed(2)}`,
+      'Total Horas': `${stats.totalHours.toFixed(2)}h`
     }));
 
     const ws = XLSX.utils.json_to_sheet([...rows, {}, ...summaryRows]);
@@ -727,19 +737,60 @@ function exportToExcel(data) {
 
 // Update summary when date changes
 summaryDate.addEventListener('change', updateSummary);
+if (summaryFrom) summaryFrom.addEventListener('change', updateSummary);
+if (summaryTo) summaryTo.addEventListener('change', updateSummary);
+
+// Show/hide date inputs depending on summary type
+const onSummaryTypeChange = () => {
+  const type = summaryType.value;
+  if (type === 'range') {
+    if (summaryDate) summaryDate.style.display = 'none';
+    if (summaryFrom) summaryFrom.style.display = 'inline-block';
+    if (summaryTo) summaryTo.style.display = 'inline-block';
+  } else {
+    if (summaryDate) summaryDate.style.display = 'inline-block';
+    if (summaryFrom) summaryFrom.style.display = 'none';
+    if (summaryTo) summaryTo.style.display = 'none';
+  }
+};
+
+if (summaryType) {
+  summaryType.addEventListener('change', () => {
+    onSummaryTypeChange();
+    updateSummary();
+  });
+}
+onSummaryTypeChange();
 
 
 // Add export functions
 exportPDF.addEventListener('click', () => {
     const savedData = JSON.parse(localStorage.getItem('pointData')) || [];
+  let filteredData = [];
+  const type = summaryType.value;
+  if (type === 'monthly') {
     const selectedDate = summaryDate.value;
-    
-    const filteredData = summaryType.value === 'monthly' 
-        ? savedData.filter(entry => {
-            const [yearMonth] = selectedDate.split('-').slice(0, 2);
-            return entry.date && entry.date.startsWith(yearMonth);
-          })
-        : savedData.filter(entry => entry.date === selectedDate);
+    filteredData = savedData.filter(entry => {
+      const yearMonth = selectedDate.slice(0,7);
+      return entry.date && entry.date.startsWith(yearMonth);
+    });
+  } else if (type === 'range') {
+    const from = summaryFrom.value;
+    const to = summaryTo.value;
+    if (!from || !to) {
+      alert('Por favor selecione data inicial e final para o intervalo');
+      return;
+    }
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    filteredData = savedData.filter(entry => {
+      const d = new Date(entry.date);
+      return d >= fromDate && d <= toDate;
+    });
+  } else {
+    const selectedDate = summaryDate.value;
+    filteredData = savedData.filter(entry => entry.date === selectedDate);
+  }
     
     if (filteredData.length === 0) {
         alert('Nenhum dado encontrado para o período selecionado');
@@ -751,14 +802,31 @@ exportPDF.addEventListener('click', () => {
 
 exportExcel.addEventListener('click', () => {
     const savedData = JSON.parse(localStorage.getItem('pointData')) || [];
+  let filteredData = [];
+  const type = summaryType.value;
+  if (type === 'monthly') {
     const selectedDate = summaryDate.value;
-    
-    const filteredData = summaryType.value === 'monthly' 
-        ? savedData.filter(entry => {
-            const [yearMonth] = selectedDate.split('-').slice(0, 2);
-            return entry.date && entry.date.startsWith(yearMonth);
-          })
-        : savedData.filter(entry => entry.date === selectedDate);
+    filteredData = savedData.filter(entry => {
+      const yearMonth = selectedDate.slice(0,7);
+      return entry.date && entry.date.startsWith(yearMonth);
+    });
+  } else if (type === 'range') {
+    const from = summaryFrom.value;
+    const to = summaryTo.value;
+    if (!from || !to) {
+      alert('Por favor selecione data inicial e final para o intervalo');
+      return;
+    }
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    filteredData = savedData.filter(entry => {
+      const d = new Date(entry.date);
+      return d >= fromDate && d <= toDate;
+    });
+  } else {
+    const selectedDate = summaryDate.value;
+    filteredData = savedData.filter(entry => entry.date === selectedDate);
+  }
     
     if (filteredData.length === 0) {
         alert('Nenhum dado encontrado para o período selecionado');
@@ -769,19 +837,40 @@ exportExcel.addEventListener('click', () => {
 });
 
   function updateSummary() {
-      const selectedDate = summaryDate.value;
       const savedData = JSON.parse(localStorage.getItem('pointData')) || [];
-      
-      const filteredData = savedData.filter(entry => entry.date === selectedDate);
-      
+      let filteredData = [];
+      const type = summaryType.value;
+
+      if (type === 'monthly') {
+        const selectedDate = summaryDate.value;
+        const yearMonth = selectedDate.slice(0,7);
+        filteredData = savedData.filter(entry => entry.date && entry.date.startsWith(yearMonth));
+      } else if (type === 'range') {
+        const from = summaryFrom.value;
+        const to = summaryTo.value;
+        if (!from || !to) {
+          summaryContent.innerHTML = '<p>Por favor selecione intervalo de datas.</p>';
+          return;
+        }
+        const fromDate = new Date(from);
+        const toDate = new Date(to);
+        filteredData = savedData.filter(entry => {
+          const d = new Date(entry.date);
+          return d >= fromDate && d <= toDate;
+        });
+      } else {
+        const selectedDate = summaryDate.value;
+        filteredData = savedData.filter(entry => entry.date === selectedDate);
+      }
+
       const summary = filteredData.map(entry => `
-          <div class="entry-row" data-entry='${JSON.stringify(entry)}'>
-              <strong>${getEntryName(entry)}</strong> - 
-              Total de Horas: ${calculateTotalHours(entry)}h
-          </div>
+        <div class="entry-row" data-entry='${JSON.stringify(entry)}'>
+          <strong>${getEntryName(entry)}</strong> - 
+          Total de Horas: ${calculateTotalHours(entry)}h
+        </div>
       `).join('');
 
-      summaryContent.innerHTML = summary || '<p>Nenhuma entrada encontrada para esta data.</p>';
+      summaryContent.innerHTML = summary || '<p>Nenhuma entrada encontrada para o período selecionado.</p>';
   }
 
   // Add click event listener to summary content container

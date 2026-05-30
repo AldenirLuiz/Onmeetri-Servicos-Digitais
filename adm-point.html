@@ -147,7 +147,12 @@
             <select id="summaryType">
                 <option value="daily">Diário</option>
                 <option value="monthly">Mensal</option>
+                <option value="range">Intervalo</option>
             </select>
+            <label for="summaryFrom" style="margin-left:8px">De:</label>
+            <input type="date" id="summaryFrom" />
+            <label for="summaryTo">Até:</label>
+            <input type="date" id="summaryTo" />
         </div>
             <button id="exportPDF">Exportar PDF</button>
             <button id="exportExcel">Exportar Excel</button>

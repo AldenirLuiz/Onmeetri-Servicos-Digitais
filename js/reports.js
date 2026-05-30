@@ -99,8 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <th>Dias Registrados</th>
                     <th>Manhã</th>
                     <th>Tarde</th>
-                    <th>Total de Presenças</th>
-                    <th>Taxa de Presença</th>
+                    <th>Total de Diárias</th>
+                    <th>Taxa de Presença (%)</th>
                 </tr>
             `;
         } else {
@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <td>${emp.totalDays}</td>
                     <td>${emp.presentMorning}</td>
                     <td>${emp.presentAfternoon}</td>
-                    <td>${emp.totalPresences}</td>
+                    <td>${emp.totalDiarias.toFixed(2)}</td>
                     <td>${emp.presenceRate.toFixed(2)}%</td>
                 `;
                 tableBody.appendChild(tr);
@@ -161,10 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
             metric1Label.textContent = "Total de Funcionários:";
             metric2Label.textContent = "Média de Presença:";
 
-            const totalRecords = data.reduce((acc, emp) => acc + emp.totalDays, 0);
+            const totalDiarias = data.reduce((acc, emp) => acc + (emp.totalDiarias || 0), 0);
             const avgPresence = data.length > 0 ? data.reduce((acc, emp) => acc + emp.presenceRate, 0) / data.length : 0;
 
-            mediaSalarial.textContent = `${avgPresence.toFixed(2)}% (${totalRecords} registros)`;
+            mediaSalarial.textContent = `${avgPresence.toFixed(2)}% (${totalDiarias.toFixed(2)} diárias)`;
         } else {
             metric1Label.textContent = "Total de Funcionários:";
             metric2Label.textContent = "Média Salarial:";
@@ -188,15 +188,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const totalDays = entries.length;
             const presentMorning = entries.filter(entry => entry.checkMorning).length;
             const presentAfternoon = entries.filter(entry => entry.checkAfter).length;
-            const totalPresences = presentMorning + presentAfternoon;
-            const presenceRate = totalDays > 0 ? (totalPresences / (totalDays * 2)) * 100 : 0;
+
+            // Cada presença de manhã ou tarde vale 0.5 diária. Soma das presenças / 2 = total de diárias
+            const totalDiarias = (presentMorning + presentAfternoon) * 0.5;
+            const presenceRate = totalDays > 0 ? (totalDiarias / totalDays) * 100 : 0;
 
             return {
                 ...emp,
                 totalDays,
                 presentMorning,
                 presentAfternoon,
-                totalPresences,
+                totalDiarias,
                 presenceRate
             };
         });
@@ -415,6 +417,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let fileName;
 
         if (reportType.value === "presence") {
+            const settings = JSON.parse(localStorage.getItem('platformSettings')) || {};
+            const hoursPerDay = (settings.policies && settings.policies.minimumHoursPerDay) ? parseFloat(settings.policies.minimumHoursPerDay) : 8;
+
             exportData = visibleData.map(emp => ({
                 Nome: emp.nome,
                 Departamento: emp.departamento,
@@ -422,8 +427,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Dias Registrados": emp.totalDays,
                 "Manhã": emp.presentMorning,
                 "Tarde": emp.presentAfternoon,
-                "Total de Presenças": emp.totalPresences,
-                "Taxa de Presença (%)": emp.presenceRate.toFixed(2)
+                "Total de Diárias": emp.totalDiarias.toFixed(2),
+                "Taxa de Presença (%)": emp.presenceRate.toFixed(2),
+                "Horas Trabalhadas": (emp.totalDiarias * hoursPerDay).toFixed(2)
             }));
             sheetName = "Presença";
             fileName = "relatorio_presenca.xlsx";
@@ -457,7 +463,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (reportType.value === "presence") {
             heading = "Relatório de Presença";
-            headers = [["Nome", "Departamento", "Contrato", "Dias Registrados", "Manhã", "Tarde", "Total Presenças", "Taxa de Presença (%)"]];
+            const settings = JSON.parse(localStorage.getItem('platformSettings')) || {};
+            const hoursPerDay = (settings.policies && settings.policies.minimumHoursPerDay) ? parseFloat(settings.policies.minimumHoursPerDay) : 8;
+
+            headers = [["Nome", "Departamento", "Contrato", "Dias Registrados", "Manhã", "Tarde", "Total de Diárias", "Taxa de Presença (%)", "Horas Trabalhadas"]];
             exportData = visibleData.map(emp => [
                 emp.nome,
                 emp.departamento,
@@ -465,8 +474,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 emp.totalDays,
                 emp.presentMorning,
                 emp.presentAfternoon,
-                emp.totalPresences,
-                emp.presenceRate.toFixed(2)
+                emp.totalDiarias.toFixed(2),
+                emp.presenceRate.toFixed(2),
+                (emp.totalDiarias * hoursPerDay).toFixed(2)
             ]);
         } else {
             heading = "Relatório de Funcionários";
@@ -525,6 +535,18 @@ document.addEventListener("DOMContentLoaded", () => {
             headStyles: { fillColor: [90, 131, 177] },
         });
 
+        // Resumo geral: total de diárias e horas trabalhadas no período
+        try {
+            const settings = JSON.parse(localStorage.getItem('platformSettings')) || {};
+            const hoursPerDay = (settings.policies && settings.policies.minimumHoursPerDay) ? parseFloat(settings.policies.minimumHoursPerDay) : 8;
+            const totalDiariasOverall = visibleData.reduce((acc, emp) => acc + (emp.totalDiarias || 0), 0);
+            const totalHours = totalDiariasOverall * hoursPerDay;
+            const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 8 : yPosition + 8;
+            doc.setFontSize(10);
+            doc.text(`Resumo: Total de Diárias: ${totalDiariasOverall.toFixed(2)} — Horas Trabalhadas: ${totalHours.toFixed(2)}`, 14, finalY);
+        } catch (err) {
+            console.error('Erro ao gerar resumo do PDF', err);
+        }
         const fileName = reportType.value === "presence" ? "relatorio_presenca.pdf" : "relatorio_funcionarios.pdf";
         const dateRange = dateFromInput.value || dateToInput.value
             ? `_${dateFromInput.value || 'inicio'}_${dateToInput.value || 'fim'}`
