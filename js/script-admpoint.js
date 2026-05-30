@@ -762,6 +762,19 @@ if (summaryType) {
 }
 onSummaryTypeChange();
 
+// Inicialização: se range for padrão, preencher De/Até com mês atual e carregar resumo
+if (summaryType && summaryType.value === 'range') {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const firstDay = `${year}-${month}-01`;
+  if (summaryFrom && !summaryFrom.value) summaryFrom.value = firstDay;
+  if (summaryTo && !summaryTo.value) summaryTo.value = today.toISOString().slice(0,10);
+  updateSummary();
+} else {
+  // Carrega resumo inicial para modo diário/mensal
+  updateSummary();
+}
 
 // Add export functions
 exportPDF.addEventListener('click', () => {
